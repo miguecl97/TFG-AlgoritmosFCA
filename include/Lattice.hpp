@@ -52,20 +52,20 @@ class Lattice{
                  * @return The list of concepts of the lattice.
                  */
                 
-                //list<N> getConcepts();
+                list<N> getConcepts();
 
                 /**
                  * @brief Adds a new formal concept to the lattice.
                  * @param concept The formal concept to be added.
                  */
-                /*
+                
                 void add(N concept);
 
                 bool find(N& concp);
 
                 bool next(N& c, N& output);
                 
-                bool insertLookUp(N& x, N& c);*/
+                bool insertLookUp(N& x, N& c);
 
 
 };

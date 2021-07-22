@@ -7,13 +7,15 @@
 
 //Lattice's mathods.
 //
+
+
 template<typename N>
 Lattice<N>::Lattice(){
     count=0;
     last_position_index=0;
     was_inserted=false;
 }
-/*
+
 template<typename N>
 list<N> Lattice<N>::getConcepts(){return concepts;}
 
@@ -72,6 +74,5 @@ bool Lattice<N>::insertLookUp(N& x, N& c){
 
     return true;
 
-}*/
-
+}
 

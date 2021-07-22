@@ -10,7 +10,7 @@
 #include <boost/algorithm/string.hpp>
 
 //#include "Context.hpp"
-#include "Lattice.hpp"
+//#include "Lattice.hpp"
 //#include "utilities.hpp"
 #include "Algorithms.hpp"
 
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
   list<formalConcept> test;
   Lattice<formalConcept> l;
   
-  //list<formalConcept> list = l.getConcepts();
+  list<formalConcept> list = l.getConcepts();
 
   if (argc > 1) {
     ifstream CSVfile(argv[1]);
@@ -82,7 +82,6 @@ int main(int argc, char *argv[]){
     cout << "Se ha calculado el retículo en " 
     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
 		<< " ms" << endl;
-
 
   return 0;
 }
