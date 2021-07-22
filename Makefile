@@ -1,0 +1,16 @@
+SRC = src
+INC = include
+OBJ = obj
+BIN = bin
+CPPFLAGS = -Wall  -g -c -std=c++17 -I$(INC) 
+
+all: $(BIN)/main 
+
+$(BIN)/main: $(OBJ)/main.o $(OBJ)/utilities.o $(OBJ)/Context.o $(OBJ)/Lattice.o $(OBJ)/Algorithms.o
+	$(CXX) $^ -o $@
+
+$(OBJ)/%.o: $(SRC)/%.cpp
+	$(CXX) $(CPPFLAGS) $^ -o $@
+
+clean:
+	-rm obj/* bin/*
