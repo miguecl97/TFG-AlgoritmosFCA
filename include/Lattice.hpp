@@ -19,13 +19,11 @@ using namespace std;
 
 //template named N
 template<typename N>
-//lattice class
 class Lattice{
         private:
                 int count;
                 bool was_inserted;
                 int last_position_index;
-                //typedef pair<vector<int>, vector<int>> formalConcept; // <extension, intension>
 
                 struct Node{
 
@@ -40,12 +38,9 @@ class Lattice{
                                 index=i;
                         }
 
-
                         bool operator==(const Node& n) const{
                                 return c.first == n.c.first; 
                         }
-
-
                 };
 
                 list<Node> concepts; 
@@ -56,7 +51,8 @@ class Lattice{
                  * @brief Retrieves the list of concepts of the lattice.
                  * @return The list of concepts of the lattice.
                  */
-                list<N> getConcepts();
+                
+                //list<N> getConcepts();
 
                 /**
                  * @brief Adds a new formal concept to the lattice.

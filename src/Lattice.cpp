@@ -13,10 +13,10 @@ Lattice<N>::Lattice(){
     last_position_index=0;
     was_inserted=false;
 }
-
+/*
 template<typename N>
 list<N> Lattice<N>::getConcepts(){return concepts;}
-/*
+
 template<typename N>
 void Lattice<N>::add(N concept){
     concepts.push_back(Node(concept,count++));
