@@ -51,9 +51,6 @@ class Context {
 
                 void attributeDoublePrime(vector<int> &attrset, vector<int> &attributeDPrime);
 
-
-
-                //const bitset<TMAX>& operator[](int objID) const {return Intents.at(objID);}
 };
 
 /**

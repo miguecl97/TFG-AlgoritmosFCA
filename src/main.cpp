@@ -9,9 +9,9 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "Context.hpp"
-#include "Lattice.hpp"
-#include "utilities.hpp"
+//#include "Context.hpp"
+//#include "Lattice.hpp"
+//#include "utilities.hpp"
 #include "Algorithms.hpp"
 
 using namespace std;
@@ -22,8 +22,8 @@ int main(int argc, char *argv[]){
   list<formalConcept> test;
   Lattice<formalConcept> l;
   
-
   list<formalConcept> list = l.getConcepts();
+
   if (argc > 1) {
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);

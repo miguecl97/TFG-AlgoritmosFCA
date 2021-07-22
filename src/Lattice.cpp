@@ -5,21 +5,18 @@
 
 #include "Lattice.hpp"
 
-
-
 //Lattice's mathods.
 //
-/*
 template<typename N>
 Lattice<N>::Lattice(){
     count=0;
     last_position_index=0;
     was_inserted=false;
-}*/
+}
 
 template<typename N>
 list<N> Lattice<N>::getConcepts(){return concepts;}
-
+/*
 template<typename N>
 void Lattice<N>::add(N concept){
     concepts.push_back(Node(concept,count++));
@@ -51,7 +48,7 @@ bool Lattice<N>::next(N& c, N& output){
 
 }
 
-template <typename N>
+template<typename N>
 bool Lattice<N>::insertLookUp(N& x, N& c){
 
     typename list<Node>::iterator x_pos = find(concepts.begin(),concepts.end(), Node(x,count));
@@ -75,6 +72,6 @@ bool Lattice<N>::insertLookUp(N& x, N& c){
 
     return true;
 
-}
+}*/
 
 

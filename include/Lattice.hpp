@@ -51,11 +51,7 @@ class Lattice{
                 list<Node> concepts; 
 
         public:
-                Lattice(){      
-                        count=0;
-                        last_position_index=0;
-                        was_inserted=false;
-                }
+                Lattice();
                 /**
                  * @brief Retrieves the list of concepts of the lattice.
                  * @return The list of concepts of the lattice.
@@ -66,13 +62,14 @@ class Lattice{
                  * @brief Adds a new formal concept to the lattice.
                  * @param concept The formal concept to be added.
                  */
+                /*
                 void add(N concept);
 
                 bool find(N& concp);
 
                 bool next(N& c, N& output);
                 
-                bool insertLookUp(N& x, N& c);
+                bool insertLookUp(N& x, N& c);*/
 
 
 };
