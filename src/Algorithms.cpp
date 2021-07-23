@@ -4,6 +4,7 @@
 */
 
 #include"Algorithms.hpp"
+//#include "Lattice.cpp"
 
 #include <iostream>
 #include <vector>
@@ -152,15 +153,15 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
        if(intersection.empty()){
             neigh.push_back(make_pair(g1,m1));
 
-            cout << "añadiendo vecino"<< endl;
-            cout << "("<< g1<< " , "<<m1<<")"<<endl;
+            //cout << "añadiendo vecino"<< endl;
+            //cout << "("<< g1<< " , "<<m1<<")"<<endl;
 
        }else{
             vector <int> aux2;
             set_difference(min.begin(),min.end(), aux.begin(), aux.end(),std::inserter(aux2, aux2.end()));
             min = aux2;
-            cout << "la interseccion no es vacía"<< intersection<<endl;
-            cout << min<<endl;
+            //cout << "la interseccion no es vacía"<< intersection<<endl;
+            //cout << min<<endl;
        }
     
     }
@@ -178,20 +179,24 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
 
     cout << f.first;
     cout << f.second;
+
     c.objectDoublePrime(emptyobj,f.first);
     c.objectPrime(emptyattr,f.second);
 
-    list <formalConcept> neigb = Neighbors(f.first,f.second,c);
+    l.add(f);
+    
+    list <formalConcept> neigh;
 
     //list<formalConcept> lista = l.getConcepts();
 
-    for(formalConcept x : neigb){
-        //bool result = l.insertLookUp(x,f);
-    }
-    
-
-
+    do{
+        neigh = Neighbors(f.first,f.second,c);
+        for(formalConcept x : neigh){
+            l.insertLookUp(x,f);
+        }
+    }while(l.next(f,f));
 
 }
+    
 
 

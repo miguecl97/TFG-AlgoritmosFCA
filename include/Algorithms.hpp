@@ -8,7 +8,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "Context.hpp"
+//#include "Context.hpp"
 #include "Lattice.hpp"
 #include "utilities.hpp"
 

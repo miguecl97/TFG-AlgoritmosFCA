@@ -39,7 +39,7 @@ Context readCSV(ifstream &f){
 
 
 
-ostream& operator<< (ostream& os, std::vector<int>& v) 
+ostream& operator<< (ostream& os, const std::vector<int>& v) 
 {
     os << "[";
     for (typename std::vector<int>::const_iterator ii = v.begin(); ii != v.end(); ++ii)
@@ -51,7 +51,29 @@ ostream& operator<< (ostream& os, std::vector<int>& v)
 }
 
 
+std::ostream& operator<<(ostream& out, const formalConcept& f){
 
+        out<< "{";
+        if(f.first.size()!=0){
+                for(vector<int>::const_iterator j = f.first.begin(); j<f.first.end() -1 ;j++){
+                        out<< *j << ", ";
+                        
+                }
+        
+                out << *(f.first.end() -1);
+        }
+        out<< "}, {";
+        if(f.second.size()!=0){
+                for(vector<int>::const_iterator j = f.second.begin(); j<f.second.end() -1 ;j++){
+                        out<< *j << ", ";
+                        
+                }  
+                out << *(f.second.end() -1);
+        }
+        out << "}";
+
+        return out;
+}
 
 bool IsSubset(std::vector<int> A, std::vector<int> B)
 {

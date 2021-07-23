@@ -6,8 +6,8 @@
 #include <iostream>
 #include <vector>
 
-#include "constants.hpp"
 #include "TextTable.hpp"
+
 using namespace std;
 
 #ifndef __CONTEXT__

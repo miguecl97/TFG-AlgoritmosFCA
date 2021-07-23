@@ -10,13 +10,6 @@
 
 
 template<typename N>
-Lattice<N>::Lattice(){
-    count=0;
-    last_position_index=0;
-    was_inserted=false;
-}
-
-template<typename N>
 list<N> Lattice<N>::getConcepts(){return concepts;}
 
 template<typename N>
@@ -56,7 +49,7 @@ bool Lattice<N>::insertLookUp(N& x, N& c){
     typename list<Node>::iterator x_pos = find(concepts.begin(),concepts.end(), Node(x,count));
     if(x_pos == concepts.end()){
         concepts.push_back(Node(x,count++));
-        x_pos = concepts.end() -1;
+        x_pos = concepts.end() - 1;
     }
 
     typename list<Node>::iterator c_pos;

@@ -13,6 +13,7 @@
 //#include "Lattice.hpp"
 //#include "utilities.hpp"
 #include "Algorithms.hpp"
+//#include "Lattice.cpp"
 
 using namespace std;
 
@@ -22,8 +23,6 @@ int main(int argc, char *argv[]){
   list<formalConcept> test;
   Lattice<formalConcept> l;
   
-  list<formalConcept> list = l.getConcepts();
-
   if (argc > 1) {
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
@@ -78,7 +77,7 @@ int main(int argc, char *argv[]){
 
   auto end = chrono::steady_clock::now();
 
-
+    
     cout << "Se ha calculado el retículo en " 
     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
 		<< " ms" << endl;

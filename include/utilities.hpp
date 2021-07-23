@@ -31,7 +31,9 @@ typedef pair<vector<int>, vector<int>> formalConcept;
 
 
 
-ostream& operator<< (ostream& os, vector<int>& v);
+ostream& operator<< (ostream& os,const vector<int>& v);
+
+ostream& operator<<(ostream& out, const formalConcept& f);
 
 bool IsSubset(std::vector<int> A, std::vector<int> B);
 
