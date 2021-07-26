@@ -177,9 +177,6 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
     vector <int> emptyobj;
     vector <int> emptyattr;
 
-    cout << f.first;
-    cout << f.second;
-
     c.objectDoublePrime(emptyobj,f.first);
     c.objectPrime(emptyattr,f.second);
 

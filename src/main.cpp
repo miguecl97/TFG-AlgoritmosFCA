@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   list<formalConcept> test;
   Lattice<formalConcept> l;
   
-  if (argc > 1) {
+  if (argc =2 ) {
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
     cout << c;
@@ -75,9 +75,13 @@ int main(int argc, char *argv[]){
 
   LatticeLindig(c,l);
 
+  
   auto end = chrono::steady_clock::now();
 
-    
+  ofstream myfile; 
+  myfile.open("lattice.g");
+
+  l.printGraphplaceInput(myfile,0);
     cout << "Se ha calculado el retículo en " 
     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
 		<< " ms" << endl;

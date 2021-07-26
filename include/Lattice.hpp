@@ -72,9 +72,7 @@ class Lattice{
 
                 void printGraphplaceInput(ofstream& out, int flag=0);
 
-                //friend ostream& operator<<(ostream& out, const formalConcept& f);
-
-
+                void printTerminal();
 
 };
 
@@ -163,6 +161,19 @@ void Lattice<N>::printGraphplaceInput(ofstream& out, int flag){
         }
 }
 
+template<typename N>
+void Lattice<N>::printTerminal(){
+        for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
+                cout << "Concepto: "<< i->index+1 << ": " << endl;
+                cout << "( ";
 
+                
+                cout << i->c;
+
+
+                cout << ") "<<endl;
+        }
+
+}       
 
 #endif
