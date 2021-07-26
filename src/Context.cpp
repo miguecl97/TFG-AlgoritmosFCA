@@ -89,7 +89,7 @@ ostream& operator<<(ostream& os, Context& c){
     TextTable t( '-', '|', '+' );
 
 
-    t.add( "Objetos / Atributos");
+    t.add( "Objects / Attributes");
     for (size_t attrID = 0; attrID < c.getNAttributes(); attrID++){
         t.add(c.getAttributes().at(attrID));
     }

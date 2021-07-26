@@ -27,4 +27,7 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c);
 
 void LatticeLindig(Context &c, Lattice<formalConcept> &l);
 
+
+void InClose(int r, int y, Lattice<formalConcept> &l);
+
 #endif

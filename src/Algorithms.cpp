@@ -194,6 +194,8 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
     }while(l.next(f,f));
 
 }
+
+void InClose(int r, int y, Lattice<formalConcept &l);
     
 
 

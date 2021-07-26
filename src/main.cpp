@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
     c = readCSV(CSVfile);
     cout << c;
   }else{
-    cout << "el primer argumento debe de ser un archivo .csv valido";
+    cout << "Error: first argument must be a valid .csv file";
     return 0;
   }
 
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
   myfile.open("lattice.g");
 
   l.printGraphplaceInput(myfile,0);
-    cout << "Se ha calculado el retículo en " 
+    cout << "The lattice has been computed in :  " 
     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
 		<< " ms" << endl;
 
