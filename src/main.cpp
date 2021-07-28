@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   list<formalConcept> test;
   Lattice<formalConcept> l;
   
-  if (argc =2 ) {
+  if (argc>1 ) {
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
     cout << c;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
   }
 
   //for nextconcept
-  vector<vector<int>> A;
+  vector<vector<int>> A ;
   vector<vector<int>> B = {{}};
   vector<int> inum = {0};
   int r=0;
@@ -73,15 +73,18 @@ int main(int argc, char *argv[]){
   }
 */
 
-  LatticeLindig(c,l);
-
+  int y =0;
+  InClose(r,y,A,B,c,l);
   
   auto end = chrono::steady_clock::now();
 
   ofstream myfile; 
   myfile.open("lattice.g");
 
+
+  LatticeLindig(c,l);
   l.printGraphplaceInput(myfile,0);
+  //l.printTerminal();
     cout << "The lattice has been computed in :  " 
     << chrono::duration_cast<chrono::milliseconds>(end - start).count()
 		<< " ms" << endl;

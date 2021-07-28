@@ -21,6 +21,9 @@ Context::Context(vector<vector<bool>> data, vector<string> obj, vector<string> a
     table = data;     
 }
 
+bool Context::getIncidence(int i, int j){
+    return table[i][j];
+}
 void Context::objectPrime(vector<int> &objset, vector<int> &objPrime){
     
     if(objset.empty()){

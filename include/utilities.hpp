@@ -37,4 +37,6 @@ ostream& operator<<(ostream& out, const formalConcept& f);
 
 bool IsSubset(std::vector<int> A, std::vector<int> B);
 
+void insert_sorted( std::vector<int> & vec, int const& item );
+
 #endif

@@ -163,8 +163,10 @@ void Lattice<N>::printGraphplaceInput(ofstream& out, int flag){
 
 template<typename N>
 void Lattice<N>::printTerminal(){
+        cout << endl;
+        cout << "List of concepts: "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
-                cout << "Concepto: "<< i->index+1 << ": " << endl;
+                cout << "Concept: "<< i->index+1 << ": " << endl;
                 cout << "( ";
 
                 

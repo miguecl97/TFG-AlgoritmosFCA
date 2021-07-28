@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include <numeric> // std::iota
+#include <cmath>
 
 void NextConcept(vector<vector<int>> &A,vector<vector<int>> &B,vector<int> &inum,int &r,Context &c, Lattice<formalConcept> &l){
 
@@ -195,7 +196,83 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
 
 }
 
-void InClose(int r, int y, Lattice<formalConcept &l);
+void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice<formalConcept> &l){
+    int rnew = r+1;
+
+
+    if((int)A.size() <= rnew+1){
+        A.resize(rnew+1);
+    }
+
+    for(int j = y; j<(int)c.getNAttributes();j++){
+        int k = j+1;
+        A[rnew].clear();
+        for(int i : A[r]){
+            //cout << "j = "<< j << ", i = "<< i << " -> " << c.getIncidence(i,j) <<endl;
+            if(c.getIncidence(i,j)){
+                insert_sorted(A[rnew],i);
+            }
+        }
+
+        if(A[rnew].size()>0){
+            if(A[rnew].size()==A[r].size()){
+                insert_sorted(B[r],j);
+            }else{
+                if(isCannonical(r,j-1,A,B,c)){
+                    vector<int> aux = {j};
+                    if((int)B.size() <= rnew+1){
+                        B.resize(rnew + 1);
+                    }
+
+                    std::set_union(B[r].begin(), B[r].end(), aux.begin(), aux.end() , back_inserter(B[rnew]) );
+                    sort(B[rnew].begin(), B[rnew].end() );
+                    B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
+
+                    //InClose(rnew,k,A,B,c,l);
+                }
+            }
+        }
+    }
+    
+    cout<< "Llamada r = "<< r<< endl;
+    for(int i=0; i< (int) A.size() ; i++){
+        cout << " A[ "<< i << "]"<< A[i];
+    }
+    cout << endl;
+    for(int i=0; i< (int) B.size() ; i++){
+        cout << " B[ "<< i << "]"<< B[i];
+    }
+    cout << endl;
+    cout << endl;
+}
+
+bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,Context &c){
+    int h=0;
+    int rnew=r+1;
+    for(int k = B[r].size()-1; k>=0; k-- ){
+        for(int j = y; j>= B[r][k]+1; j--){
+            for(h = 0; h<= (int)A[rnew].size()-1; h++){
+                if(!c.getIncidence(A[rnew][k],j)){
+                    break;
+                }
+            }
+            if(h==(int)A[rnew].size()){
+                return false;
+            }
+        }
+        y = B[r][k]-1;
+    }
+    for(int j =y ; j>=0; j--){
+        for(h=0; h <= (int) A[rnew].size()-1 ; h++){
+            if(!c.getIncidence(A[rnew][h],j)){
+                break;
+            }
+        }
+        if(h==(int)A[rnew].size())
+            return false;
+    }
+    return true;    
+}
     
 
 

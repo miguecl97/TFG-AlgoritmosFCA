@@ -81,3 +81,9 @@ bool IsSubset(std::vector<int> A, std::vector<int> B)
     std::sort(B.begin(), B.end());
     return std::includes(A.begin(), A.end(), B.begin(), B.end());
 }
+
+
+void insert_sorted( std::vector<int> & vec, int const& item ){
+    if(find(vec.begin(),vec.end(),item) == vec.end())
+        vec.insert(std::upper_bound( vec.begin(), vec.end(), item ),item );
+}

@@ -24,10 +24,10 @@ using namespace std;
 void NextConcept(vector<vector<int>> &A,vector<vector<int>> &B,vector<int> &inum,int &r,Context &c, Lattice<formalConcept> &l);
 
 list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c);
-
 void LatticeLindig(Context &c, Lattice<formalConcept> &l);
 
 
-void InClose(int r, int y, Lattice<formalConcept> &l);
+void InClose(int &r, int &y,vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice<formalConcept> &l);
+bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B, Context &c);
 
 #endif

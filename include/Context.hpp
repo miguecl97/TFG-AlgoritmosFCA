@@ -43,6 +43,8 @@ class Context {
 
                 vector<vector<bool>> getTable() const { return table;}
 
+                bool getIncidence(int i, int j);
+
                 void objectPrime(vector<int> &objset, vector<int> &objPrime);
 
                 void attributePrime(vector<int> &attrset, vector<int> &attributePrime);
