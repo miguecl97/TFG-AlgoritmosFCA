@@ -196,7 +196,7 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
 
 }
 
-void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice<formalConcept> &l){
+void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice<formalConcept> &l){
     int rnew = r+1;
 
 
@@ -205,10 +205,9 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
     }
 
     for(int j = y; j<(int)c.getNAttributes();j++){
-        int k = j+1;
+        //int k = j+1;
         A[rnew].clear();
         for(int i : A[r]){
-            //cout << "j = "<< j << ", i = "<< i << " -> " << c.getIncidence(i,j) <<endl;
             if(c.getIncidence(i,j)){
                 insert_sorted(A[rnew],i);
             }
@@ -218,6 +217,7 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
             if(A[rnew].size()==A[r].size()){
                 insert_sorted(B[r],j);
             }else{
+                
                 if(isCannonical(r,j-1,A,B,c)){
                     vector<int> aux = {j};
                     if((int)B.size() <= rnew+1){
@@ -228,7 +228,7 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
                     sort(B[rnew].begin(), B[rnew].end() );
                     B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
 
-                    //InClose(rnew,k,A,B,c,l);
+                    InClose(rnew,j+1,A,B,c,l);
                 }
             }
         }
@@ -249,7 +249,7 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
 bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,Context &c){
     int h=0;
     int rnew=r+1;
-    for(int k = B[r].size()-1; k>=0; k-- ){
+    for(int k = B[r].size()-1; k>=0;--k ){
         for(int j = y; j>= B[r][k]+1; j--){
             for(h = 0; h<= (int)A[rnew].size()-1; h++){
                 if(!c.getIncidence(A[rnew][k],j)){
@@ -262,7 +262,7 @@ bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,C
         }
         y = B[r][k]-1;
     }
-    for(int j =y ; j>=0; j--){
+    for(int j = y ; j>=0; j--){
         for(h=0; h <= (int) A[rnew].size()-1 ; h++){
             if(!c.getIncidence(A[rnew][h],j)){
                 break;
@@ -274,5 +274,188 @@ bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,C
     return true;    
 }
     
+void initializeTD(vector<vector<int>> &S, vector <int> &F,Context &c){
+    std::vector<std::vector<int> > T(c.getNAttributes(), std::vector<int>(c.getNAttributes()));
+
+    vector<int> D(c.getNAttributes());
+    vector<int> P(c.getNAttributes());
+    std::iota(P.begin(), P.end(), 0);
+    vector<int> O(c.getNObjects());
+
+    std::iota(O.begin(), O.end(), 0);
+
+    for(int x : P ){
+        D[x] = c.getNAttributes();
+        for(int y : P){
+            for(int z : O){
+                if(c.getIncidence(z,x) && !c.getIncidence(z,y)){
+                    if(T[y][x] == 0){
+                       D[x] = D[x]-1;
+                    }
+                    T[y][x] = T[y][x]+1;
+                }
+            }
+        }
+    }
+
+    S=T;
+    F=D;
+}
 
 
+void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c){
+    
+    int x = X[0];
+    vector<int> P(T.size());
+    std::iota(P.begin(), P.end(), 0);
+
+    vector<int> minus = (P-A)-X;
+    
+
+    for(int y : minus){
+        if(T[y][x]==0){
+            D[y] = D[y] - X.size();
+        }
+    }
+
+    vector<int> Rx;
+    vector<int> aux ={x};
+    c.attributePrime(aux,Rx);
+    vector<int> minus2 = B - Rx ;
+
+    for(int j : minus2){
+        vector<int> Rj;
+        vector<int> aux2 ={j};
+        c.attributePrime(aux2,Rj);
+
+        vector<int> Z = ((P-A)-Rj)-X;
+        vector<int> U = ((P-A)-Z)-Z;
+
+        for(int u : U){
+            for(int z : Z){
+                T[u][z]=T[u][z]-1;
+                if(T[u][z]==0){
+                    D[u] = D[u]+1;
+                }
+            }
+        }
+     
+    }
+
+}
+
+void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c){
+
+    int x = X[0];
+    vector<int> P(T.size());
+    std::iota(P.begin(), P.end(), 0);
+
+    vector<int> minus = (P-A)-X;
+    
+
+    for(int y : minus){
+        if(T[y][x]==0){
+            D[y] = D[y] - X.size();
+        }
+    }
+
+    vector<int> Rx;
+    vector<int> aux ={x};
+    c.attributePrime(aux,Rx);
+    vector<int> minus2 = B - Rx ;
+
+    for(int j : minus2){
+        vector<int> Rj;
+        vector<int> aux2 ={j};
+        c.attributePrime(aux2,Rj);
+
+        vector<int> Z = ((P-A)-Rj)-X;
+        vector<int> U = ((P-A)-Z)-Z;
+
+        for(int u : U){
+            for(int z : Z){
+                T[u][z]=T[u][z]+1;
+                if(T[u][z]==0){
+                    D[u] = D[u]-1;
+                }
+            }
+        }
+     
+    }
+}
+
+vector<vector<int>> maxmodPartition(Context &c){
+
+    vector<int> P(c.getNAttributes());
+    std::iota(P.begin(), P.end(), 0);
+    vector<int> O(c.getNObjects());
+    std::iota(O.begin(), O.end(), 0);
+    vector<vector<int>> part;
+
+    part.push_back(P);
+    for(int y : O){
+        //cout<< "iteration "<< y<< endl;
+        vector<int> Ry;
+        vector<int> aux ={y};
+        c.objectPrime(aux,Ry);
+        //cout << "RY="<< Ry<< endl;
+        vector<vector<int>> partcopy = part;
+        for(vector<int> k : partcopy){
+            //cout << "k ="<<  k << endl;
+            if(k.size()>1){
+                vector<int> kprime;
+                std::set_intersection(k.begin(),k.end(),Ry.begin(),Ry.end(),inserter(kprime,kprime.begin()));
+                vector<int> kdoubleprime = k - Ry;
+                //cout << "k' ="<< kprime<< endl;
+                //cout << "k'' ="<< kdoubleprime<< endl;
+                if(!kdoubleprime.empty() && !kprime.empty()){
+
+                    for(int n=0; n<(int)part.size(); n++){
+                        if(part[n]==k){
+                            part[n]=kprime;
+                            part.insert(part.begin()+n+1,kdoubleprime);
+                        }
+                    }
+                    //cout << "part = ";
+                    for(vector<int> a : part){
+                        //cout << a<< " | ";
+                    }
+                    //cout << endl;
+                }
+            }
+        }
+        //cout << "-------------------"<< endl<< endl;
+    }
+
+    return part;
+}
+
+vector<int> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
+
+    vector<int> ND;
+
+    do{
+        vector<int> X = part[0];
+        part.erase(part.begin());
+
+        for(int x : X){
+            ND.push_back(x);
+        }
+
+        vector<int> aux;
+        
+        c.attributePrime(X,aux);
+
+
+
+    }while(!part.empty());
+
+    return ND;
+}
+void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vector<int> &B, vector<int> &marked, Context &c, Lattice<formalConcept> &l){
+
+    vector<vector<int>> part = maxmodPartition(c);
+
+    vector<int> ND = nonDominatingMaxMod(c,part);
+
+}

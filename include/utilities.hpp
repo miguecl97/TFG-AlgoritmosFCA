@@ -39,4 +39,6 @@ bool IsSubset(std::vector<int> A, std::vector<int> B);
 
 void insert_sorted( std::vector<int> & vec, int const& item );
 
+
+vector<int> operator-(const vector<int>& vector1, const vector<int>& vector2);
 #endif

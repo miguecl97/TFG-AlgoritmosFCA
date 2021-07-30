@@ -45,49 +45,21 @@ int main(int argc, char *argv[]){
   std::iota(aux.begin(), aux.end(), 0);
 
   A.push_back(aux);
-
-
-  auto start = chrono::steady_clock::now();
-
-/*
-  for(int k =1; k< 10;k++){
-
-    cout << "concepto numero : "<< k << endl;
-    NextConcept(A,B,inum,r ,c,l);
-
-    cout<< "r = "<< r << endl;
-    cout << "inum = " << inum<< endl;
-
-    for(int i = 0 ; i <=r; i++){
-      cout<< "A[ "<< i<< "] "<< A[i];
-    }
-
-    cout << endl;
-
-    for(int i = 0 ; i <=r; i++){
-      cout<< "B[ "<< i<< "] "<< B[i];
-    }
-
-    cout << endl<< endl;
-
-  }
-*/
+  vector<vector<int>> T;
+  vector<int> D;
+  vector<int> marked;
+  InheritConcepts(T, D, aux, m, marked, c,l);
 
   int y =0;
-  InClose(r,y,A,B,c,l);
-  
-  auto end = chrono::steady_clock::now();
+  //InClose(r,0,A,B,c,l);
+
 
   ofstream myfile; 
   myfile.open("lattice.g");
-
-
-  LatticeLindig(c,l);
-  l.printGraphplaceInput(myfile,0);
+  //LatticeLindig(c,l);
+  //l.printGraphplaceInput(myfile,0);
   //l.printTerminal();
-    cout << "The lattice has been computed in :  " 
-    << chrono::duration_cast<chrono::milliseconds>(end - start).count()
-		<< " ms" << endl;
+  //cout << "The lattice has been computed in :  "<< chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms" << endl;
 
   return 0;
 }
