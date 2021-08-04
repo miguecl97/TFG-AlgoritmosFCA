@@ -274,7 +274,7 @@ bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,C
     return true;    
 }
     
-void initializeTD(vector<vector<int>> &S, vector <int> &F,Context &c){
+void initializeTD(vector<vector<int>> &S, vector <int> &F, Context &c){
     std::vector<std::vector<int> > T(c.getNAttributes(), std::vector<int>(c.getNAttributes()));
 
     vector<int> D(c.getNAttributes());
@@ -310,10 +310,9 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<in
     std::iota(P.begin(), P.end(), 0);
 
     vector<int> minus = (P-A)-X;
-    
 
     for(int y : minus){
-        if(T[y][x]==0){
+        if(T[x][y]==0){
             D[y] = D[y] - X.size();
         }
     }
@@ -321,26 +320,49 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<in
     vector<int> Rx;
     vector<int> aux ={x};
     c.attributePrime(aux,Rx);
-    vector<int> minus2 = B - Rx ;
+    vector<int> minus2 = B - Rx;
 
     for(int j : minus2){
         vector<int> Rj;
         vector<int> aux2 ={j};
-        c.attributePrime(aux2,Rj);
+        c.objectPrime(aux2,Rj);
 
         vector<int> Z = ((P-A)-Rj)-X;
-        vector<int> U = ((P-A)-Z)-Z;
+        vector<int> U = ((P-A)-Z)-X;
 
         for(int u : U){
             for(int z : Z){
-                T[u][z]=T[u][z]-1;
-                if(T[u][z]==0){
+                T[z][u]=T[z][u]-1;
+                if(T[z][u]==0){
                     D[u] = D[u]+1;
                 }
             }
         }
      
     }
+
+    /*
+    for(int i = X.size()-1; i>=0; i--){
+         
+         for(int j = 0; j < (int)T.size(); j++){     
+            T[j].erase(T[j].begin()+X[i]);
+         }
+         
+         T.erase(T.begin()+X[i]);
+         D.erase(D.begin()+X[i]);
+    }
+    */
+    for(int i = X.size()-1; i>=0; i--){
+         
+         for(int j = 0; j < (int)T.size(); j++){     
+            T[j][X[i]] = -1;
+            T[X[i]][j] = -1;
+
+         }
+         
+         D[X[i]]= -1;
+    }
+
 
 }
 
@@ -351,40 +373,61 @@ void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<i
     std::iota(P.begin(), P.end(), 0);
 
     vector<int> minus = (P-A)-X;
-    
 
     for(int y : minus){
-        if(T[y][x]==0){
-            D[y] = D[y] - X.size();
+        if(T[x][y]==0){
+            D[y] = D[y] + X.size();
         }
     }
 
     vector<int> Rx;
     vector<int> aux ={x};
     c.attributePrime(aux,Rx);
-    vector<int> minus2 = B - Rx ;
+    vector<int> minus2 = B - Rx;
 
     for(int j : minus2){
         vector<int> Rj;
         vector<int> aux2 ={j};
-        c.attributePrime(aux2,Rj);
+        c.objectPrime(aux2,Rj);
 
         vector<int> Z = ((P-A)-Rj)-X;
-        vector<int> U = ((P-A)-Z)-Z;
+        vector<int> U = ((P-A)-Z)-X;
 
         for(int u : U){
             for(int z : Z){
-                T[u][z]=T[u][z]+1;
-                if(T[u][z]==0){
+                T[z][u]=T[z][u]+1;
+                if(T[z][u]==0){
                     D[u] = D[u]-1;
                 }
             }
         }
      
     }
+    /*
+    for(int i = X.size()-1; i>=0; i--){
+         
+         for(int j = 0; j < (int)T.size(); j++){     
+            T[j].erase(T[j].begin()+X[i]);
+         }
+         
+         T.erase(T.begin()+X[i]);
+         D.erase(D.begin()+X[i]);
+    }
+    */
+    for(int i = X.size()-1; i>=0; i--){
+         
+         for(int j = 0; j < (int)T.size(); j++){     
+            T[j][X[i]] = -1;
+            T[X[i]][j] = -1;
+
+         }
+         
+         D[X[i]]= -1;
+    }
+      
 }
 
-vector<vector<int>> maxmodPartition(Context &c){
+vector<vector<int>> maxmodPartition(Context &c,vector<int> &A,vector<int> &B){
 
     vector<int> P(c.getNAttributes());
     std::iota(P.begin(), P.end(), 0);
@@ -392,8 +435,8 @@ vector<vector<int>> maxmodPartition(Context &c){
     std::iota(O.begin(), O.end(), 0);
     vector<vector<int>> part;
 
-    part.push_back(P);
-    for(int y : O){
+    part.push_back(P-A);
+    for(int y : B){
         //cout<< "iteration "<< y<< endl;
         vector<int> Ry;
         vector<int> aux ={y};
@@ -415,12 +458,12 @@ vector<vector<int>> maxmodPartition(Context &c){
                             part[n]=kprime;
                             part.insert(part.begin()+n+1,kdoubleprime);
                         }
-                    }
-                    //cout << "part = ";
+                    }/*
+                    cout << "part = ";
                     for(vector<int> a : part){
-                        //cout << a<< " | ";
+                        cout << a<< " | ";
                     }
-                    //cout << endl;
+                    cout << endl;*/
                 }
             }
         }
@@ -430,32 +473,177 @@ vector<vector<int>> maxmodPartition(Context &c){
     return part;
 }
 
-vector<int> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
+vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
 
-    vector<int> ND;
+    vector<vector<int>> ND;
+    vector<vector<int>> relations;
+    vector<int> m (c.getNAttributes());
+    std::iota(m.begin(), m.end(), 0);
+
+    for(int a : m){
+        vector<int> aux ={a};
+        vector<int> atprime ;
+
+        c.attributePrime(aux,atprime);
+
+        relations.push_back(atprime);
+    }
 
     do{
         vector<int> X = part[0];
         part.erase(part.begin());
 
-        for(int x : X){
-            ND.push_back(x);
+
+        ND.push_back(X);
+
+        if(!part.empty()){
+        vector<int> xprime;
+        c.attributePrime(X,xprime);
+
+        for(auto i = 0; i<(int)relations.size(); i++){
+            if(relations.at(i) != xprime){
+                //cout << " X' = "<< xprime << endl;
+                //cout << "R["<< i << "] = "<< relations[i] << endl;
+                if(IsSubset(xprime,relations[i])){
+                    //cout<< "eliminando "<< relations[i] << endl;
+                    vector<int> vi = {i};
+                    part.erase(remove(part.begin(), part.end(), vi), part.end());
+                }
+            }
         }
 
-        vector<int> aux;
-        
-        c.attributePrime(X,aux);
 
-
+        }
+        //cout << "================"<< endl;
 
     }while(!part.empty());
 
     return ND;
 }
+int COUNTER = 0;
 void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vector<int> &B, vector<int> &marked, Context &c, Lattice<formalConcept> &l){
+    bool emptyrelation=false;
 
-    vector<vector<int>> part = maxmodPartition(c);
+        COUNTER++;
+        cout<< endl<< endl;
+        cout << "Step "<< COUNTER << endl;
+        cout <<"proccesing : "<< A << " x " << B <<   endl;
 
-    vector<int> ND = nonDominatingMaxMod(c,part);
+    if(A.empty()){
+        initializeTD(T,D,c);
+        
+    }
 
+    if (std::count(std::begin(D), std::end(D), -1) == (int)D.size()){
+        cout << "emptyrelation "<< endl;
+        emptyrelation=true;
+    }
+
+    if(!emptyrelation){
+        cout << "not empty relation"<< endl;
+        vector<vector<int>> part = maxmodPartition(c,A,B);
+        //vector<vector<int>> ND = nonDominatingMaxMod(c,part);
+        vector<vector<int>> ND;
+
+        cout<< "maxmod partition :";
+        for(vector<int> v: part){
+            cout << v << " | ";
+        }
+        cout << endl;
+        
+        for(int d : D){
+            cout << d<< " | ";
+        }
+        cout << endl;
+
+        //cout<< "diferencia : "<< dif<<endl;
+        for(vector<int> X : part){
+            if(D[X.front()] == (int) X.size()){
+                ND.push_back(X);
+            }
+        }
+        //sort(ND.begin(), ND.end() );
+        for(int m : marked){
+            for(auto i=0; i<(int)ND.size(); i++){
+                if(find(ND[i].begin(),ND[i].end(),m)!= ND[i].end()){
+                    ND.erase(ND.begin()+i);
+                }
+            }
+        }
+
+        for(vector<int> n : ND){
+            cout<< "ND = "<< n;
+        }
+        cout << endl;
+        cout << "problema con marked y con las D negativas"<< endl;
+        vector<vector<int>> NEW = ND;
+        reverse(NEW.begin(),NEW.end());
+        for(vector<int> X : NEW){
+            cout << " ... Step "<< COUNTER<< endl;
+            cout << "marked ="<< marked<< endl;
+
+            vector<int> aprime;
+            vector<int> sum = A+X;
+            c.attributePrime(sum, aprime);
+
+            vector<int> bprime;
+            vector<int> intersection;
+
+            vector<int> rx;
+            c.attributePrime(X,rx);
+
+            std::set_intersection(B.begin(),B.end(),rx.begin(),rx.end(),inserter(intersection,intersection.begin()));
+
+            cout <<"generated : "<< sum << " x "<< intersection<<   endl;
+
+            c.objectPrime(intersection, bprime);
+            //cout << "A' = "<< sum<< " x "<< "B'="<< intersection << endl;
+
+            preUpdate(T,D,A,B,X,c);
+        /*
+            for(vector<int> t :T){
+                cout << t<< endl;
+            }*/
+            cout<< "despues del preupdate: "<< endl;
+            for(int d : D){
+                cout << d<< " | ";
+            }
+
+            cout << endl;
+            InheritConcepts(T,D,sum,intersection,marked,c,l);
+            postUpdate(T,D,A,B,X,c);
+
+            vector<int> Y;
+            vector<vector<int>> relations;
+            vector<int> m (c.getNAttributes());
+            std::iota(m.begin(), m.end(), 0);
+
+            for(int a : m){
+                vector<int> aux ={a};
+                vector<int> atprime ;
+
+                c.attributePrime(aux,atprime);
+
+                relations.push_back(atprime);
+            }
+
+            vector<int> xprime=rx;
+
+            for(auto i = 0; i<(int)relations.size(); i++){
+                if(relations.at(i) != xprime){
+                    //cout << " X' = "<< xprime << endl;
+                    //cout << "R["<< i << "] = "<< relations[i] << endl;
+                    if(IsSubset(xprime,relations[i])){
+                        //cout<< "eliminando "<< relations[i] << endl;
+                        //vector<int> vi = {i};
+                        Y.push_back(i);
+                    }
+                }
+            }
+
+
+            marked = (marked + X) + Y;
+        }
+
+    }
 }

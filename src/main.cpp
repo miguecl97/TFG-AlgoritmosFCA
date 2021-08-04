@@ -34,7 +34,7 @@ int main(int argc, char *argv[]){
 
   //for nextconcept
   vector<vector<int>> A ;
-  vector<vector<int>> B = {{}};
+  vector<vector<int>> B ;
   vector<int> inum = {0};
   int r=0;
   vector<int> aux (c.getNObjects());
@@ -48,7 +48,8 @@ int main(int argc, char *argv[]){
   vector<vector<int>> T;
   vector<int> D;
   vector<int> marked;
-  InheritConcepts(T, D, aux, m, marked, c,l);
+  vector<int> a;
+  InheritConcepts(T, D, a, aux, marked, c,l);
 
   int y =0;
   //InClose(r,0,A,B,c,l);

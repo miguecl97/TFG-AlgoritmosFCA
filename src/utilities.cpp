@@ -75,6 +75,7 @@ std::ostream& operator<<(ostream& out, const formalConcept& f){
         return out;
 }
 
+// B is subset of A
 bool IsSubset(std::vector<int> A, std::vector<int> B)
 {
     std::sort(A.begin(), A.end());
@@ -95,6 +96,16 @@ vector<int> operator-(const vector<int>& vector1, const vector<int>& vector2){
     //std::sort(vector1.begin(), vector1.end());
     //std::sort(vector2.begin(), vector2.end());
     std::set_difference( vector1.begin(), vector1.end(), vector2.begin(), vector2.end(), std::back_inserter( aux )  );
+
+    return aux;
+}
+
+vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2){
+
+    vector<int> aux;
+    std::set_union(vector1.begin(), vector1.end(), vector2.begin(), vector2.end() ,back_inserter(aux) );
+    sort(aux.begin(), aux.end() );
+    aux.erase( unique( aux.begin(), aux.end() ), aux.end() );
 
     return aux;
 }

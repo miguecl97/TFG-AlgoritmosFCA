@@ -33,9 +33,9 @@ bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B, 
 
 
 void initializeTD(vector<vector<int>> &S, vector <int> &F,Context &c);
-void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A, vector<int> &X);
+void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A, vector<int> &B, vector<int> &X, Context &c);
 void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c);
-vector<vector<int>> maxmodPartition(Context &c);
-vector <int> nonDominatingMaxMod(Context &c, vector<vector<int>> part);
+vector<vector<int>> maxmodPartition(Context &c,vector<int> &A, vector<int> &B);
+vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part);
 void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vector<int> &B, vector<int> &marked, Context &c, Lattice<formalConcept> &l);
 #endif
