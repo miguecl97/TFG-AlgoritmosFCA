@@ -313,7 +313,11 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<in
 
     for(int y : minus){
         if(T[x][y]==0){
-            D[y] = D[y] - X.size();
+            if(D[y]!=-1){
+                //D[y] = max(D[y] - (int)X.size(),0);
+                D[y]=D[y]-X.size();
+
+            }
         }
     }
 
@@ -332,9 +336,12 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<in
 
         for(int u : U){
             for(int z : Z){
-                T[z][u]=T[z][u]-1;
-                if(T[z][u]==0){
-                    D[u] = D[u]+1;
+                if(T[z][u]!=-1){
+                    //T[z][u]=max(T[z][u]-1,0);
+                    T[z][u]=T[z][u]-1;
+                    if(T[z][u]==0){
+                        D[u] = D[u]+1;
+                    }
                 }
             }
         }
@@ -376,7 +383,9 @@ void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<i
 
     for(int y : minus){
         if(T[x][y]==0){
-            D[y] = D[y] + X.size();
+            if(D[y]!=-1){
+            //D[y] = max(D[y] + (int)X.size(),0);
+            D[y]=D[y]+X.size();}
         }
     }
 
@@ -395,9 +404,12 @@ void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<i
 
         for(int u : U){
             for(int z : Z){
-                T[z][u]=T[z][u]+1;
-                if(T[z][u]==0){
-                    D[u] = D[u]-1;
+                if(T[z][u]!=-1){
+                    T[z][u]=T[z][u]+1;
+                    if(T[z][u]==1){
+                        D[u]=D[u]-1;
+                        //D[u] = max(D[u]-1,0);
+                    }
                 }
             }
         }
@@ -521,22 +533,25 @@ vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
     return ND;
 }
 int COUNTER = 0;
-void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vector<int> &B, vector<int> &marked, Context &c, Lattice<formalConcept> &l){
+void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice<formalConcept> &l){
     bool emptyrelation=false;
 
         COUNTER++;
         cout<< endl<< endl;
         cout << "Step "<< COUNTER << endl;
         cout <<"proccesing : "<< A << " x " << B <<   endl;
+        cout << "marked : "<< marked<< endl;
 
     if(A.empty()){
         initializeTD(T,D,c);
         
     }
 
-    if (std::count(std::begin(D), std::end(D), -1) == (int)D.size()){
+    if (B.empty()){
         cout << "emptyrelation "<< endl;
         emptyrelation=true;
+        cout << "saliendo "<< endl;
+        return;
     }
 
     if(!emptyrelation){
@@ -545,43 +560,62 @@ void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vec
         //vector<vector<int>> ND = nonDominatingMaxMod(c,part);
         vector<vector<int>> ND;
 
+        cout << "D= ";
+        for(int d : D){
+            cout << d<< " | ";
+        }
+        cout << endl;
+        cout << "T ..."<< endl;
+
+        for(vector<int> t: T){
+            cout << t << endl;
+        }
+cout<< endl;
+        //cout<< "diferencia : "<< dif<<endl;
+        
+
         cout<< "maxmod partition :";
         for(vector<int> v: part){
             cout << v << " | ";
         }
         cout << endl;
-        
-        for(int d : D){
-            cout << d<< " | ";
+
+        for(int m : marked){
+            for(auto i=0; i<(int)part.size(); i++){
+                if(count(part[i].begin(),part[i].end(),m)!=0 ){
+                    part.erase(part.begin()+i);
+                }
+            }
+
+        }
+
+
+        cout<< "maxmod partition (after delete):";
+        for(vector<int> v: part){
+            cout << v << " | ";
         }
         cout << endl;
 
-        //cout<< "diferencia : "<< dif<<endl;
         for(vector<int> X : part){
             if(D[X.front()] == (int) X.size()){
-                ND.push_back(X);
+                ND.insert(ND.begin(),X);
             }
         }
-        //sort(ND.begin(), ND.end() );
-        for(int m : marked){
-            for(auto i=0; i<(int)ND.size(); i++){
-                if(find(ND[i].begin(),ND[i].end(),m)!= ND[i].end()){
-                    ND.erase(ND.begin()+i);
-                }
-            }
+
+        cout<< "ND :";
+        for(vector<int> v: ND){
+            cout << v << " | ";
         }
+
 
         for(vector<int> n : ND){
             cout<< "ND = "<< n;
         }
         cout << endl;
-        cout << "problema con marked y con las D negativas"<< endl;
         vector<vector<int>> NEW = ND;
-        reverse(NEW.begin(),NEW.end());
-        for(vector<int> X : NEW){
-            cout << " ... Step "<< COUNTER<< endl;
-            cout << "marked ="<< marked<< endl;
 
+        for(vector<int> X : NEW){
+            cout << " ...(for) Step "<< COUNTER<< endl;
             vector<int> aprime;
             vector<int> sum = A+X;
             c.attributePrime(sum, aprime);
@@ -603,14 +637,16 @@ void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vec
         /*
             for(vector<int> t :T){
                 cout << t<< endl;
-            }*/
+            }
             cout<< "despues del preupdate: "<< endl;
             for(int d : D){
                 cout << d<< " | ";
-            }
+            }*/
 
             cout << endl;
+
             InheritConcepts(T,D,sum,intersection,marked,c,l);
+
             postUpdate(T,D,A,B,X,c);
 
             vector<int> Y;
@@ -642,7 +678,7 @@ void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vec
             }
 
 
-            marked = (marked + X) + Y;
+            marked = (marked + X);
         }
 
     }

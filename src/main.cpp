@@ -49,7 +49,7 @@ int main(int argc, char *argv[]){
   vector<int> D;
   vector<int> marked;
   vector<int> a;
-  InheritConcepts(T, D, a, aux, marked, c,l);
+  InheritConcepts({{}}, {}, a, aux, {}, c,l);
 
   int y =0;
   //InClose(r,0,A,B,c,l);

@@ -37,5 +37,5 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A, vector<i
 void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c);
 vector<vector<int>> maxmodPartition(Context &c,vector<int> &A, vector<int> &B);
 vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part);
-void InheritConcepts(vector<vector<int>> &T, vector<int> &D, vector<int> &A, vector<int> &B, vector<int> &marked, Context &c, Lattice<formalConcept> &l);
+void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice<formalConcept> &l);
 #endif
