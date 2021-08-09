@@ -4,14 +4,14 @@
 */
 
 #include"Algorithms.hpp"
-//#include "Lattice.cpp"
+#include "Lattice.cpp"
 
 #include <iostream>
 #include <vector>
 #include <numeric> // std::iota
 #include <cmath>
 
-void NextConcept(vector<vector<int>> &A,vector<vector<int>> &B,vector<int> &inum,int &r,Context &c, Lattice<formalConcept> &l){
+void NextConcept(vector<vector<int>> &A,vector<vector<int>> &B,vector<int> &inum,int &r,Context &c, Lattice &l){
 
     vector<int> m (c.getNAttributes());
     std::iota(m.begin(), m.end(), 0);
@@ -172,7 +172,7 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
 }
 
 
-void LatticeLindig(Context &c, Lattice<formalConcept> &l){
+void LatticeLindig(Context &c, Lattice &l){
 
     formalConcept f;
     vector <int> emptyobj;
@@ -196,7 +196,7 @@ void LatticeLindig(Context &c, Lattice<formalConcept> &l){
 
 }
 
-void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice<formalConcept> &l){
+void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
 
 
@@ -533,34 +533,34 @@ vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
     return ND;
 }
 int COUNTER = 0;
-void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice<formalConcept> &l){
+void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice &l){
     bool emptyrelation=false;
 
         COUNTER++;
         cout<< endl<< endl;
-        cout << "Step "<< COUNTER << endl;
-        cout <<"proccesing : "<< A << " x " << B <<   endl;
-        cout << "marked : "<< marked<< endl;
-
+        //cout << "Step "<< COUNTER << endl;
+        //cout <<"proccesing : "<< A << " x " << B <<   endl;
+        //cout << "marked : "<< marked<< endl;
+        l.add(make_pair(B,A));
     if(A.empty()){
         initializeTD(T,D,c);
         
     }
 
     if (B.empty()){
-        cout << "emptyrelation "<< endl;
+        //cout << "emptyrelation "<< endl;
         emptyrelation=true;
-        cout << "saliendo "<< endl;
+        //cout << "saliendo "<< endl;
         return;
     }
 
     if(!emptyrelation){
-        cout << "not empty relation"<< endl;
+        //cout << "not empty relation"<< endl;
         vector<vector<int>> part = maxmodPartition(c,A,B);
         //vector<vector<int>> ND = nonDominatingMaxMod(c,part);
         vector<vector<int>> ND;
 
-        cout << "D= ";
+       /* cout << "D= ";
         for(int d : D){
             cout << d<< " | ";
         }
@@ -570,15 +570,15 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
         for(vector<int> t: T){
             cout << t << endl;
         }
-cout<< endl;
+cout<< endl;*/
         //cout<< "diferencia : "<< dif<<endl;
         
-
+/*
         cout<< "maxmod partition :";
         for(vector<int> v: part){
             cout << v << " | ";
         }
-        cout << endl;
+        cout << endl;*/
 
         for(int m : marked){
             for(auto i=0; i<(int)part.size(); i++){
@@ -589,19 +589,19 @@ cout<< endl;
 
         }
 
-
+/*
         cout<< "maxmod partition (after delete):";
         for(vector<int> v: part){
             cout << v << " | ";
         }
-        cout << endl;
+        cout << endl;*/
 
         for(vector<int> X : part){
             if(D[X.front()] == (int) X.size()){
                 ND.insert(ND.begin(),X);
             }
         }
-
+/*
         cout<< "ND :";
         for(vector<int> v: ND){
             cout << v << " | ";
@@ -610,12 +610,12 @@ cout<< endl;
 
         for(vector<int> n : ND){
             cout<< "ND = "<< n;
-        }
+        }*/
         cout << endl;
         vector<vector<int>> NEW = ND;
 
         for(vector<int> X : NEW){
-            cout << " ...(for) Step "<< COUNTER<< endl;
+            //cout << " ...(for) Step "<< COUNTER<< endl;
             vector<int> aprime;
             vector<int> sum = A+X;
             c.attributePrime(sum, aprime);
@@ -628,7 +628,7 @@ cout<< endl;
 
             std::set_intersection(B.begin(),B.end(),rx.begin(),rx.end(),inserter(intersection,intersection.begin()));
 
-            cout <<"generated : "<< sum << " x "<< intersection<<   endl;
+            //cout <<"generated : "<< sum << " x "<< intersection<<   endl;
 
             c.objectPrime(intersection, bprime);
             //cout << "A' = "<< sum<< " x "<< "B'="<< intersection << endl;
@@ -678,8 +678,9 @@ cout<< endl;
             }
 
 
-            marked = (marked + X);
+            marked = (marked + X+Y);
         }
 
     }
+
 }
