@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
   Lattice l;
 
   //read infile .csv
-   if (argc>1 ) {
+   if (argc>1) {
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
     cout << c;
@@ -43,25 +43,46 @@ int main(int argc, char *argv[]){
   std::iota(attributes.begin(), attributes.end(), 0);
 
   //--- NEXTCONCEPT ALGORITHM ---
+  Lattice lnext;
+  vector<int> inum = {0};
+  vector<vector<int>> A ;
+  A.push_back(objects);
+  vector<vector<int>> B ;
+  B.push_back({});
+  int r = 0;
+  int i = 0;
+
+  NextConcept(A,B,inum,0,c,lnext);
+  //lnext.printTerminal();
+  
+
 
   //--- ---
 
   //---BERRY'S ALGORITHM---
   //InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice &l)
   vector<int> atBerry;
-  InheritConcepts({{}}, {}, atBerry, objects, {}, c,l);
+  Lattice lberry;
+  InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
+
+  cout << "Berry :"<< endl;
+  cout<< endl;
 
   //--- ---
 
 
   //-- INCLOSE ALGORITHM ---
-  vector<vector<int>> A ;
-  vector<vector<int>> B ;
-  A.push_back(attributes);
+  vector<vector<int>> A2 ;
+  vector<vector<int>> B2 ;
+  A2.push_back(attributes);
+  B2.push_back({});
   Lattice linclose;
-  int r=0;
-  //InClose(r,0,A,B,c,linclose);
+  int r2=0;
+  int y =0;
+  cout << "In close: "<< endl;
 
+  InClose(r2,y,A2,B2,c,linclose);
+  //linclose.printTerminal();
   //--- ---
 
 
@@ -69,6 +90,8 @@ int main(int argc, char *argv[]){
   //--- LINDIG'S ALGORITM ---
   Lattice llindig;
   LatticeLindig(c,llindig);
+  cout << "Lindig :"<< endl;
+  cout<< endl;
   //--- ---
 
 

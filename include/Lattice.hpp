@@ -17,29 +17,29 @@ using namespace std;
 
 //typedef pair<vector<int>, vector<int>> formalConcept; // <extension, intension>
 
+struct Node{
+
+        int index;
+        formalConcept c;
+        pair<vector<int>,vector<int>> lowerUpperNeighbors;
+
+        Node(){};
+
+        Node(const formalConcept& con,int i){
+                c=con;
+                index=i;
+        }
+
+        bool operator==(const Node& n) const{
+                return c.first == n.c.first; 
+        }
+};
+
 class Lattice{
         private:
                 int count;
                 bool was_inserted;
                 int last_position_index;
-
-                struct Node{
-
-                        int index;
-                        formalConcept c;
-                        pair<vector<int>,vector<int>> lowerUpperNeighbors;
-
-                        Node(){};
-
-                        Node(const formalConcept& con,int i){
-                                c=con;
-                                index=i;
-                        }
-
-                        bool operator==(const Node& n) const{
-                                return c.first == n.c.first; 
-                        }
-                };
 
                 vector<Node> concepts; 
         public:
@@ -52,8 +52,9 @@ class Lattice{
                  * @brief Retrieves the list of concepts of the lattice.
                  * @return The list of concepts of the lattice.
                  */
-                
-                vector<formalConcept> getConcepts();
+                vector<Node> getConcepts();
+
+                vector<formalConcept> getformalConcepts();
 
                 /**
                  * @brief Adds a new formal concept to the lattice.
@@ -61,6 +62,8 @@ class Lattice{
                  */
                 
                 void add(formalConcept concept);
+
+                int getIndex(formalConcept concp);
 
                 bool find(formalConcept& concp);
 

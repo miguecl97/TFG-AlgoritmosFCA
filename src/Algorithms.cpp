@@ -11,90 +11,131 @@
 #include <numeric> // std::iota
 #include <cmath>
 
-void NextConcept(vector<vector<int>> &A,vector<vector<int>> &B,vector<int> &inum,int &r,Context &c, Lattice &l){
-
-    vector<int> m (c.getNAttributes());
+void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,int r,Context &c, Lattice &l){
+    vector<int> m(c.getNAttributes());
     std::iota(m.begin(), m.end(), 0);
+
+
+    if((!A.empty() || B.size() == c.getNObjects())){
+        if(l.getIndex(make_pair(A[r],B[r]))==-1){
+                    l.add(make_pair(A[r],B[r]));
+        }
+    }
+    if(B[r]==m){
+        return;
+    }
 
     bool found = false;
 
-    
-    for(int i = (int) c.getNAttributes() - 1; i >= 0; --i){
+    for(int i = (int) c.getNAttributes(); i > 0; i--){
+        if(B[r]==m){
+            return;
+        }
 
+        //cout<< "iteracion : "<< i<<endl;
         found = false;
 
-        if(count(B[r].begin(), B[r].end(),m[i])){
+        if(count(B[r].begin(), B[r].end(),m[i-1])!=0){
             found = true;
         }
-        
+
         if(!found){
-  
-            //cout << "i = "<< i << endl;
-            //cout << "inum [r] ="<< inum[r]<< endl;
 
             while(i < inum[r]){
                 r = r-1;
             }
-          
-            if((int)inum.size() <= r+1){
-                inum.resize(inum.size() + 1);
-            }
 
+            if((int)inum.size() <= r+1){
+                inum.resize(r + 2);
+            }
+            
             inum[r+1]=i;
             vector<int> auxprime;
-            vector<int> mi = { m[i] };
+            vector<int> mi = { m[i-1] };
             c.attributePrime(mi,auxprime );
 
             if((int)A.size() <= r+1){
-                A.resize(A.size() + 1);
+                A.resize(r + 2);
             }
 
             A[r+1].clear();
-            
             set_intersection(A[r].begin(),A[r].end(),auxprime.begin(),auxprime.end(),inserter(A[r+1],A[r+1].begin()));
             
-            for(int j = 0; j<i ; j++){
-                if(!found){
-                    vector<int> auxprime;
-                    vector<int> mj = { m[j]};
-                    c.attributePrime(mj,auxprime );
 
-                    if(IsSubset(auxprime,A[r+1])){
+            for(int j = 1; j<i ; j++){
+                if(!found){
+                    vector<int> auxjprime;
+                    vector<int> mj = { m[j-1]};
+                    c.attributePrime(mj,auxjprime );
+                    //cout << "subset? "<< A[r+1]<< " c= "<< auxjprime<< " ? ";
+                    if(IsSubset(auxjprime,A[r+1])){
                         found = true;
+                        //cout << "found";
                     }
+                    cout << endl;
                 }
             }
             
             if(!found){
                 if((int)B.size() <= r+1){
-                    B.resize(B.size() + 1);
+                    B.resize(r+2);
                 }    
 
-                B[r+1].clear();
-                std::set_union( B[r].begin(), B[r].end(),mi.begin(), mi.end(),back_inserter(B[r+1]) );
+                B[r+1] = B[r] + mi;
 
-                for(int j = i+1;j<(int)c.getNAttributes();j++){
-                    if(count(B[r+1].begin(), B[r+1].end(),j) == 0){
+                for(int j = i+1;j<=(int)c.getNAttributes();j++){
+                    if(count(B[r+1].begin(), B[r+1].end(),j-1) == 0){
                         vector<int> auxprime;
-                        vector<int> mj = { m[j] };
+                        vector<int> mj = { m[j-1] };
                         c.attributePrime(mj,auxprime );
 
                         if(IsSubset(auxprime,A[r+1])){
-                            vector< int> copy (B[r+1].begin(), B[r+1].end());
-                            B[r+1].clear();
-                            std::set_union(copy.begin(), copy.end(),mj.begin(), mj.end(), back_inserter(B[r+1]) );
+                            vector<int> aux = B[r+1] + mj;
+                            B[r+1] = aux;
                         }
                     }
-                }                
-                r = r+1;          
-                return ;
-            }           
+                }   
+
+                r = r+1;    
+
+                cout<< "i ="<< i <<endl;
+                cout<< "r= "<< r << " / / inum="<< inum<<endl;
+                for(int w =0; w< (int)A.size() ; w++){
+                cout << " A["<< w<< "]="<< A[w];
+                }
+                cout << endl;
+                for(int e = 0; e<(int)B.size() ; e++){
+                cout << " B["<< e<< "]="<< B[e];
+                }
+                cout << endl<< endl;
+                
+                NextConcept(A,B,inum,r,c,l);
+                //return;
+
+            
+                
+            }  
+
         }
+        // cout << "Step : "<< COUNTER<< endl;
+        // cout << "inum = "<< inum<< endl;
+        // cout << "r = "<< r << endl;
+        // for(int w =0; w< (int)A.size() ; w++){
+        //     cout << " A["<< w<< "]="<< A[w];
+        // }
+        //     cout << endl;
+        // for(int e =0; e<(int)B.size() ; e++){
+        //     cout << " B["<< e<< "]="<< B[e];
+        // }
+        //     cout << endl<< endl;
+
+        
+        //if(i==1 && B[r]!=m){i=c.getNAttributes()+1;}
 
     }
-    if(B[r]==m){
-        cout<< "fin del algoritmo";
-    }
+
+    
+
     
 }
 
@@ -196,19 +237,19 @@ void LatticeLindig(Context &c, Lattice &l){
 
 }
 
-void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
+void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
 
-
-    if((int)A.size() <= rnew+1){
+    l.add(make_pair(A[r],B[r]));
+    if((int)A.size() <= rnew){
         A.resize(rnew+1);
     }
 
     for(int j = y; j<(int)c.getNAttributes();j++){
-        //int k = j+1;
+        int k = j+1;
         A[rnew].clear();
         for(int i : A[r]){
-            if(c.getIncidence(i,j)){
+            if(c.getIncidence(i,j) == true){
                 insert_sorted(A[rnew],i);
             }
         }
@@ -228,7 +269,8 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
                     sort(B[rnew].begin(), B[rnew].end() );
                     B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
 
-                    InClose(rnew,j+1,A,B,c,l);
+
+                    InClose(rnew,k,A,B,c,l);
                 }
             }
         }
@@ -244,9 +286,10 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
     }
     cout << endl;
     cout << endl;
+
 }
 
-bool isCannonical(int r, int y, vector<vector<int>> &A, vector<vector<int>> &B,Context &c){
+bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Context &c){
     int h=0;
     int rnew=r+1;
     for(int k = B[r].size()-1; k>=0;--k ){
@@ -532,27 +575,28 @@ vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part){
 
     return ND;
 }
-int COUNTER = 0;
+
+
 void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice &l){
     bool emptyrelation=false;
 
-        COUNTER++;
-        cout<< endl<< endl;
-        //cout << "Step "<< COUNTER << endl;
-        //cout <<"proccesing : "<< A << " x " << B <<   endl;
-        //cout << "marked : "<< marked<< endl;
-        l.add(make_pair(B,A));
+        // COUNTER++;
+        // cout<< endl<< endl;
+        // cout << "Step "<< COUNTER << endl;
+        // cout <<"proccesing : "<< A << " x " << B <<   endl;
+        // cout << "marked : "<< marked<< endl;
+
     if(A.empty()){
         initializeTD(T,D,c);
-        
     }
 
     if (B.empty()){
-        //cout << "emptyrelation "<< endl;
+        // cout << "emptyrelation "<< endl;
         emptyrelation=true;
         //cout << "saliendo "<< endl;
-        return;
+        //return;
     }
+    
 
     if(!emptyrelation){
         //cout << "not empty relation"<< endl;
@@ -573,12 +617,12 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
 cout<< endl;*/
         //cout<< "diferencia : "<< dif<<endl;
         
-/*
-        cout<< "maxmod partition :";
-        for(vector<int> v: part){
-            cout << v << " | ";
-        }
-        cout << endl;*/
+
+        // cout<< "maxmod partition :";
+        // for(vector<int> v: part){
+        //     cout << v << " | ";
+        // }
+        // cout << endl;
 
         for(int m : marked){
             for(auto i=0; i<(int)part.size(); i++){
@@ -605,17 +649,19 @@ cout<< endl;*/
         cout<< "ND :";
         for(vector<int> v: ND){
             cout << v << " | ";
-        }
-
-
-        for(vector<int> n : ND){
-            cout<< "ND = "<< n;
         }*/
-        cout << endl;
+
+        // cout << "ND :";
+        // for(vector<int> n : ND){
+        //     cout<< "ND = "<< n;
+        // }
+        // cout << endl;
+
+
         vector<vector<int>> NEW = ND;
 
         for(vector<int> X : NEW){
-            //cout << " ...(for) Step "<< COUNTER<< endl;
+            // cout << " ...(for) Step "<< COUNTER<< endl;
             vector<int> aprime;
             vector<int> sum = A+X;
             c.attributePrime(sum, aprime);
@@ -628,7 +674,8 @@ cout<< endl;*/
 
             std::set_intersection(B.begin(),B.end(),rx.begin(),rx.end(),inserter(intersection,intersection.begin()));
 
-            //cout <<"generated : "<< sum << " x "<< intersection<<   endl;
+            // cout << "inter :"<< B << "+ "<< rx << "= "<< intersection<< endl;
+            // cout <<"generated : "<< sum << " x "<< intersection<<   endl;
 
             c.objectPrime(intersection, bprime);
             //cout << "A' = "<< sum<< " x "<< "B'="<< intersection << endl;
@@ -657,30 +704,27 @@ cout<< endl;*/
             for(int a : m){
                 vector<int> aux ={a};
                 vector<int> atprime ;
-
                 c.attributePrime(aux,atprime);
-
                 relations.push_back(atprime);
             }
 
-            vector<int> xprime=rx;
-
+            
             for(auto i = 0; i<(int)relations.size(); i++){
-                if(relations.at(i) != xprime){
-                    //cout << " X' = "<< xprime << endl;
-                    //cout << "R["<< i << "] = "<< relations[i] << endl;
-                    if(IsSubset(xprime,relations[i])){
-                        //cout<< "eliminando "<< relations[i] << endl;
-                        //vector<int> vi = {i};
+                if(relations.at(i) != rx){
+                    if(IsSubset(rx,relations[i])){
                         Y.push_back(i);
                     }
                 }
             }
 
-
-            marked = (marked + X+Y);
+            marked = (marked + X +Y);
         }
 
+    }
+
+
+    if(!B.empty() || A.size() == c.getNAttributes()){
+        l.add(make_pair(B,A));
     }
 
 }

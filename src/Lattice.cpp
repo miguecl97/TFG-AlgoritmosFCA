@@ -4,8 +4,11 @@
 
 
 
+vector<Node> Lattice::getConcepts(){
+    return concepts;
+}
 
-vector<formalConcept> Lattice::getConcepts(){
+vector<formalConcept> Lattice::getformalConcepts(){
     vector<formalConcept> ret;
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
@@ -13,13 +16,25 @@ vector<formalConcept> Lattice::getConcepts(){
     }
 
     return ret;
-
 }
 
 void Lattice::add(formalConcept concept){
     concepts.push_back(Node(concept,count++));
     was_inserted=true;
 }
+
+
+int Lattice::getIndex(formalConcept concp){
+    typename std::vector<Node>::iterator it;
+    for(it= concepts.begin(); it!=concepts.end(); it++){
+        if(it->c.first == concp.first && it->c.second == concp.second)
+            return it->index;
+
+    }
+
+    return -1;
+}
+
 
 bool Lattice::find(formalConcept& concp){
     typename std::vector<Node>::iterator it;
