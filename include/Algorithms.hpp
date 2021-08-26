@@ -27,7 +27,7 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c);
 void LatticeLindig(Context &c, Lattice &l);
 
 
-void InClose(int &r, int &y,vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l);
+void InClose(int &r, int y,vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l);
 bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B, Context &c);
 
 

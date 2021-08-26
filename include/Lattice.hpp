@@ -54,6 +54,8 @@ class Lattice{
                  */
                 vector<Node> getConcepts();
 
+                int getSize();
+
                 vector<formalConcept> getformalConcepts();
 
                 /**

@@ -16,26 +16,52 @@ void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,i
     std::iota(m.begin(), m.end(), 0);
 
 
-    if((!A.empty() || B.size() == c.getNObjects())){
-        if(l.getIndex(make_pair(A[r],B[r]))==-1){
-                    l.add(make_pair(A[r],B[r]));
+                        
+        vector<int> tres = {0,3};
+        if(A.back()==tres){
+            cout << "LLAMADA ESPECIAL"<< endl;
         }
+
+
+    
+    formalConcept f = make_pair(A[r],B[r]);
+    if(!l.find(f)){
+        l.add(f);
     }
-    if(B[r]==m){
+
+    
+    if(B[r]==m){    
         return;
     }
+
+
 
     bool found = false;
 
     for(int i = (int) c.getNAttributes(); i > 0; i--){
-        if(B[r]==m){
-            return;
-        }
+
+                cout<< "ANTES DEL FOR"<< endl;
+                cout<< "r= "<< r << " / / inum="<< inum<<endl;
+                for(int w =0; w< (int)A.size() ; w++){
+                    //if(A[w]==tres){
+                    cout << " A["<< w<< "]="<< A[w];
+                    //}
+                }
+                cout << endl;
+                for(int e = 0; e<(int)B.size() ; e++){
+                cout << " B["<< e<< "]="<< B[e];
+                }
+                cout << endl<< endl;
+
 
         //cout<< "iteracion : "<< i<<endl;
         found = false;
+                        
+                        
+
 
         if(count(B[r].begin(), B[r].end(),m[i-1])!=0){
+            cout << "me voy"<< endl;
             found = true;
         }
 
@@ -59,6 +85,7 @@ void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,i
             }
 
             A[r+1].clear();
+
             set_intersection(A[r].begin(),A[r].end(),auxprime.begin(),auxprime.end(),inserter(A[r+1],A[r+1].begin()));
             
 
@@ -70,6 +97,8 @@ void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,i
                     //cout << "subset? "<< A[r+1]<< " c= "<< auxjprime<< " ? ";
                     if(IsSubset(auxjprime,A[r+1])){
                         found = true;
+                        cout << "me voy 2"<< endl;
+                        break;
                         //cout << "found";
                     }
                     cout << endl;
@@ -80,59 +109,68 @@ void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,i
                 if((int)B.size() <= r+1){
                     B.resize(r+2);
                 }    
-
                 B[r+1] = B[r] + mi;
 
                 for(int j = i+1;j<=(int)c.getNAttributes();j++){
                     if(count(B[r+1].begin(), B[r+1].end(),j-1) == 0){
-                        vector<int> auxprime;
+                        vector<int> auxj2prime;
                         vector<int> mj = { m[j-1] };
-                        c.attributePrime(mj,auxprime );
+                        c.attributePrime(mj,auxj2prime );
 
-                        if(IsSubset(auxprime,A[r+1])){
-                            vector<int> aux = B[r+1] + mj;
-                            B[r+1] = aux;
+                        if(IsSubset(auxj2prime,A[r+1])){
+                            insert_sorted(B[r+1],m[j-1]);
                         }
                     }
                 }   
 
                 r = r+1;    
-
+                
+                cout << " FINAL DEL FOR"<< endl;
                 cout<< "i ="<< i <<endl;
                 cout<< "r= "<< r << " / / inum="<< inum<<endl;
                 for(int w =0; w< (int)A.size() ; w++){
-                cout << " A["<< w<< "]="<< A[w];
+                    //if(A[w]==tres){
+                    cout << " A["<< w<< "]="<< A[w];
+                    //}
                 }
                 cout << endl;
                 for(int e = 0; e<(int)B.size() ; e++){
                 cout << " B["<< e<< "]="<< B[e];
                 }
                 cout << endl<< endl;
-                
+
+
+                if(A.back()==tres){
+                    cout << "LLAMADA ESPECIAL antes"<< endl;
+                }
                 NextConcept(A,B,inum,r,c,l);
                 //return;
-
+                
             
                 
             }  
 
         }
-        // cout << "Step : "<< COUNTER<< endl;
-        // cout << "inum = "<< inum<< endl;
-        // cout << "r = "<< r << endl;
-        // for(int w =0; w< (int)A.size() ; w++){
-        //     cout << " A["<< w<< "]="<< A[w];
-        // }
-        //     cout << endl;
-        // for(int e =0; e<(int)B.size() ; e++){
-        //     cout << " B["<< e<< "]="<< B[e];
-        // }
-        //     cout << endl<< endl;
+
 
         
         //if(i==1 && B[r]!=m){i=c.getNAttributes()+1;}
 
     }
+
+        if(A.back()==tres){
+            cout << "LLAMADA ESPECIAL se salio"<< endl;
+        }
+    
+    // if((!A.empty() || B.front().size() == c.getNAttributes())){
+    //     for(int k = 0; k < min(A.size(),B.size()); k++){
+    //         formalConcept f = make_pair(A[k],B[k]);
+    //         if(!l.find(f)){
+    //             l.add(f);
+    //         }
+    //     }
+
+
 
     
 
@@ -237,10 +275,9 @@ void LatticeLindig(Context &c, Lattice &l){
 
 }
 
-void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
+void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
 
-    l.add(make_pair(A[r],B[r]));
     if((int)A.size() <= rnew){
         A.resize(rnew+1);
     }
@@ -248,6 +285,7 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
     for(int j = y; j<(int)c.getNAttributes();j++){
         int k = j+1;
         A[rnew].clear();
+        
         for(int i : A[r]){
             if(c.getIncidence(i,j) == true){
                 insert_sorted(A[rnew],i);
@@ -255,37 +293,45 @@ void InClose(int &r, int &y, vector<vector<int>> &A ,vector<vector<int>> &B, Con
         }
 
         if(A[rnew].size()>0){
+
             if(A[rnew].size()==A[r].size()){
+                //cout << "B[r] ="<< B[r]<< " + "<< j << " = ";
                 insert_sorted(B[r],j);
+                //cout << B[r]<< endl;
             }else{
-                
                 if(isCannonical(r,j-1,A,B,c)){
                     vector<int> aux = {j};
-                    if((int)B.size() <= rnew+1){
+                    if((int)B.size() <= rnew){
                         B.resize(rnew + 1);
                     }
+                    B[rnew]= B[r]+aux;
+                    //std::set_union(B[r].begin(), B[r].end(), aux.begin(), aux.end() , back_inserter(B[rnew]) );
+                    //sort(B[rnew].begin(), B[rnew].end() );
+                    //B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
 
-                    std::set_union(B[r].begin(), B[r].end(), aux.begin(), aux.end() , back_inserter(B[rnew]) );
-                    sort(B[rnew].begin(), B[rnew].end() );
-                    B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
-
-
-                    InClose(rnew,k,A,B,c,l);
+                    InClose(rnew,j+1,A,B,c,l);
                 }
             }
         }
     }
+    /*
+    cout << "Lista de salida: r="<< r<< endl;
+    for(int i=0 ; i < (int) A.size(); i++){
+        cout<< "A["<< i<< "]="<< A[i]<<", ";
+    }
+    cout<< endl;
+    for(int i=0 ; i < (int) B.size(); i++){
+        cout<< "B["<< i<< "]="<< B[i]<<", ";
+    }
+    cout << endl<< endl;
     
-    cout<< "Llamada r = "<< r<< endl;
-    for(int i=0; i< (int) A.size() ; i++){
-        cout << " A[ "<< i << "]"<< A[i];
-    }
-    cout << endl;
-    for(int i=0; i< (int) B.size() ; i++){
-        cout << " B[ "<< i << "]"<< B[i];
-    }
-    cout << endl;
-    cout << endl;
+    for(int i=0 ; i < (int) min(A.size(),B.size()); i++){
+        formalConcept f = make_pair(A[i],B[i]);
+        if(!l.find(f)){
+            l.add(f);
+        }
+    }*/
+
 
 }
 
@@ -295,7 +341,7 @@ bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Con
     for(int k = B[r].size()-1; k>=0;--k ){
         for(int j = y; j>= B[r][k]+1; j--){
             for(h = 0; h<= (int)A[rnew].size()-1; h++){
-                if(!c.getIncidence(A[rnew][k],j)){
+                if(!c.getIncidence(A[rnew][h],j)){
                     break;
                 }
             }
@@ -305,6 +351,7 @@ bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Con
         }
         y = B[r][k]-1;
     }
+    h=0;
     for(int j = y ; j>=0; j--){
         for(h=0; h <= (int) A[rnew].size()-1 ; h++){
             if(!c.getIncidence(A[rnew][h],j)){

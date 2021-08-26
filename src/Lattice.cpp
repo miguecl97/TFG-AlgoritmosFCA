@@ -8,6 +8,10 @@ vector<Node> Lattice::getConcepts(){
     return concepts;
 }
 
+int Lattice::getSize(){
+    return concepts.size();
+}
+
 vector<formalConcept> Lattice::getformalConcepts(){
     vector<formalConcept> ret;
     typename std::vector<Node>::iterator it;
@@ -29,7 +33,6 @@ int Lattice::getIndex(formalConcept concp){
     for(it= concepts.begin(); it!=concepts.end(); it++){
         if(it->c.first == concp.first && it->c.second == concp.second)
             return it->index;
-
     }
 
     return -1;

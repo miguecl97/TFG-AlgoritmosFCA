@@ -51,9 +51,9 @@ int main(int argc, char *argv[]){
   B.push_back({});
   int r = 0;
   int i = 0;
-
   NextConcept(A,B,inum,0,c,lnext);
-  //lnext.printTerminal();
+  cout << "NextConcept(Ganter) : "<< lnext.getSize()<<endl;
+  lnext.printTerminal();
   
 
 
@@ -64,8 +64,9 @@ int main(int argc, char *argv[]){
   vector<int> atBerry;
   Lattice lberry;
   InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
+  cout << "Berry :"<< lberry.getSize()<<endl;
+  //lberry.printTerminal();
 
-  cout << "Berry :"<< endl;
   cout<< endl;
 
   //--- ---
@@ -74,15 +75,16 @@ int main(int argc, char *argv[]){
   //-- INCLOSE ALGORITHM ---
   vector<vector<int>> A2 ;
   vector<vector<int>> B2 ;
-  A2.push_back(attributes);
+  A2.push_back(objects);
   B2.push_back({});
   Lattice linclose;
   int r2=0;
   int y =0;
-  cout << "In close: "<< endl;
+  cout << "In close: "<<linclose.getSize()<< endl;
 
-  InClose(r2,y,A2,B2,c,linclose);
+  InClose(r,0,A2,B2,c,linclose);
   //linclose.printTerminal();
+  
   //--- ---
 
 
@@ -90,13 +92,10 @@ int main(int argc, char *argv[]){
   //--- LINDIG'S ALGORITM ---
   Lattice llindig;
   LatticeLindig(c,llindig);
-  cout << "Lindig :"<< endl;
+  cout << "Lindig :"<<llindig.getSize()<< endl;
+  //llindig.printTerminal();
   cout<< endl;
   //--- ---
-
-
-
-
 
 
 
