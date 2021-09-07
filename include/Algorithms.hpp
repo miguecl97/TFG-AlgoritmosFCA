@@ -31,7 +31,6 @@ void InClose(int &r, int y,vector<vector<int>> &A ,vector<vector<int>> &B, Conte
 bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B, Context &c);
 
 
-
 void initializeTD(vector<vector<int>> &S, vector <int> &F,Context &c);
 void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A, vector<int> &B, vector<int> &X, Context &c);
 void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c);

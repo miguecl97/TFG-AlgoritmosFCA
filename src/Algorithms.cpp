@@ -3,7 +3,7 @@
 * @author mcantarero
 */
 
-#include"Algorithms.hpp"
+#include "Algorithms.hpp"
 #include "Lattice.cpp"
 
 #include <iostream>
@@ -173,14 +173,20 @@ void LatticeLindig(Context &c, Lattice &l){
 
 void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
+    if(r==0){
+        vector<int> empty= {};
+        vector<int> attributes (c.getNAttributes());
+        std::iota(attributes.begin(), attributes.end(), 0);
+        l.add(make_pair(empty,attributes));
+    }
 
     if((int)A.size() <= rnew){
         A.resize(rnew+1);
     }
 
     for(int j = y; j<(int)c.getNAttributes();j++){
-        int k = j+1;
-        A[rnew].clear();
+        //int k = j+1;
+        A[rnew]={};
         
         for(int i : A[r]){
             if(c.getIncidence(i,j) == true){
@@ -191,35 +197,33 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
         if(A[rnew].size()>0){
 
             if(A[rnew].size()==A[r].size()){
-                //cout << "B[r] ="<< B[r]<< " + "<< j << " = ";
                 insert_sorted(B[r],j);
-                //cout << B[r]<< endl;
             }else{
                 if(isCannonical(r,j-1,A,B,c)){
                     vector<int> aux = {j};
                     if((int)B.size() <= rnew){
                         B.resize(rnew + 1);
                     }
-                    B[rnew]= B[r]+aux;
-                    //std::set_union(B[r].begin(), B[r].end(), aux.begin(), aux.end() , back_inserter(B[rnew]) );
-                    //sort(B[rnew].begin(), B[rnew].end() );
-                    //B[rnew].erase( unique( B[rnew].begin(), B[rnew].end() ), B[rnew].end() );
+                    B[rnew]= B[r]+aux;                    
 
                     InClose(rnew,j+1,A,B,c,l);
                 }
             }
+            
         }
+
     }
     /*
-    cout << "Lista de salida: r="<< r<< endl;
-    for(int i=0 ; i < (int) A.size(); i++){
-        cout<< "A["<< i<< "]="<< A[i]<<", ";
-    }
-    cout<< endl;
-    for(int i=0 ; i < (int) B.size(); i++){
-        cout<< "B["<< i<< "]="<< B[i]<<", ";
-    }
-    cout << endl<< endl;
+        cout << "Lista de salida: r="<< r<<", y ="<< y << endl;
+                    for(int i=0 ; i < (int) A.size(); i++){
+                        cout<< "A["<< i<< "]="<< A[i]<<", ";
+                    }
+                    cout<< endl;
+                    for(int i=0 ; i < (int) B.size(); i++){
+                        cout<< "B["<< i<< "]="<< B[i]<<", ";
+                    }
+                    cout << endl<< endl;
+
     
     for(int i=0 ; i < (int) min(A.size(),B.size()); i++){
         formalConcept f = make_pair(A[i],B[i]);
@@ -228,13 +232,18 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
         }
     }*/
 
+    formalConcept f = make_pair(A[r],B[r]);
+    if(!l.find(f)){
+        //cout << "anadiendo concepto"<< endl;
+        l.add(f);
+    }
 
 }
 
 bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Context &c){
     int h=0;
     int rnew=r+1;
-    for(int k = B[r].size()-1; k>=0;--k ){
+    for(int k = B[r].size()-1; k>=0;k-- ){
         for(int j = y; j>= B[r][k]+1; j--){
             for(h = 0; h<= (int)A[rnew].size()-1; h++){
                 if(!c.getIncidence(A[rnew][h],j)){
@@ -247,7 +256,6 @@ bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Con
         }
         y = B[r][k]-1;
     }
-    h=0;
     for(int j = y ; j>=0; j--){
         for(h=0; h <= (int) A[rnew].size()-1 ; h++){
             if(!c.getIncidence(A[rnew][h],j)){
