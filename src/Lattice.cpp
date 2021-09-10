@@ -22,10 +22,24 @@ vector<formalConcept> Lattice::getformalConcepts(){
     return ret;
 }
 
+void Lattice::replace(formalConcept f,formalConcept newf){
+    typename std::vector<Node>::iterator it;
+    for(it= concepts.end(); it!=concepts.begin(); it--){
+        if(it->c.first == f.first && it->c.second == f.second){
+            it->c.first=newf.first;
+            it->c.second=newf.second;
+            break;
+        }
+    }
+
+}
+
+
 void Lattice::add(formalConcept concept){
     concepts.push_back(Node(concept,count++));
     was_inserted=true;
 }
+
 
 
 int Lattice::getIndex(formalConcept concp){
@@ -39,7 +53,7 @@ int Lattice::getIndex(formalConcept concp){
 }
 
 
-bool Lattice::find(formalConcept& concp){
+bool Lattice::find(formalConcept concp){
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
         if(it->c.first == concp.first && it->c.second == concp.second)

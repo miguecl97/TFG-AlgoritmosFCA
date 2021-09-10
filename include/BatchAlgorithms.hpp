@@ -1,5 +1,5 @@
 /**
- * @file algorithms.hpp
+ * @file batchalgorithms.hpp
  * @author mcantarero
  */
 #include <vector>
@@ -15,8 +15,8 @@
 
 using namespace std;
 
-#ifndef __ALGORITHMS__
-#define __ALGORITHMS__
+#ifndef __BATCHALGORITHMS__
+#define __BATCHALGORITHMS__
 
 
  // <extension, intension>

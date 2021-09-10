@@ -38,8 +38,11 @@ class Context {
                 size_t getNAttributes() const {return nProp;}
 
                 vector<string> getObjects() const { return objects;}
+                vector<int> getObjectsVector();
+
 
                 vector<string> getAttributes() const { return attributes;}
+                vector<int> getAttributesVector();
 
                 vector<vector<bool>> getTable() const { return table;}
 

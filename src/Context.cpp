@@ -5,7 +5,7 @@
 #include <math.h>
 #include <iostream>
 #include <iomanip>
-
+#include <numeric> // std::iota
 #include "Context.hpp"
 
 Context::Context(){
@@ -21,9 +21,27 @@ Context::Context(vector<vector<bool>> data, vector<string> obj, vector<string> a
     table = data;     
 }
 
+vector<int> Context::getObjectsVector(){
+
+    vector<int> aux (getNObjects());
+    std::iota(aux.begin(), aux.end(), 0);
+
+    return aux;
+}
+
+vector<int> Context::getAttributesVector(){
+
+    vector<int> aux (getNAttributes());
+    std::iota(aux.begin(), aux.end(), 0);
+
+    return aux;
+}
+
+
 bool Context::getIncidence(int i, int j){
     return table[i][j];
 }
+
 void Context::objectPrime(vector<int> &objset, vector<int> &objPrime){
     
     if(objset.empty()){

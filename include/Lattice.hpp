@@ -65,9 +65,11 @@ class Lattice{
                 
                 void add(formalConcept concept);
 
+                void replace(formalConcept f,formalConcept newf);
+
                 int getIndex(formalConcept concp);
 
-                bool find(formalConcept& concp);
+                bool find(formalConcept concp);
 
                 bool next(formalConcept& c, formalConcept& output);
                 

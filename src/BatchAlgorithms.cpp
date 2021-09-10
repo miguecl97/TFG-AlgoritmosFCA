@@ -3,8 +3,8 @@
 * @author mcantarero
 */
 
-#include "Algorithms.hpp"
-#include "Lattice.cpp"
+#include "BatchAlgorithms.hpp"
+//#include "Lattice.cpp"
 
 #include <iostream>
 #include <vector>

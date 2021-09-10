@@ -10,10 +10,11 @@
 #include <boost/algorithm/string.hpp>
 
 //#include "Context.hpp"
-//#include "Lattice.hpp"
+#include "Lattice.hpp"
 //#include "utilities.hpp"
-#include "Algorithms.hpp"
-//#include "Lattice.cpp"
+#include "BatchAlgorithms.hpp"
+#include "IncrementalAlgorithms.hpp"
+#include "Lattice.cpp"
 
 using namespace std;
 
@@ -41,6 +42,12 @@ int main(int argc, char *argv[]){
 
   vector<int> attributes (c.getNAttributes());
   std::iota(attributes.begin(), attributes.end(), 0);
+
+  //--------------------------------------------------------------- . ------------------------------------------------------------------//
+  //-------------------------------------------------------------B A T C H--------------------------------------------------------------//
+  //--------------------------------------------------------------- . ------------------------------------------------------------------//
+  
+  cout<< "Results of batch algorithms: "<< endl;
 
   //--- NEXTCONCEPT ALGORITHM ---
   Lattice lnext;
@@ -95,14 +102,36 @@ int main(int argc, char *argv[]){
   
   //--- ---
 
-
-
   ofstream myfile; 
   myfile.open("lattice.g");
   //l.printGraphplaceInput(myfile,0);
   //l.printTerminal();
   //cout << "The lattice has been computed in :  "<< chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms" << endl;
 
+  //--------------------------------------------------------------- . ------------------------------------------------------------------//
+  //-----------------------------------------------------I N C R E M E N T A L S--------------------------------------------------------//
+  //--------------------------------------------------------------- . ------------------------------------------------------------------//
+  cout << endl<< "...------------------------------------.-------------------------------------------------------..."<< endl;
+  cout<< "Results of incremental algorithms: "<< endl;
+
+  //-- NORRIS ALGORITHM ---
+  Lattice lNorris;
+
+  //vector<int> empty={};
+  //lNorris.add(make_pair(empty,empty));
+  //lNorris.add(make_pair(empty,attributes));
+  //lNorris.add(make_pair(objects,empty));
+
+  for(int g : objects){
+    AddNorris(g,c,lNorris);
+  }
+
+  cout << "Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
+  cout<< "Norris formal context: (TESTING)"<<endl;
+  lNorris.printTerminal();
+
+  cout<< "Berry formal context: (WORKS FINE)"<<endl;
+  lberry.printTerminal();
   return 0;
 }
 
