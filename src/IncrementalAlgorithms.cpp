@@ -13,20 +13,15 @@
 
 
 
-void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l){
-    //vector<int> aux = {g};
+void AddNorris(vector<int> g,vector<int> &added, Context &c, Lattice &l){
     vector<int> gPrime;
+    c.objectPrime(g,gPrime); // compute {g}'
+
     
-    c.objectPrime(aux,gPrime); // compute {g}'
-
     for(formalConcept f : l.getformalConcepts()){ // for each (A,B) in L
-
-        
         if(IsSubset(gPrime,f.second)){
-            l.replace(f,make_pair(f.first+aux,f.second));
-            //insert_sorted(f.first,g); // A u g, inserts g in A if was not contained
-            f.first = f.first +aux;
-            //l.replace(f,make_pair(f.first+aux,f.second));
+            l.replace(f,make_pair(f.first+g,f.second)); //hacemos efecto de los cambios en el retículo
+            f.first = f.first + g; //A = A U {g}
         }else{
             vector<int> D;
             std::set_intersection(f.second.begin(),f.second.end(),gPrime.begin(),gPrime.end(),inserter(D,D.begin())); // D = B \cap {g}'
@@ -39,42 +34,30 @@ void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l){
                 c.objectPrime(haux,hprime);
                 formalConcept f2 = make_pair(haux,hprime);
 
-                /*if(l.find(f2) && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was in L && D \subseteq {h}'
-                    empty = false;// set is not empty
-                }*/
-
                 if(find(added.begin(), added.end(), h) != added.end() && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was added && D \subseteq {h}'
                     empty = false;// set is not empty
                 }
-            }
 
+            }
             if(empty){
-                l.add(make_pair(f.first+aux,D)); // add (A U g,D) to L
+                l.add(make_pair(f.first+g,D)); // add (A U g,D) to L
             }
-
         }
     }
-
     bool empty2 = true;
-
-    for(int h : c.getObjectsVector()){
+    for(int h : c.getObjectsVector()){ //h \in G
         vector<int> h2 = {h};
         vector<int> hprime2;
         c.objectPrime(h2,hprime2);
-        //l.find(make_pair(h2,hprime2))
-        if(find(added.begin(), added.end(), h) != added.end()  && IsSubset(hprime2,gPrime)){//if there is an h that was inserted and {g}' \subseteq {h}'
+
+        if(find(added.begin(), added.end(), h) != added.end()  && IsSubset(hprime2,gPrime)){//if there is an h that was added and {g}' \subseteq {h}'
             empty2=false;//set is not empty
         }
-
     }
-
     if(empty2){
-        l.add(make_pair(aux,gPrime));// add ({g},{g}')
+        l.add(make_pair(g,gPrime));// add ({g},{g}')
     }
-
-    added.push_back(aux.front());
-
-
+    added.push_back(g.front()); // g has been added
 }
 
 
@@ -94,7 +77,7 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
     }else{
         if(!IsSubset(inf.second,gPrime)){
             if(inf.first.empty()){
-                inf.second= inf.second+gPrime;
+                inf.second = inf.second+gPrime;
             }else{
                 
                 l.add(make_pair(emptyset,inf.second+gPrime));

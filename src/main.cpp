@@ -123,8 +123,11 @@ int main(int argc, char *argv[]){
   } 
   lNorris.add(make_pair(empty, attributes));
   cout << "Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
-  //lNorris.printTerminal();
+  cout << "CONCEPTOS DE NORRIS:";
+  lNorris.printTerminal();
 
+  cout << endl <<endl<<"SALIDA CORRECTA(PUEDE VARIAR EL ORDEN):";
+  lberry.printTerminal();
   //--- ---
 
 
@@ -137,7 +140,7 @@ int main(int argc, char *argv[]){
     //cout<< inf.second<<endl;
   } 
 
-  cout << "Godin has mined:" << lGodin.getSize()<<" concepts ."<<endl;
+  cout << "Godin has mined: " << lGodin.getSize()<<" concepts ."<<endl;
   //lGodin.printTerminal();
   //--- ---
 
