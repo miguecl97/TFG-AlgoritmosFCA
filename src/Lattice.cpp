@@ -26,9 +26,11 @@ void Lattice::replace(formalConcept f,formalConcept newf){
     typename std::vector<Node>::iterator it;
     for(it= concepts.end(); it!=concepts.begin(); it--){
         if(it->c.first == f.first && it->c.second == f.second){
+            //cout << "reemplazando"<< f.first << ", "<<f.second<<endl<<"por "<< newf.first<< ", "<<newf.second<<endl;
             it->c.first=newf.first;
             it->c.second=newf.second;
-            break;
+            //cout << "nuevo concepto:"<< it->c.first << ", "<<it->c.second<<endl;
+            return;
         }
     }
 

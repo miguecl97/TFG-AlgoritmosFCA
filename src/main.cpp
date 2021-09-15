@@ -117,21 +117,43 @@ int main(int argc, char *argv[]){
   //-- NORRIS ALGORITHM ---
   Lattice lNorris;
 
-  //vector<int> empty={};
+  vector<int> empty={};
   //lNorris.add(make_pair(empty,empty));
   //lNorris.add(make_pair(empty,attributes));
   //lNorris.add(make_pair(objects,empty));
 
+  
+  //AddNorris({},c,lNorris);
+  //lNorris.add(make_pair(empty,empty));
+  //AddNorris({},c,lNorris);
+  vector<int> added ={};
   for(int g : objects){
-    AddNorris(g,c,lNorris);
-  }
+    AddNorris({g},added,c,lNorris);
+  } 
+
+  //AddNorris(objects,c,lNorris);
 
   cout << "Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
-  cout<< "Norris formal context: (TESTING)"<<endl;
+  cout<< endl<<"Norris formal context: (TESTING)";
   lNorris.printTerminal();
 
-  cout<< "Berry formal context: (WORKS FINE)"<<endl;
   lberry.printTerminal();
+  //--- ---
+
+
+  //---GODIN'S ALGORITHM---
+  formalConcept inf(make_pair(empty,empty));
+  Lattice lGodin;
+
+  for(int g : objects){
+    AddGodin({g},inf,c,lGodin);
+    //cout<< inf.second<<endl;
+  } 
+
+  cout << "Godin has mined:" << lGodin.getSize()<<" concepts ."<<endl;
+  //lGodin.printTerminal();
+  //--- ---
+
   return 0;
 }
 

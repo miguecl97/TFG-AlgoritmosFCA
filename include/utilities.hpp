@@ -43,4 +43,6 @@ void insert_sorted( std::vector<int> & vec, int const& item );
 vector<int> operator-(const vector<int>& vector1, const vector<int>& vector2);
 vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2);
 
+vector< vector<int> > getAllSubsets(vector<int> set);
+
 #endif

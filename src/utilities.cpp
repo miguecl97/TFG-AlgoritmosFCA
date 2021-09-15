@@ -111,3 +111,24 @@ vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2){
 }
 
 
+vector< vector<int> > getAllSubsets(vector<int> set){
+    vector< vector<int> > subset;
+    vector<int> empty;
+    subset.push_back( empty );
+
+    for (int i = 0; i <(int) set.size(); i++)
+    {
+        vector< vector<int> > subsetTemp = subset;  //making a copy of given 2-d vector.
+
+        for (int j = 0; j < (int)subsetTemp.size(); j++)
+            subsetTemp[j].push_back( set[i] );   // adding set[i] element to each subset of subsetTemp. like adding {2}(in 2nd iteration  to {{},{1}} which gives {{2},{1,2}}.
+
+        for (int j = 0; j < (int)subsetTemp.size(); j++)
+            subset.push_back( subsetTemp[j] );  //now adding modified subsetTemp to original subset (before{{},{1}} , after{{},{1},{2},{1,2}}) 
+    }
+    //std::sort(subset.begin(),subset.end());
+    return subset;
+}
+
+
+

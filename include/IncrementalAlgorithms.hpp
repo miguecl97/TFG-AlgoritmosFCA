@@ -22,7 +22,8 @@ using namespace std;
  // <extension, intension>
 
 
-void AddNorris(int g, Context &c, Lattice &l);
+void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l);
 
+void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l);
 
 #endif
