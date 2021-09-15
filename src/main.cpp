@@ -116,28 +116,15 @@ int main(int argc, char *argv[]){
 
   //-- NORRIS ALGORITHM ---
   Lattice lNorris;
-
   vector<int> empty={};
-  //lNorris.add(make_pair(empty,empty));
-  //lNorris.add(make_pair(empty,attributes));
-  //lNorris.add(make_pair(objects,empty));
-
-  
-  //AddNorris({},c,lNorris);
-  //lNorris.add(make_pair(empty,empty));
-  //AddNorris({},c,lNorris);
   vector<int> added ={};
   for(int g : objects){
     AddNorris({g},added,c,lNorris);
   } 
-
-  //AddNorris(objects,c,lNorris);
-
+  lNorris.add(make_pair(empty, attributes));
   cout << "Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
-  cout<< endl<<"Norris formal context: (TESTING)";
-  lNorris.printTerminal();
+  //lNorris.printTerminal();
 
-  lberry.printTerminal();
   //--- ---
 
 

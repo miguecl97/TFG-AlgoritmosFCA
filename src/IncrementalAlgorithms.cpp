@@ -43,7 +43,7 @@ void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l){
                     empty = false;// set is not empty
                 }*/
 
-                if(added.count(h)==0 && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was added && D \subseteq {h}'
+                if(find(added.begin(), added.end(), h) != added.end() && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was added && D \subseteq {h}'
                     empty = false;// set is not empty
                 }
             }
@@ -61,8 +61,8 @@ void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l){
         vector<int> h2 = {h};
         vector<int> hprime2;
         c.objectPrime(h2,hprime2);
-
-        if(l.find(make_pair(h2,hprime2)) && IsSubset(hprime2,gPrime)){//if there is an h that was inserted and {g}' \subseteq {h}'
+        //l.find(make_pair(h2,hprime2))
+        if(find(added.begin(), added.end(), h) != added.end()  && IsSubset(hprime2,gPrime)){//if there is an h that was inserted and {g}' \subseteq {h}'
             empty2=false;//set is not empty
         }
 
@@ -73,6 +73,7 @@ void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l){
     }
 
     added.push_back(aux.front());
+
 
 }
 
@@ -86,10 +87,10 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
     c.objectPrime(g,gPrime);
 
     if(inf.first.empty() && inf.second.empty()){
-        l.replace(inf,make_pair(g,gPrime));
+        //l.replace(inf,make_pair(g,gPrime));
         inf.first=g;
         inf.second=gPrime;
-        //l.add(inf);
+        l.add(inf);
     }else{
         if(!IsSubset(inf.second,gPrime)){
             if(inf.first.empty()){
