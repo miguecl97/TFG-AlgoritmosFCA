@@ -21,6 +21,7 @@ struct Node{
 
         int index;
         formalConcept c;
+        vector<int> ch;
         pair<vector<int>,vector<int>> lowerUpperNeighbors;
 
         Node(){};
@@ -57,7 +58,8 @@ class Lattice{
                 int getSize();
 
                 vector<formalConcept> getformalConcepts();
-
+                
+                Node getConcept(int i);
                 /**
                  * @brief Adds a new formal concept to the lattice.
                  * @param concept The formal concept to be added.

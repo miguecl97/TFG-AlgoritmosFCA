@@ -37,4 +37,11 @@ void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<i
 vector<vector<int>> maxmodPartition(Context &c,vector<int> &A, vector<int> &B);
 vector<vector<int>> nonDominatingMaxMod(Context &c, vector<vector<int>> part);
 void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice &l);
+
+
+
+vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context &c);
+void FindBordat(formalConcept E, formalConcept &F,Lattice &l);
+void LatticeBordat(vector<int> A, vector<int> B, vector<int> C,Context &c, Lattice &l);
+    
 #endif

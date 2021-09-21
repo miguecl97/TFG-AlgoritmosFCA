@@ -8,6 +8,7 @@ vector<Node> Lattice::getConcepts(){
     return concepts;
 }
 
+
 int Lattice::getSize(){
     return concepts.size();
 }
@@ -21,6 +22,17 @@ vector<formalConcept> Lattice::getformalConcepts(){
 
     return ret;
 }
+
+Node Lattice::getConcept(int i){
+    for(auto i =0; i<(int)concepts.size();i++){
+        if(concepts[i].index==i){
+            return concepts[i];
+        }
+    }
+
+    return concepts[0];
+}
+
 
 void Lattice::replace(formalConcept f,formalConcept newf){
     typename std::vector<Node>::iterator it;

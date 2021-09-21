@@ -213,28 +213,9 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
         }
 
     }
-    /*
-        cout << "Lista de salida: r="<< r<<", y ="<< y << endl;
-                    for(int i=0 ; i < (int) A.size(); i++){
-                        cout<< "A["<< i<< "]="<< A[i]<<", ";
-                    }
-                    cout<< endl;
-                    for(int i=0 ; i < (int) B.size(); i++){
-                        cout<< "B["<< i<< "]="<< B[i]<<", ";
-                    }
-                    cout << endl<< endl;
-
-    
-    for(int i=0 ; i < (int) min(A.size(),B.size()); i++){
-        formalConcept f = make_pair(A[i],B[i]);
-        if(!l.find(f)){
-            l.add(f);
-        }
-    }*/
 
     formalConcept f = make_pair(A[r],B[r]);
     if(!l.find(f)){
-        //cout << "anadiendo concepto"<< endl;
         l.add(f);
     }
 
@@ -508,3 +489,138 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
     }
 
 }
+
+
+vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context &c){
+    
+    vector<formalConcept> ln;
+    vector<int> C = B;
+
+    int indexg=A.size();
+    for(int i=0; i<(int)A.size();i++){
+        vector<int> gPrime;
+        vector<int> gaux = {A[i]};
+        c.objectPrime(gaux,gPrime);
+
+        if(!IsSubset(C,gPrime)){
+            indexg=i;
+            break;            
+        }
+    }
+
+    //cout<<" LLamada a VECINOS:    con A="<<A<<", B="<<B<<endl;
+
+    while(indexg<=(int)A.size()-1){
+       // cout <<"(vecinos) index{g}="<<indexg<<endl;
+        vector<int> E = {A[indexg]};
+        vector<int> gPrime;
+        c.objectPrime(E,gPrime);
+        vector<int> F = gPrime;
+        int h=A[indexg];
+        //cout<< "(vecinos) procesando :(E= "<< A[indexg]<<",F= "<< F <<")"<<endl;
+
+        int i=1;
+        while(h!=A.back()){
+    
+            h=A[indexg+i];
+            vector<int> intersection;
+            vector<int> haux= {h};
+            vector<int> hPrime;
+            c.objectPrime(haux,hPrime);
+            std::set_intersection(F.begin(),F.end(),hPrime.begin(),hPrime.end(),inserter(intersection,intersection.begin()));
+
+            if(!IsSubset(C,intersection)){
+                insert_sorted(E,h);
+                F=intersection;
+            }
+
+            i++;
+        }
+
+
+        vector<int> intersection2;
+        std::set_intersection(F.begin(),F.end(),C.begin(),C.end(),inserter(intersection2,intersection2.begin()));
+        //cout << "F="<< F<<"CAP C="<<C<<",B="<<B<<endl;
+        if(intersection2==B){
+            ln.push_back(make_pair(E,F));
+        }
+        C=C+F;
+
+        indexg=A.size();
+
+        for(int i=0; i<(int)A.size();i++){
+            vector<int> gPrime;
+            vector<int> gaux = {A[i]};
+            c.objectPrime(gaux,gPrime);
+            
+            if(!IsSubset(C,gPrime)){
+                indexg=i;
+                break;            
+            }
+
+        }
+
+        //cout<<"(vecinos) indexg (final)="<<indexg<<endl;
+
+    }
+
+    return ln;
+
+
+}
+
+void FindBordat(formalConcept AB, formalConcept &CD, Lattice &l){
+
+    int i = l.getIndex(AB);
+    vector<int> chAB = l.getConcepts()[i].ch;
+    formalConcept first;
+    for(int e : chAB){
+        Node nodo = l.getConcept(e);
+        if(IsSubset(CD.second,nodo.c.second)){
+            first = nodo.c;
+            break;
+        }
+    }
+
+    if(first.second!=CD.second){
+        FindBordat(first,CD,l);
+    }else{
+        CD=first;
+        return;
+    }
+        
+    
+    
+}
+
+void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Lattice &l){
+
+
+    //cout << "Processing ("<<A<<","<<B<<")"<<endl;
+    l.add(make_pair(A,B));
+    //cout << "C="<<C<<endl;
+    vector<formalConcept> ln = LowerNeighboursBordat(A,B,c);    
+    //cout << "Lowers: ";
+    /*for(formalConcept l :ln){
+        cout << "("<<l.first<<","<<l.second<<")";
+    }
+    cout <<endl<<endl;*/
+
+    for(formalConcept f : ln){
+
+        vector<int> intersection;
+        std::set_intersection(C.begin(),C.end(),f.second.begin(),f.second.end(),inserter(intersection,intersection.begin()));
+        if(intersection==B){
+            C=C+f.second;
+            LatticeBordat(f.first,f.second,C,c,l);
+            l.getConcept(l.getIndex(make_pair(A,B))).ch.push_back(l.getIndex(f));
+        }else{
+            vector<int> empty ={};
+            //FindBordat(make_pair(c.getObjectsVector(),empty),f,l);
+            //(A,B) upper Neighbors of (f.first,f.second);
+        }
+    }
+
+
+}
+
