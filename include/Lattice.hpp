@@ -72,7 +72,9 @@ class Lattice{
                 int getIndex(formalConcept concp);
 
                 bool find(formalConcept concp);
-
+                vector<formalConcept> getParents(formalConcept c);
+                vector<formalConcept> getConceptsAbove(formalConcept c);
+                
                 bool next(formalConcept& c, formalConcept& output);
                 
                 bool insertLookUp(formalConcept& x, formalConcept& c);

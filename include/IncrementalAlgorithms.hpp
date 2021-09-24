@@ -26,4 +26,9 @@ void AddNorris(vector<int> aux,vector<int> &added, Context &c, Lattice &l);
 
 void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l);
 
+
+
+formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConcept, Lattice &l);
+formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l);
+
 #endif

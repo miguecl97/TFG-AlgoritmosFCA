@@ -148,3 +148,67 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
 
 
 }
+
+
+
+
+formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConcept, Lattice &l){
+    bool parentIsMaximal=true;
+    while (parentIsMaximal){
+        parentIsMaximal=false;
+        vector<formalConcept> parents=l.getParents(generatorConcept);
+        //cout << "concepto "<< generatorConcept.first<< ", "<< generatorConcept.second<<endl;
+        for(formalConcept parent : parents){
+            //cout << "hijo  "<< parent.first<<", "<< parent.second<<endl;
+            if(IsSubset(parent.second,intent)){
+                generatorConcept=parent;
+                parentIsMaximal=true;
+            }
+        }
+        
+    }
+
+    return generatorConcept;
+}
+
+formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l){
+    generatorConcept = GetMaximalConcept(intent,generatorConcept,l);
+
+    if(generatorConcept.second==intent){
+        return generatorConcept;
+    }
+    vector<formalConcept> generatorParents = l.getParents(generatorConcept);
+    vector<formalConcept> newParents;
+
+    for(formalConcept f : generatorParents){
+        cout<< "aaa"<<endl;
+        if(!IsSubset(intent,f.second)){
+            vector<int> intersection;
+            std::set_intersection(f.second.begin(),f.second.end(),intent.begin(),intent.end(),inserter(intersection,intersection.begin()));
+            f=AddIntent(intersection,f,c,l);
+        }
+
+        bool addParent=true;
+
+        for(formalConcept parent : newParents){
+            if(IsSubset(parent.second,f.second)){
+                addParent=false;
+                break;
+            }else if(IsSubset(f.second,parent.second)){
+                //newParents.erase(f.second);
+            }
+        }
+
+        if(addParent){
+            newParents.push_back(f);
+        }
+    }
+
+    formalConcept newConcept = make_pair(generatorConcept.first,intent);
+    l.add(newConcept);
+    /*for(formalConcept p : newParents){
+
+    }*/
+
+    return newConcept;
+}

@@ -624,3 +624,4 @@ void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Latt
 
 }
 
+

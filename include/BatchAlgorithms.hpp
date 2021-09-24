@@ -44,4 +44,5 @@ vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context
 void FindBordat(formalConcept E, formalConcept &F,Lattice &l);
 void LatticeBordat(vector<int> A, vector<int> B, vector<int> C,Context &c, Lattice &l);
     
+
 #endif

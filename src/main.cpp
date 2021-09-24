@@ -19,7 +19,34 @@
 using namespace std;
 
 void callAlgorithms(Context &c, vector<int> opt){
-  //general data:
+
+  
+}
+
+
+
+
+int main(int argc, char *argv[]){
+
+
+  /*** prepare data according to the context for algorithms ***/
+
+
+  Context c;
+  //read infile .csv
+  if(argc>1){
+
+    ifstream CSVfile(argv[1]);
+    c = readCSV(CSVfile);
+    //cout << c;
+
+  }else{
+    cout << "Error: first argument must be a valid option";
+    return 0;
+  }
+
+
+    //general data:
   vector<int> objects (c.getNObjects());
   std::iota(objects.begin(), objects.end(), 0);
 
@@ -32,12 +59,9 @@ void callAlgorithms(Context &c, vector<int> opt){
   //--------------------------------------------------------------- . ------------------------------------------------------------------//
   //-------------------------------------------------------------B A T C H--------------------------------------------------------------//
   //--------------------------------------------------------------- . ------------------------------------------------------------------//
-  if(opt.empty()){
-    opt={1,2,3,4,5,6,7};
-  }
+
   cout<< "Results of batch algorithms: "<< endl;
 
-  if(std::count(opt.begin(),opt.end(),1)){
   //--- NEXTCONCEPT ALGORITHM ---
   Lattice lnext;
   vector<int> inum = {0};
@@ -52,8 +76,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   //lnext.printTerminal();
   
   //--- ---
-  }
-
+  
 
 
 
@@ -63,8 +86,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   cout << "->Lindig has mined: "<<llindig.getSize()<<" concepts ."<< endl;
   //llindig.printTerminal();
   //--- ---
-
-
+  
 
 
   //---BERRY'S ALGORITHM---
@@ -74,7 +96,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   cout << "->Berry has mined:" << lberry.getSize()<<" concepts ."<<endl;
   //lberry.printTerminal();
   //--- ---
-
+  
 
   //-- INCLOSE ALGORITHM ---
   vector<vector<int>> A2 ;
@@ -87,9 +109,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   InClose(r,y,A2,B2,c,linclose);
   //linclose.printTerminal();
   cout << "->In close has mined: "<<linclose.getSize()<<" concepts ."<< endl;
-  
   //--- ---
-
 
   //---BORDAT'S ALGORITHM---
   Lattice lBordat;
@@ -100,6 +120,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   cout << "->Bordat has mined:" << lBordat.getSize()<<" concepts ."<<endl;
   //lBordat.printTerminal();
   //--- ---
+  
 
   ofstream myfile; 
   myfile.open("lattice.g");
@@ -124,7 +145,7 @@ void callAlgorithms(Context &c, vector<int> opt){
   //cout << endl <<endl<<"SALIDA CORRECTA(PUEDE VARIAR EL ORDEN):";
   //lberry.printTerminal();
   //--- ---
-
+  
 
   //---GODIN'S ALGORITHM---
   formalConcept inf(make_pair(empty,empty));
@@ -135,64 +156,35 @@ void callAlgorithms(Context &c, vector<int> opt){
   cout << "->Godin has mined: " << lGodin.getSize()<<" concepts ."<<endl;
   //lGodin.printTerminal();
   //--- ---
-}
 
 
 
-
-int main(int argc, char *argv[]){
-
-
-  /*** prepare data according to the context for algorithms ***/
-
-
-  Context c;
-  //read infile .csv
-  vector<int> options;
-
-  if(argc==1){
-    options={};
-    if(argc>1){
-      for(auto i=0;i< argc;i++){
-        options.push_back(i);
-      }
+  //---ADDINTENT ALGORITHM---
+  formalConcept bottomconcept(make_pair(empty,attributes));
+  Lattice lAddIntent;
+  lAddIntent.add(bottomconcept);
+  for(int g : objects){
+    vector<int> gaux={g};
+    vector<int> gPrime;
+    c.objectPrime(gaux,gPrime);
+    formalConcept objectConcept = AddIntent(gPrime,bottomconcept,c,lAddIntent);
+    //cout << "objeto: objectConcept="<< objectConcept<<endl;
+    vector<formalConcept> parents = lAddIntent.getParents(objectConcept);
+    for(formalConcept f: parents){
+      lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
-    cout << "MONUMENTOS GRANADA:"<<endl;
-    ifstream CSVfile1("./blackBoxTests/monumentosGranada.csv");
-    c = readCSV(CSVfile1);
-    callAlgorithms(c,options);
-    cout << endl<< "...------------------------------------.-------------------------------------------------------..."<< endl;
-
-    cout << "TRIANGULOS: "<<endl;
-    ifstream CSVfile2("./blackBoxTests/simpletest.csv");
-    c = readCSV(CSVfile2);
-    callAlgorithms(c,options);
-    cout << endl<< "...------------------------------------.-------------------------------------------------------..."<< endl;
-
-    cout<< "BERRY'S EXAMPLE: "<<endl;
-    ifstream CSVfile3("./blackBoxTests/testBerry.csv");
-    c = readCSV(CSVfile3);
-    callAlgorithms(c,options);
-    cout << endl<< "...------------------------------------.-------------------------------------------------------..."<< endl;
-
-    cout<<"GANTER'S EXAMPLE: "<<endl;
-    ifstream CSVfile4("./blackBoxTests/testGanter.csv");
-    c = readCSV(CSVfile4);
-    callAlgorithms(c,options);
-    cout << endl<< "...------------------------------------.-------------------------------------------------------..."<< endl;
-
-
-  }else if(argc==2 && !std::isdigit(*argv[1])){
-    ifstream CSVfile(argv[1]);
-    c = readCSV(CSVfile);
-    cout << c;
-    callAlgorithms(c,options);
-  }else{
-    cout << "Error: first argument must be a valid option";
-    return 0;
   }
+  cout << "->AddIntent has mined: " << lAddIntent.getSize()<<" concepts ."<<endl;
+  //lAddIntent.printTerminal();
+  //--- ---
+  
 
+  cout<< "SALIDA GODIN";
+  lGodin.printTerminal();
+  
+  cout<<"SALIDA CORRECTA:";
+  lberry.printTerminal();
   return 0;
 }
 
