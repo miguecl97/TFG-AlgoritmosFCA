@@ -82,7 +82,7 @@ vector<formalConcept> Lattice::getParents(formalConcept c){
     
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
-        if(IsSubset(it->c.second,c.second)&& it->c.first!=c.first && it->c.second!=c.second)
+        if(IsSubset(it->c.second,c.second) && it->c.first!=c.first && it->c.second!=c.second)
             parents.push_back(it->c);
     }
 
@@ -90,15 +90,15 @@ vector<formalConcept> Lattice::getParents(formalConcept c){
 }
 
 vector<formalConcept> Lattice::getConceptsAbove(formalConcept c){
-    vector<formalConcept> parents;
+    vector<formalConcept> childs;
     
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
-        if(IsSubset(it->c.second,c.second))
-            parents.push_back(it->c);
+        if(IsSubset(c.second,it->c.second) && it->c.first!=c.first && it->c.second!=c.second)
+            childs.push_back(it->c);
     }
 
-    return parents;
+    return childs;
 }
 
 

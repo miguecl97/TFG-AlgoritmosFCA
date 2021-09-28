@@ -169,22 +169,24 @@ int main(int argc, char *argv[]){
     c.objectPrime(gaux,gPrime);
     formalConcept objectConcept = AddIntent(gPrime,bottomconcept,c,lAddIntent);
     //cout << "objeto: objectConcept="<< objectConcept<<endl;
-    vector<formalConcept> parents = lAddIntent.getParents(objectConcept);
-    for(formalConcept f: parents){
+    vector<formalConcept> children = lAddIntent.getParents(objectConcept);
+    lAddIntent.replace(objectConcept,make_pair(objectConcept.first+gaux,objectConcept.second));
+    for(formalConcept f: children){
       lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
   }
   cout << "->AddIntent has mined: " << lAddIntent.getSize()<<" concepts ."<<endl;
-  //lAddIntent.printTerminal();
+  lAddIntent.printTerminal();
   //--- ---
   
-
+  /*
   cout<< "SALIDA GODIN";
   lGodin.printTerminal();
   
+  */
   cout<<"SALIDA CORRECTA:";
-  lberry.printTerminal();
+  llindig.printTerminal();
   return 0;
 }
 

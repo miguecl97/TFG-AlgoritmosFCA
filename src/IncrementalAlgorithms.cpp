@@ -94,27 +94,27 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                 j=f.second.size();
             }
         }
-        vector<formalConcept> C(j+1);
-        vector<formalConcept> CPrime(j+1);
+        vector<vector<formalConcept>> C(j+1);
+        vector<vector<formalConcept>> CPrime(j+1);
         
         for(int i =0; i<= j; i++){
 
             for(formalConcept f : l.getformalConcepts()){
                 if((int)f.second.size()==i){
-                    C[i]=f;// stova a dar core mirarlo bien
+                    C[i].push_back(f);// stova a dar core mirarlo bien
                 }
-                CPrime[i]=make_pair(emptyset,emptyset);
+                CPrime[i].clear();
             }
            
         }
         
         for(int i =0; i<= j; i++){
 
-            for(formalConcept f : C){
+            for(formalConcept f : C[i]){
                 if(IsSubset(gPrime,f.second)){
-                    f.first = f.first +g;
-                    CPrime[i].first=CPrime[i].first+f.first;
-                    CPrime[i].second=CPrime[i].second+f.second;
+                    l.replace(f,make_pair(f.first+g,f.second)); //NOTE: por si falla
+                    //f.first = f.first +g;
+                    CPrime[i].push_back(make_pair(f.first + g,f.second)); //REVISAR
 
                     if(f.second==gPrime){
                         return;
@@ -122,12 +122,18 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                 }else{
                     vector<int> intent;
                     std::set_intersection(f.second.begin(),f.second.end(),gPrime.begin(),gPrime.end(),inserter(intent,intent.begin())); // int = B \cap {g}'
-                    //bool exists = false;
+                    
+                    bool exists = false;
 
-                    if(CPrime.size() < intent.size() || CPrime[intent.size()].second!=intent){
+                    for(formalConcept fCPrime : CPrime[intent.size()]){
+                        if(fCPrime.second==intent){
+                            exists=true;
+                            break;
+                        }
+                    }
+                    if(!exists){
                         l.add(make_pair(f.first+g,intent));
-                        CPrime[intent.size()].first=CPrime[intent.size()].first + f.first +g;
-                        CPrime[intent.size()].second= CPrime[intent.size()].second + intent;
+                        CPrime[intent.size()].push_back(make_pair(f.first+g,intent));
 
                         //upper neig update;
                         //update edges;
@@ -156,13 +162,13 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
     bool parentIsMaximal=true;
     while (parentIsMaximal){
         parentIsMaximal=false;
-        vector<formalConcept> parents=l.getParents(generatorConcept);
-        //cout << "concepto "<< generatorConcept.first<< ", "<< generatorConcept.second<<endl;
+        vector<formalConcept> parents=l.getConceptsAbove(generatorConcept);
+        
         for(formalConcept parent : parents){
-            //cout << "hijo  "<< parent.first<<", "<< parent.second<<endl;
             if(IsSubset(parent.second,intent)){
                 generatorConcept=parent;
                 parentIsMaximal=true;
+                break;
             }
         }
         
@@ -172,30 +178,56 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
 }
 
 formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l){
+    cout << "Llamada a addintent con"<<endl;
+    cout << "Intent="<<intent<<endl;
+    cout << "GeneratorConcept="<<generatorConcept<<endl;
+    cout<<endl;
+    
     generatorConcept = GetMaximalConcept(intent,generatorConcept,l);
 
     if(generatorConcept.second==intent){
         return generatorConcept;
     }
-    vector<formalConcept> generatorParents = l.getParents(generatorConcept);
+   
+    vector<formalConcept> generatorParents = l.getConceptsAbove(generatorConcept);
     vector<formalConcept> newParents;
+    vector<int> empty ={};
+    newParents.push_back(make_pair(empty,empty));
+/*
+     cout << "Padres de "<<generatorConcept<<endl;
+     for(formalConcept f : generatorParents){
+         cout <<"->"<< f<< " + ";
+     }
+     cout << endl<<endl;*/
 
     for(formalConcept f : generatorParents){
-        cout<< "aaa"<<endl;
         if(!IsSubset(intent,f.second)){
             vector<int> intersection;
+
             std::set_intersection(f.second.begin(),f.second.end(),intent.begin(),intent.end(),inserter(intersection,intersection.begin()));
             f=AddIntent(intersection,f,c,l);
+            //l.replace(f,fnew);
+            //f=fnew;
         }
 
         bool addParent=true;
 
-        for(formalConcept parent : newParents){
-            if(IsSubset(parent.second,f.second)){
+        for(unsigned i=0; i<newParents.size();i++){
+            if(IsSubset(newParents[i].second,f.second)){
                 addParent=false;
                 break;
-            }else if(IsSubset(f.second,parent.second)){
+            }else if(IsSubset(f.second,newParents[i].second)){
                 //newParents.erase(f.second);
+                newParents.erase(newParents.begin()+i);
+                /*for(formalConcept f2: newParents){
+                    cout<< f2;
+                }
+                cout << "deleting "<< newParents[i]<< "!!!!!!!";
+                
+                for(formalConcept f2: newParents){
+                    cout<< f2;
+                }
+                cout <<endl;*/
             }
         }
 
