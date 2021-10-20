@@ -49,9 +49,13 @@ int main(int argc, char *argv[]){
     //general data:
   vector<int> objects (c.getNObjects());
   std::iota(objects.begin(), objects.end(), 0);
+  vector<int> objectsPrime;
+  c.objectPrime(objects,objectsPrime);
 
   vector<int> attributes (c.getNAttributes());
   std::iota(attributes.begin(), attributes.end(), 0);
+  vector<int> attributesPrime;
+  c.attributePrime(attributes,attributesPrime);
 
   vector<int> empty={};
 
@@ -64,16 +68,28 @@ int main(int argc, char *argv[]){
 
   //--- NEXTCONCEPT ALGORITHM ---
   Lattice lnext;
+  Lattice lganter;
   vector<int> inum = {0};
   vector<vector<int>> A ;
   A.push_back(objects);
   vector<vector<int>> B ;
-  B.push_back({});
+  B.push_back(objectsPrime);
+  int r2 =0;
 
-  NextConcept(A,B,inum,0,c,lnext);
+  /*while(B[r2]!=c.getAttributesVector()){
+    formalConcept f = make_pair(A[r2],B[r2]);
+    if(!lnext.find(f)){
+        lnext.add(f);
+    }
+    NextConcept(A,B,inum,r2,c,lnext);
 
-  cout << "->NextConcept(Ganter) has mined: "<< lnext.getSize()<<" concepts ."<<endl;
-  //lnext.printTerminal();
+  }*/
+  //NextConcept(A,B,inum,r2,c,lnext);
+
+  NextGanter({},c.getNObjects()-1,c,lganter);
+  lganter.add(make_pair(attributesPrime,attributes));
+  cout << "->NextConcept(Ganter) has mined: "<< lganter.getSize()<<" concepts ."<<endl;
+  //lganter.printTerminalConcepts(c.getObjects(),c.getAttributes());
   
   //--- ---
   
@@ -90,11 +106,12 @@ int main(int argc, char *argv[]){
 
 
   //---BERRY'S ALGORITHM---
-  vector<int> atBerry;
+  vector<int> atBerry={};
   Lattice lberry;
   InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
   cout << "->Berry has mined:" << lberry.getSize()<<" concepts ."<<endl;
   //lberry.printTerminal();
+  //lberry.printTerminalConcepts(c.getObjects(),c.getAttributes());
   //--- ---
   
 
@@ -106,8 +123,9 @@ int main(int argc, char *argv[]){
   Lattice linclose;
   int r=0;
   int y =0;
+  linclose.add(make_pair(attributesPrime,attributes));
   InClose(r,y,A2,B2,c,linclose);
-  //linclose.printTerminal();
+  //linclose.printTerminalConcepts(c.getObjects(),c.getAttributes());
   cout << "->In close has mined: "<<linclose.getSize()<<" concepts ."<< endl;
   //--- ---
 
@@ -154,30 +172,31 @@ int main(int argc, char *argv[]){
     AddGodin({g},inf,c,lGodin);
   } 
   cout << "->Godin has mined: " << lGodin.getSize()<<" concepts ."<<endl;
-  //lGodin.printTerminal();
+  //lGodin.printTerminalConcepts(c.getObjects(),c.getAttributes());
   //--- ---
 
 
 
   //---ADDINTENT ALGORITHM---
-  formalConcept bottomconcept(make_pair(empty,attributes));
+  formalConcept bottomconcept(make_pair(attributesPrime,attributes));
   Lattice lAddIntent;
   lAddIntent.add(bottomconcept);
   for(int g : objects){
     vector<int> gaux={g};
     vector<int> gPrime;
     c.objectPrime(gaux,gPrime);
+    cout<< g<<endl;
     formalConcept objectConcept = AddIntent(gPrime,bottomconcept,c,lAddIntent);
-    //cout << "objeto: objectConcept="<< objectConcept<<endl;
-    vector<formalConcept> children = lAddIntent.getParents(objectConcept);
-    lAddIntent.replace(objectConcept,make_pair(objectConcept.first+gaux,objectConcept.second));
-    for(formalConcept f: children){
+    vector<formalConcept> above = lAddIntent.getConceptsAbove(objectConcept);
+    //lAddIntent.replace(objectConcept,make_pair(objectConcept.first+gaux,objectConcept.second));
+    for(formalConcept f: above){
       lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
   }
   cout << "->AddIntent has mined: " << lAddIntent.getSize()<<" concepts ."<<endl;
-  lAddIntent.printTerminal();
+  //lAddIntent.printTerminalNodes();
+  //lAddIntent.printTerminalConcepts(c.getObjects(),c.getAttributes());
   //--- ---
   
   /*
@@ -186,7 +205,7 @@ int main(int argc, char *argv[]){
   
   */
   cout<<"SALIDA CORRECTA:";
-  llindig.printTerminal();
+  //llindig.printTerminal();
   return 0;
 }
 

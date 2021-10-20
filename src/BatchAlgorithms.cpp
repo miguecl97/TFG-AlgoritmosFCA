@@ -11,103 +11,160 @@
 #include <numeric> // std::iota
 #include <cmath>
 
-void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> &inum,int r,Context &c, Lattice &l){
-    vector<int> m(c.getNAttributes());
-    std::iota(m.begin(), m.end(), 0);
+
+
+void NextGanter(vector<int> A,int g, Context &c, Lattice &l){
+
+    while(A!=c.getObjectsVector()){
+        vector<int> gvec ={g};
+        vector<int> aux = A + gvec;
+        vector<int> minus;
+        for(int h : A){
+            if(g<h){
+                minus.push_back(h);
+            }
+        }
+        A = aux-minus;
+
+        vector<int> AdoublePrime;
+        vector<int> Aprime;
+        c.objectPrime(A,Aprime);
+        c.objectDoublePrime(A,AdoublePrime);
+        bool empty=true;
+        for(int h : AdoublePrime-A){
+            if(h<g){
+                empty =false;
+            }
+        }
+        if(empty){
+            l.add(make_pair(AdoublePrime,Aprime));
+            vector<int> aux2 = c.getObjectsVector() - AdoublePrime;
+            if(!aux2.empty()){
+                g = *max_element(aux2.begin(), aux2.end());
+            }
+            A=AdoublePrime;
+        }else{
+            vector<int> aux2;
+            for(int h : c.getObjectsVector() - A){
+                if(h<g){
+                    aux2.push_back(h);
+                }
+            }
+            if(!aux2.empty()){
+                g = *max_element(aux2.begin(), aux2.end());
+            }    
+
+        }
+    }
+
+}
+void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> inum,int r,Context &c, Lattice &l){
+    vector<int> m=c.getAttributesVector();
+    int numconcept=1;
     bool found = false;
-    
-    //add the new concept generated
-    formalConcept f = make_pair(A[r],B[r]);
-    if(!l.find(f)){
-        l.add(f);
-    }
 
-    //check if we reach the final of algorithm
-    if(B[r]==m){    
-        return;
-    }
-
-    //start the algoritm
-    for(int i = (int) c.getNAttributes(); i > 0; i--){
-        found = false;
-                        
-        if(count(B[r].begin(), B[r].end(),m[i-1])!=0){
-            found = true;
-        }
-
-        if(!found){
-            while(i < inum[r]){
-                r = r-1;
-            }
-
-            if((int)inum.size() <= r+1){
-                inum.resize(r + 2);
-            }
+    int i = c.getNAttributes();
+    while(i>0){
+            found = false;
             
-            inum[r+1]=i;
-            vector<int> auxprime;
-            vector<int> mi = { m[i-1] };
-            c.attributePrime(mi,auxprime );
-
-            if((int)A.size() <= r+1){
-                A.resize(r + 2);
+            if(count(B[r].begin(), B[r].end(),m[i-1])!=0){
+                found = true;
+                //break;
             }
 
-            A[r+1].clear();
-            set_intersection(A[r].begin(),A[r].end(),auxprime.begin(),auxprime.end(),inserter(A[r+1],A[r+1].begin()));
-            
-            for(int j = 1; j<i ; j++){
-                if(!found){
-                    vector<int> auxjprime;
-                    vector<int> mj = { m[j-1]};
-                    c.attributePrime(mj,auxjprime );
-
-                    if(IsSubset(auxjprime,A[r+1])){
-                        //could be a bit more efficient with a break; but for a clearly code
-                        found = true;
-                    }
-                }
-            }
-            
             if(!found){
-                if((int)B.size() <= r+1){
-                    B.resize(r+2);
-                }  
+                while(i < inum[r]){
+                    r = r-1;
+                }
 
-                B[r+1] = B[r] + mi;
+                if((int)inum.size() <= r+1){
+                    inum.resize(r + 2);
+                }
+                
+                inum[r+1]=i;
+                vector<int> auxprime;
+                vector<int> mi = { m[i-1] };
+                c.attributePrime(mi,auxprime );
 
-                for(int j = i+1;j<=(int)c.getNAttributes();j++){
-                    if(count(B[r+1].begin(), B[r+1].end(),j-1) == 0){
-                        vector<int> auxj2prime;
-                        vector<int> mj = { m[j-1] };
-                        c.attributePrime(mj,auxj2prime );
+                if((int)A.size() <= r+1){
+                    A.resize(r + 2);
+                }
 
-                        if(IsSubset(auxj2prime,A[r+1])){
-                            insert_sorted(B[r+1],m[j-1]);
+                A[r+1].clear();
+                set_intersection(A[r].begin(),A[r].end(),auxprime.begin(),auxprime.end(),inserter(A[r+1],A[r+1].begin()));
+                
+                for(int j = 1; j<i ; j++){
+                        vector<int> auxjprime;
+                        vector<int> mj = { m[j-1]};
+                        c.attributePrime(mj,auxjprime );
+
+                        if(IsSubset(auxjprime,A[r+1])){
+                            //could be a bit more efficient with a break; but for a clearly code
+                            found = true;
+                            break;
                         }
+                }
+                
+
+                if(!found){
+                    if((int)B.size() <= r+1){
+                        B.resize(r+2);
+                    }  
+
+                    B[r+1] = B[r] + mi;
+
+                    for(int j = i+1;j<=(int)c.getNAttributes();j++){
+                        if(count(B[r+1].begin(), B[r+1].end(),j-1) == 0){
+                            vector<int> auxj2prime;
+                            vector<int> mj = { m[j-1] };
+                            c.attributePrime(mj,auxj2prime );
+
+                            if(IsSubset(auxj2prime,A[r+1])){
+                                insert_sorted(B[r+1],m[j-1]);
+                            }
+                        }
+                    }   
+
+                    r = r+1;    
+                    // for printing whats happening
+
+                    /*
+                    cout << "Concept num: "<<numconcept<< endl;
+                    numconcept++;
+                    cout<< "i ="<< i <<endl;
+                    cout<< "r= "<< r << " / / inum="<< inum<<endl;
+                    for(int w =0; w< (int)A.size() ; w++){
+                        cout << " A["<< w<< "]="<< A[w];
                     }
-                }   
+                    cout << endl;
+                    for(int e = 0; e<(int)B.size() ; e++){
+                    cout << " B["<< e << "]="<< B[e];
+                    }
+                    cout << endl<< endl;*/
+                    
+                    
+                    //call again with the result list
+                    /*if(B[r]!=m){
+                        NextConcept(A,B,inum,r,c,l);
+                    }*/
 
-                r = r+1;    
-                /* for printing whats happening
-                cout << "calling again nextconcept: "<< endl;
-                cout<< "i ="<< i <<endl;
-                cout<< "r= "<< r << " / / inum="<< inum<<endl;
-                for(int w =0; w< (int)A.size() ; w++){
-                    cout << " A["<< w<< "]="<< A[w];
-                }
-                cout << endl;
-                for(int e = 0; e<(int)B.size() ; e++){
-                cout << " B["<< e<< "]="<< B[e];
-                }
-                cout << endl<< endl;
-                */
 
-                //call again with the result list
-                NextConcept(A,B,inum,r,c,l);            
-            }  
+                } 
+                
+                 
+
+            }     
+
+            if(i==1){
+                i=c.getNAttributes()+1;
+            }
+
+            i--;
+
+            if(B[r]==m){
+                return;
+            }
         }
-    }
 }
 
 
@@ -173,13 +230,17 @@ void LatticeLindig(Context &c, Lattice &l){
 
 void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
-    if(r==0){
-        vector<int> empty= {};
-        vector<int> attributes (c.getNAttributes());
-        std::iota(attributes.begin(), attributes.end(), 0);
-        l.add(make_pair(empty,attributes));
-    }
 
+    /*
+    cout<< "r="<<r<<endl;
+    for(int j=0; j< (int)A.size();j++){
+        cout <<"A"<< A[j]<<endl;
+    }
+    cout << endl;
+    for(int k=0; k< (int)B.size();k++){
+        cout << "B"<<B[k]<<endl;
+    }
+    cout << endl;*/
     if((int)A.size() <= rnew){
         A.resize(rnew+1);
     }
@@ -272,7 +333,6 @@ void initializeTD(vector<vector<int>> &S, vector <int> &F, Context &c){
             }
         }
     }
-
     S=T;
     F=D;
 }
@@ -416,7 +476,7 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
         initializeTD(T,D,c);
     }
 
-    if (B.empty()){
+    if(B.empty()){
         emptyrelation=true;
     }
     
@@ -469,7 +529,7 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
                 vector<int> atprime ;
                 c.attributePrime(aux,atprime);
                 relations.push_back(atprime);
-            }
+            } 
             
             for(auto i = 0; i<(int)relations.size(); i++){
                 if(relations.at(i) != rx){
@@ -484,9 +544,31 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
 
     }
 
-    if(!B.empty() || A.size() == c.getNAttributes()){
+    
+    
+    if(!l.find(make_pair(B,A)) && (!B.empty() && !A.empty())){
         l.add(make_pair(B,A));
+    }else{
+        if(B.empty()){
+            vector<int> attPrime;
+            vector<int> aux = c.getAttributesVector();
+            c.attributePrime(aux,attPrime);
+            if(!l.find(make_pair(attPrime,aux))){
+                l.add(make_pair(attPrime,aux));
+            }
+        }else if(A.empty()){
+            vector<int> objPrime;
+            vector<int> aux =c.getObjectsVector();
+            c.objectPrime(aux,objPrime);
+            if(!l.find(make_pair(aux,objPrime))){
+                l.add(make_pair(aux,objPrime));
+            } 
+        }
     }
+
+
+    
+
 
 }
 
@@ -595,17 +677,15 @@ void FindBordat(formalConcept AB, formalConcept &CD, Lattice &l){
 
 void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Lattice &l){
 
-
-    //cout << "Processing ("<<A<<","<<B<<")"<<endl;
+    
     l.add(make_pair(A,B));
-    //cout << "C="<<C<<endl;
     vector<formalConcept> ln = LowerNeighboursBordat(A,B,c);    
-    //cout << "Lowers: ";
-    /*for(formalConcept l :ln){
-        cout << "("<<l.first<<","<<l.second<<")";
+    formalConcept f2 =make_pair(A,B);
+    /*cout<<"C="<<C<< " ,  vecinos de "<< f2<<"->"; 
+    for(formalConcept f3: ln){
+        cout << f3<< ",";
     }
-    cout <<endl<<endl;*/
-
+    cout <<endl;*/
     for(formalConcept f : ln){
 
         vector<int> intersection;
@@ -614,10 +694,6 @@ void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Latt
             C=C+f.second;
             LatticeBordat(f.first,f.second,C,c,l);
             l.getConcept(l.getIndex(make_pair(A,B))).ch.push_back(l.getIndex(f));
-        }else{
-            vector<int> empty ={};
-            //FindBordat(make_pair(c.getObjectsVector(),empty),f,l);
-            //(A,B) upper Neighbors of (f.first,f.second);
         }
     }
 

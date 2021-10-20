@@ -45,4 +45,5 @@ vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2);
 
 vector< vector<int> > getAllSubsets(vector<int> set);
 
+void transformNodes(formalConcept f, vector<string> objects, vector<string> attributes);
 #endif

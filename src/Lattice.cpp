@@ -77,29 +77,47 @@ bool Lattice::find(formalConcept concp){
     return false;
 }
 
-vector<formalConcept> Lattice::getParents(formalConcept c){
-    vector<formalConcept> parents;
+
+vector<formalConcept> Lattice::getConceptsAbove(formalConcept c){
+    vector<formalConcept> above;
     
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
-        if(IsSubset(it->c.second,c.second) && it->c.first!=c.first && it->c.second!=c.second)
-            parents.push_back(it->c);
+        if(IsSubset(c.second,it->c.second))// && it->c.first!=c.first && it->c.second!=c.second)
+            above.push_back(it->c);
+    }
+
+    return above;
+}
+
+vector<formalConcept> Lattice::getParents(formalConcept c){
+    vector<formalConcept> above;
+    
+    typename std::vector<Node>::iterator it;
+    for(it= concepts.begin(); it!=concepts.end(); it++){
+        if(IsSubset(c.second,it->c.second) && it->c.first!=c.first && it->c.second!=c.second)
+            above.push_back(it->c);
+    }
+
+    vector<formalConcept> parents;
+    typename std::vector<formalConcept>::iterator it1;
+    typename std::vector<formalConcept>::iterator it2;
+
+    for(it1= above.begin(); it1!=above.end(); it1++){
+        bool include = true;
+        for(it2= above.begin(); it2!=above.end(); it2++){
+            if (IsSubset((*it2).second,(*it1).second) && (*it1).first!=(*it2).first && (*it1).second!=(*it2).second)
+                include = false;
+        }
+
+        if (include)
+            parents.push_back(*it1);
     }
 
     return parents;
 }
 
-vector<formalConcept> Lattice::getConceptsAbove(formalConcept c){
-    vector<formalConcept> childs;
-    
-    typename std::vector<Node>::iterator it;
-    for(it= concepts.begin(); it!=concepts.end(); it++){
-        if(IsSubset(c.second,it->c.second) && it->c.first!=c.first && it->c.second!=c.second)
-            childs.push_back(it->c);
-    }
 
-    return childs;
-}
 
 
 bool Lattice::next(formalConcept& c, formalConcept& output){
@@ -162,7 +180,7 @@ void Lattice::printGraphplaceInput(ofstream& out, int flag){
         }
 }
 
-void Lattice::printTerminal(){
+void Lattice::printTerminalNodes(){
         cout << endl;
         cout << "List of concepts: "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
@@ -176,4 +194,20 @@ void Lattice::printTerminal(){
                 cout << ") "<<endl;
         }
 
-}       
+}      
+
+void Lattice::printTerminalConcepts(vector<string> obj, vector<string> attr){
+        cout << endl;
+        cout << "List of concepts: "<< endl;
+        for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
+                cout << "Concept: "<< i->index+1 << ": " << endl;
+                cout << "( ";
+
+                
+                transformNodes(i->c,obj,attr);
+
+
+                cout << ") "<<endl;
+        }
+
+}    

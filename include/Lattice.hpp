@@ -81,7 +81,9 @@ class Lattice{
 
                 void printGraphplaceInput(ofstream& out, int flag=0);
 
-                void printTerminal();
+                void printTerminalNodes();
+                
+                void printTerminalConcepts(vector<string> obj, vector<string> attr);
 
 
 };

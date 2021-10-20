@@ -131,4 +131,29 @@ vector< vector<int> > getAllSubsets(vector<int> set){
 }
 
 
+void transformNodes(formalConcept f, vector<string> objects, vector<string> attributes){
+    
+    cout<< "{";
+        if(f.first.size()!=0){
+                for(vector<int>::const_iterator j = f.first.begin(); j<f.first.end() -1 ;j++){
+                        cout<< objects[*j] << ", ";
+                        
+                }
+        
+                cout << objects[*(f.first.end() -1)];
+        }
+        cout<< "}, {";
+        if(f.second.size()!=0){
+                for(vector<int>::const_iterator j = f.second.begin(); j<f.second.end() -1 ;j++){
+                        cout<< attributes[*j] << ", ";
+                        
+                }  
+                cout << attributes[*(f.second.end() -1)];
+        }
+       cout << "}";
+
+}
+
+
+
 

@@ -69,21 +69,26 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
     vector<int> emptyset={};
     c.objectPrime(g,gPrime);
 
+    //cout<< "adding: "<< g<<endl;
+    //cout<< "inf= "<< inf<<endl;
     if(inf.first.empty() && inf.second.empty()){
-        //l.replace(inf,make_pair(g,gPrime));
         inf.first=g;
         inf.second=gPrime;
+        //cout<< "dentro del inf.empty"<< inf<<endl;
         l.add(inf);
     }else{
         if(!IsSubset(inf.second,gPrime)){
             if(inf.first.empty()){
+                l.replace(inf,make_pair(inf.first,inf.second+gPrime));
                 inf.second = inf.second+gPrime;
+                //cout<< "dentro del inf.first.empty"<< inf<<endl;
             }else{
                 
                 l.add(make_pair(emptyset,inf.second+gPrime));
                 //(empty,inf U{g'}) es un vecino superior de inf
                 inf.first =emptyset;
                 inf.second=inf.second + gPrime;
+                //cout<< "dentro del else inf.first.empty"<<inf<<endl;
             }
         }
 
@@ -101,6 +106,7 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
 
             for(formalConcept f : l.getformalConcepts()){
                 if((int)f.second.size()==i){
+                   // cout<< "ci"<<f<<endl;
                     C[i].push_back(f);// stova a dar core mirarlo bien
                 }
                 CPrime[i].clear();
@@ -115,16 +121,17 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                     l.replace(f,make_pair(f.first+g,f.second)); //NOTE: por si falla
                     //f.first = f.first +g;
                     CPrime[i].push_back(make_pair(f.first + g,f.second)); //REVISAR
-
+                    //cout<< "dentro del issubset"<< f.first+g <<endl;
                     if(f.second==gPrime){
+                        //cout<< "haciendo return"<<endl;
                         return;
                     }
                 }else{
                     vector<int> intent;
                     std::set_intersection(f.second.begin(),f.second.end(),gPrime.begin(),gPrime.end(),inserter(intent,intent.begin())); // int = B \cap {g}'
-                    
+                    //cout<< "intent = "<<intent<<endl;
                     bool exists = false;
-
+                    //cout<< "dentro del else issubset"<< endl;
                     for(formalConcept fCPrime : CPrime[intent.size()]){
                         if(fCPrime.second==intent){
                             exists=true;
@@ -134,11 +141,9 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                     if(!exists){
                         l.add(make_pair(f.first+g,intent));
                         CPrime[intent.size()].push_back(make_pair(f.first+g,intent));
-
-                        //upper neig update;
-                        //update edges;
-
+                        //cout<< "!exist"<<f.first+g<<endl;
                         if(intent == gPrime){
+                            //cout<< "retrurning"<<endl;
                             return;
                         }
                     
@@ -162,7 +167,7 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
     bool parentIsMaximal=true;
     while (parentIsMaximal){
         parentIsMaximal=false;
-        vector<formalConcept> parents=l.getConceptsAbove(generatorConcept);
+        vector<formalConcept> parents=l.getParents(generatorConcept);
         
         for(formalConcept parent : parents){
             if(IsSubset(parent.second,intent)){
@@ -173,41 +178,34 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
         }
         
     }
-
     return generatorConcept;
 }
 
+
+
 formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l){
-    cout << "Llamada a addintent con"<<endl;
-    cout << "Intent="<<intent<<endl;
-    cout << "GeneratorConcept="<<generatorConcept<<endl;
-    cout<<endl;
-    
+    cout<< "intent " << intent<<endl;
+    cout<< "generator"<< generatorConcept<<endl;
     generatorConcept = GetMaximalConcept(intent,generatorConcept,l);
 
     if(generatorConcept.second==intent){
         return generatorConcept;
     }
+
+    cout<< "generator2"<< generatorConcept<<endl;
    
-    vector<formalConcept> generatorParents = l.getConceptsAbove(generatorConcept);
+    vector<formalConcept> generatorParents = l.getParents(generatorConcept);
     vector<formalConcept> newParents;
     vector<int> empty ={};
     newParents.push_back(make_pair(empty,empty));
-/*
-     cout << "Padres de "<<generatorConcept<<endl;
-     for(formalConcept f : generatorParents){
-         cout <<"->"<< f<< " + ";
-     }
-     cout << endl<<endl;*/
 
     for(formalConcept f : generatorParents){
+        cout<< "generatorparents       " << f<<endl;
         if(!IsSubset(intent,f.second)){
             vector<int> intersection;
 
             std::set_intersection(f.second.begin(),f.second.end(),intent.begin(),intent.end(),inserter(intersection,intersection.begin()));
             f=AddIntent(intersection,f,c,l);
-            //l.replace(f,fnew);
-            //f=fnew;
         }
 
         bool addParent=true;
@@ -217,17 +215,7 @@ formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Cont
                 addParent=false;
                 break;
             }else if(IsSubset(f.second,newParents[i].second)){
-                //newParents.erase(f.second);
                 newParents.erase(newParents.begin()+i);
-                /*for(formalConcept f2: newParents){
-                    cout<< f2;
-                }
-                cout << "deleting "<< newParents[i]<< "!!!!!!!";
-                
-                for(formalConcept f2: newParents){
-                    cout<< f2;
-                }
-                cout <<endl;*/
             }
         }
 
@@ -237,10 +225,9 @@ formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Cont
     }
 
     formalConcept newConcept = make_pair(generatorConcept.first,intent);
-    l.add(newConcept);
-    /*for(formalConcept p : newParents){
-
-    }*/
+    if(!l.find(newConcept)){
+        l.add(newConcept);
+    }
 
     return newConcept;
 }
