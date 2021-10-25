@@ -194,7 +194,23 @@ void Lattice::printTerminalNodes(){
                 cout << ") "<<endl;
         }
 
-}      
+}    
+
+void Lattice::printIntoFile(ofstream& out){
+        out << endl;
+        out << "List of concepts: "<< endl;
+        for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
+                out << "Concept: "<< i->index+1 << ": " << endl;
+                out << "( ";
+
+                
+                out << i->c;
+
+
+                out << ") "<<endl;
+        }
+
+}    
 
 void Lattice::printTerminalConcepts(vector<string> obj, vector<string> attr){
         cout << endl;

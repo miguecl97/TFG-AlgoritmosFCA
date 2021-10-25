@@ -32,6 +32,7 @@ class Context {
                  * @param attributes Vector of all attributes of the context
                  */
                 Context(vector<vector<bool>> data, vector<string> obj, vector<string> attr);               
+                Context(vector<vector<bool>> data);
 
                 size_t getNObjects() const {return nObj;}
 

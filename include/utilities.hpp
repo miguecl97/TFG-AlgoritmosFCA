@@ -27,9 +27,9 @@ typedef pair<vector<int>, vector<int>> formalConcept;
  * @param f File that contains the CSV information.
  * @return The formal context read from the file.
  */
- Context readCSV(ifstream &f);
+Context readCSV(ifstream &f);
 
-
+Context generate(int nObj, int nProp, int d);
 
 ostream& operator<< (ostream& os,const vector<int>& v);
 
@@ -46,4 +46,8 @@ vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2);
 vector< vector<int> > getAllSubsets(vector<int> set);
 
 void transformNodes(formalConcept f, vector<string> objects, vector<string> attributes);
+void init();
+double getCurrentValue(); 
+int parseLine(char* line);
+int getValue();
 #endif

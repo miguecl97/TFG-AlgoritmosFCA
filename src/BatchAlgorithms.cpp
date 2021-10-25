@@ -37,6 +37,7 @@ void NextGanter(vector<int> A,int g, Context &c, Lattice &l){
             }
         }
         if(empty){
+            //cout<< "... adding concept..."<<endl;
             l.add(make_pair(AdoublePrime,Aprime));
             vector<int> aux2 = c.getObjectsVector() - AdoublePrime;
             if(!aux2.empty()){

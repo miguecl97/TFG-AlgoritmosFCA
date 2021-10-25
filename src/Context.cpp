@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <numeric> // std::iota
 #include "Context.hpp"
+#include "string.h"
 
 Context::Context(){
     nObj = nProp = 0;
@@ -20,6 +21,19 @@ Context::Context(vector<vector<bool>> data, vector<string> obj, vector<string> a
     attributes= attr;
     table = data;     
 }
+
+Context::Context(vector<vector<bool>> data){
+    table = data;
+    nObj = data.size();
+    nProp = data.at(0).size();
+
+    for(int i=0;i<(int)nObj;i++){
+        objects.push_back(to_string(i));
+    }
+    for(int i=0; i< (int)nProp;i++){
+        attributes.push_back(to_string(i));
+    }
+ }
 
 vector<int> Context::getObjectsVector(){
 

@@ -21,7 +21,7 @@ struct Node{
 
         int index;
         formalConcept c;
-        vector<int> ch;
+        //vector<int> ch;
         pair<vector<int>,vector<int>> lowerUpperNeighbors;
 
         Node(){};
@@ -85,6 +85,7 @@ class Lattice{
                 
                 void printTerminalConcepts(vector<string> obj, vector<string> attr);
 
+                void printIntoFile(ofstream& out);
 
 };
 

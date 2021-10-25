@@ -3,7 +3,11 @@
 * @author mcantarero
 */
 
+#include "stdlib.h"
+#include "stdio.h"
+#include "string.h"
 #include "utilities.hpp"
+#include <random>
 Context readCSV(ifstream &f){
     string line;
     vector<string> values;
@@ -130,6 +134,50 @@ vector< vector<int> > getAllSubsets(vector<int> set){
     return subset;
 }
 
+Context generate(int nObj, int nProp, int d){
+    vector<vector<bool>> mat(nObj, vector<bool>(nProp, false));
+    const int range_from  = 0;
+    const int range_to    = nProp;
+    std::random_device                  rand_dev;
+    std::mt19937                        generator(rand_dev());
+    std::uniform_int_distribution<int>  distr(range_from, range_to);
+
+
+
+    /*for (auto& row : mat){
+        fill(row.begin(), row.begin() + d, true);
+        random_shuffle(row.begin(), row.end());
+    }*/
+    for(auto &row : mat){
+        fill(row.begin(), row.begin() + d, false);
+        for(int i=0; i<d;i++){
+            row[distr(generator)]=1;
+        }
+    }
+
+    ofstream dataset;
+    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/"+to_string(nProp)+"/"+to_string(d)+"/datasetG"+to_string(nObj)+".csv");
+    
+    dataset<< " ,";
+    for(int i=1;i<=nProp;i++){
+        dataset<<i<<",";
+    }
+    dataset<<"\n";
+    for(int i=1; i<= nObj;i++){
+        dataset<<i<<",";
+        for(int j=1;j<=nProp;j++){
+            if(mat[i-1][j-1]){
+                dataset<<"1,";
+            }else{
+                dataset<<"0,";
+            }
+        }
+        dataset<<"\n";
+    }
+    dataset.close();
+    return Context(mat);
+}
+
 
 void transformNodes(formalConcept f, vector<string> objects, vector<string> attributes){
     
@@ -153,6 +201,76 @@ void transformNodes(formalConcept f, vector<string> objects, vector<string> attr
        cout << "}";
 
 }
+
+
+
+static unsigned long long lastTotalUser, lastTotalUserLow, lastTotalSys, lastTotalIdle;
+
+void init(){
+    FILE* file = fopen("/proc/stat", "r");
+    fscanf(file, "cpu %llu %llu %llu %llu", &lastTotalUser, &lastTotalUserLow,
+        &lastTotalSys, &lastTotalIdle);
+    fclose(file);
+}
+
+double getCurrentValue(){
+    double percent;
+    FILE* file;
+    unsigned long long totalUser, totalUserLow, totalSys, totalIdle, total;
+
+    file = fopen("/proc/stat", "r");
+    fscanf(file, "cpu %llu %llu %llu %llu", &totalUser, &totalUserLow,
+        &totalSys, &totalIdle);
+    fclose(file);
+
+    if (totalUser < lastTotalUser || totalUserLow < lastTotalUserLow ||
+        totalSys < lastTotalSys || totalIdle < lastTotalIdle){
+        //Overflow detection. Just skip this value.
+        percent = -1.0;
+    }
+    else{
+        total = (totalUser - lastTotalUser) + (totalUserLow - lastTotalUserLow) +
+            (totalSys - lastTotalSys);
+        percent = total;
+        total += (totalIdle - lastTotalIdle);
+        percent /= total;
+        percent *= 100;
+    }
+
+    lastTotalUser = totalUser;
+    lastTotalUserLow = totalUserLow;
+    lastTotalSys = totalSys;
+    lastTotalIdle = totalIdle;
+
+    return percent;
+}
+
+int parseLine(char* line){
+    // This assumes that a digit will be found and the line ends in " Kb".
+    int i = strlen(line);
+    const char* p = line;
+    while (*p <'0' || *p > '9') p++;
+    line[i-3] = '\0';
+    i = atoi(p);
+    return i;
+}
+
+int getValue(){ //Note: this value is in KB!
+    FILE* file = fopen("/proc/self/status", "r");
+    int result = -1;
+    char line[128];
+
+    while (fgets(line, 128, file) != NULL){
+        if (strncmp(line, "VmRSS:", 6) == 0){
+            result = parseLine(line);
+            break;
+        }
+    }
+    fclose(file);
+    return result;
+}
+
+
 
 
 

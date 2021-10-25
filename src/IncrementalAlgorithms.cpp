@@ -34,8 +34,9 @@ void AddNorris(vector<int> g,vector<int> &added, Context &c, Lattice &l){
                 c.objectPrime(haux,hprime);
                 formalConcept f2 = make_pair(haux,hprime);
 
-                if(find(added.begin(), added.end(), h) != added.end() && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was added && D \subseteq {h}'
+                if((count(added.begin(), added.end(),h)!=0) && IsSubset(hprime,D)){// there is an element that checks the conditions, {h} was added && D \subseteq {h}'
                     empty = false;// set is not empty
+                    break;
                 }
 
             }
@@ -50,14 +51,16 @@ void AddNorris(vector<int> g,vector<int> &added, Context &c, Lattice &l){
         vector<int> hprime2;
         c.objectPrime(h2,hprime2);
 
-        if(find(added.begin(), added.end(), h) != added.end()  && IsSubset(hprime2,gPrime)){//if there is an h that was added and {g}' \subseteq {h}'
+        if((count(added.begin(), added.end(),h)!=0)  && IsSubset(hprime2,gPrime)){//if there is an h that was added and {g}' \subseteq {h}'
             empty2=false;//set is not empty
+            break;
         }
     }
     if(empty2){
         l.add(make_pair(g,gPrime));// add ({g},{g}')
     }
-    added.push_back(g.front()); // g has been added
+
+     // g has been added
 }
 
 
@@ -184,15 +187,15 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
 
 
 formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l){
-    cout<< "intent " << intent<<endl;
-    cout<< "generator"<< generatorConcept<<endl;
+    //cout<< "intent " << intent<<endl;
+    //cout<< "generator"<< generatorConcept<<endl;
     generatorConcept = GetMaximalConcept(intent,generatorConcept,l);
 
     if(generatorConcept.second==intent){
         return generatorConcept;
     }
 
-    cout<< "generator2"<< generatorConcept<<endl;
+    //cout<< "generator2"<< generatorConcept<<endl;
    
     vector<formalConcept> generatorParents = l.getParents(generatorConcept);
     vector<formalConcept> newParents;
@@ -200,7 +203,7 @@ formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Cont
     newParents.push_back(make_pair(empty,empty));
 
     for(formalConcept f : generatorParents){
-        cout<< "generatorparents       " << f<<endl;
+        //cout<< "generatorparents       " << f<<endl;
         if(!IsSubset(intent,f.second)){
             vector<int> intersection;
 
