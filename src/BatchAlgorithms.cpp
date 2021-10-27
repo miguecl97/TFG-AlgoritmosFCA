@@ -13,7 +13,7 @@
 
 
 
-void NextGanter(vector<int> A,int g, Context &c, Lattice &l){
+void NextGanter(vector<int> &A,int &g, Context &c, Lattice &l){
 
     while(A!=c.getObjectsVector()){
         vector<int> gvec ={g};
@@ -37,7 +37,6 @@ void NextGanter(vector<int> A,int g, Context &c, Lattice &l){
             }
         }
         if(empty){
-            //cout<< "... adding concept..."<<endl;
             l.add(make_pair(AdoublePrime,Aprime));
             vector<int> aux2 = c.getObjectsVector() - AdoublePrime;
             if(!aux2.empty()){
@@ -57,11 +56,12 @@ void NextGanter(vector<int> A,int g, Context &c, Lattice &l){
 
         }
     }
-
 }
+
+
+
 void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> inum,int r,Context &c, Lattice &l){
     vector<int> m=c.getAttributesVector();
-    int numconcept=1;
     bool found = false;
 
     int i = c.getNAttributes();
@@ -171,8 +171,7 @@ void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> inum,in
 
 
 list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
-    vector<int> A (c.getNObjects());
-    std::iota(A.begin(), A.end(), 0);
+    vector<int> A = c.getObjectsVector();
     list<formalConcept> neigh;
 
     vector<int> min = A-obj;
@@ -232,16 +231,6 @@ void LatticeLindig(Context &c, Lattice &l){
 void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
 
-    /*
-    cout<< "r="<<r<<endl;
-    for(int j=0; j< (int)A.size();j++){
-        cout <<"A"<< A[j]<<endl;
-    }
-    cout << endl;
-    for(int k=0; k< (int)B.size();k++){
-        cout << "B"<<B[k]<<endl;
-    }
-    cout << endl;*/
     if((int)A.size() <= rnew){
         A.resize(rnew+1);
     }
@@ -522,8 +511,7 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
 
             vector<int> Y;
             vector<vector<int>> relations;
-            vector<int> m (c.getNAttributes());
-            std::iota(m.begin(), m.end(), 0);
+            vector<int> m = c.getAttributesVector();
 
             for(int a : m){
                 vector<int> aux ={a};
@@ -682,11 +670,7 @@ void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Latt
     l.add(make_pair(A,B));
     vector<formalConcept> ln = LowerNeighboursBordat(A,B,c);    
     formalConcept f2 =make_pair(A,B);
-    /*cout<<"C="<<C<< " ,  vecinos de "<< f2<<"->"; 
-    for(formalConcept f3: ln){
-        cout << f3<< ",";
-    }
-    cout <<endl;*/
+
     for(formalConcept f : ln){
 
         vector<int> intersection;

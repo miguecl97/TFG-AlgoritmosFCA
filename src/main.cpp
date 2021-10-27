@@ -25,22 +25,33 @@ int main(int argc, char *argv[]){
   init();
   Context c;
   Lattice l;
-  int gprime=10;
-  //read infile .csv
-  if(argc>1){
+  bool infile =false;
+  int nG,nA,gprime=0;
+  ofstream results;
 
+  if(argc==4){
+    nG=atoi(argv[1]);
+    nA= atoi(argv[2]);
+    gprime= atoi(argv[3]);
+    infile=true;
+    c=generate(nG,nA,gprime);
+    results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/"+to_string(c.getNAttributes())+"/"+to_string(gprime) +"/G"+to_string(c.getNObjects())+"-results.txt");
+  }else if(argc==2){
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
-    //cout << c;
-
+    if(c.getNObjects()==0){
+      cout<< "Error reading the csv file";
+      return 0;
+    }
   }else{
-    
-    c=generate(100,100,gprime);
-    cout << "Error: first argument must be a valid option";
+    cout<< "There are 2 ways of execute the algorithms program: \n";
+    cout<< "-> Generating a artificial dataset by introducing number of objects, attributes and number of atributes per object in the command line:\n";
+    cout<<"    ./bin/main 50 100 4 (will generate a context with |G|=50,|M|=100 and |g'|=4)"<<endl;
+    cout<< "-> Using a existing dataset in a csv file: "<<endl;
+    cout<< "   ./bin/main /datasets/test.csv"<<endl;
+    return 0;
   }
-  //c=generate(250,250,75);
 
-    //general data:
   vector<int> objects (c.getNObjects());
   std::iota(objects.begin(), objects.end(), 0);
   vector<int> objectsPrime;
@@ -61,29 +72,17 @@ int main(int argc, char *argv[]){
   cout<< "Results of batch algorithms: "<< endl;
 
   //--- NEXTCONCEPT ALGORITHM ---
-  Lattice lnext;
   Lattice lganter;
-  vector<int> inum = {0};
-  vector<vector<int>> A ;
-  A.push_back(objects);
-  vector<vector<int>> B ;
-  B.push_back(objectsPrime);
-
-  /*while(B[r2]!=c.getAttributesVector()){
-    formalConcept f = make_pair(A[r2],B[r2]);
-    if(!lnext.find(f)){
-        lnext.add(f);
-    }
-    NextConcept(A,B,inum,r2,c,lnext);
-
-  }*/
-  //NextConcept(A,B,inum,r2,c,lnext);
-/*
+  double ramganter=0;
+  double cpuganter=0;
+  vector<int> Aganter={};
+  int gganter =c.getNObjects()-1;
   auto startganter = chrono::steady_clock::now();
-  NextGanter({},c.getNObjects()-1,c,lganter);
+  NextGanter(Aganter,gganter,c,lganter);
   lganter.add(make_pair(attributesPrime,attributes));
   auto endganter = chrono::steady_clock::now();
-  cout<< "CPU USAGE NEXTCLOSURE:"<< getCurrentValue();<<endl
+  cpuganter=getCurrentValue();
+  ramganter=getValue();
   cout << "->NextClosure(Ganter) has mined: "<< lganter.getSize()<<" concepts ."<<endl;
   cout << "Time NextClosure " 
     << chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()
@@ -97,14 +96,18 @@ int main(int argc, char *argv[]){
 
   //--- LINDIG'S ALGORITM ---
   Lattice llindig;
+  double ramlindig=0;
+  double cpulindig=0;
   auto startlindig = chrono::steady_clock::now();
   LatticeLindig(c,llindig);
   auto endlindig = chrono::steady_clock::now();
+  cpulindig=getCurrentValue();
+  ramlindig=getValue();
 
   cout << "->Lindig has mined: "<<llindig.getSize()<<" concepts ."<< endl;
   cout << "Time Lindig " 
     << chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()
-		<< " ms" << endl;l=lganter;
+		<< " ms" << endl;l=llindig;
   //llindig.printTerminal();
   //--- ---
   
@@ -113,9 +116,13 @@ int main(int argc, char *argv[]){
   //---BERRY'S ALGORITHM---
   vector<int> atBerry={};
   Lattice lberry;
+  double ramberry=0;
+  double cpuberry=0;
   auto startberry = chrono::steady_clock::now();
   InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
   auto endberry = chrono::steady_clock::now();
+  cpuberry=getCurrentValue();
+  ramberry=getValue();
   cout << "->Berry has mined:" << l.getSize()<<" concepts ."<<endl;
   cout << "Time Berry " 
     << chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()
@@ -133,10 +140,17 @@ int main(int argc, char *argv[]){
   Lattice linclose;
   int r=0;
   int y =0;
+  double raminclose=0;
+  double cpuinclose=0;
+
   auto startclose = chrono::steady_clock::now();
   linclose.add(make_pair(attributesPrime,attributes));
   InClose(r,y,A2,B2,c,linclose);
   auto endclose = chrono::steady_clock::now();
+  cpuinclose=getCurrentValue();
+  raminclose=getValue();
+
+
   //linclose.printTerminalConcepts(c.getObjects(),c.getAttributes());
   cout << "->In close has mined: "<<linclose.getSize()<<" concepts ."<< endl;
   cout << "Time InClose " 
@@ -146,12 +160,16 @@ int main(int argc, char *argv[]){
 
   //---BORDAT'S ALGORITHM---
   Lattice lBordat;
+  double rambordat=0;
+  double cpubordat=0;
   vector<int> objPrime;
   c.objectPrime(objects,objPrime);
   auto startbordat = chrono::steady_clock::now();
   LatticeBordat(objects,objPrime,objPrime,c,lBordat);
   lBordat.add(make_pair(empty,attributes));
   auto endbordat = chrono::steady_clock::now();
+  cpubordat=getCurrentValue();
+  rambordat=getValue();
   cout << "->Bordat has mined:" << lBordat.getSize()<<" concepts ."<<endl;
   cout << "Time Bordat " 
     << chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()
@@ -160,8 +178,8 @@ int main(int argc, char *argv[]){
   //--- ---
   
 
-  ofstream myfile; 
-  myfile.open("lattice.g");
+  //ofstream myfile; 
+  //myfile.open("lattice.g");
   //l.printGraphplaceInput(myfile,0);
   //l.printTerminal();
 
@@ -172,7 +190,8 @@ int main(int argc, char *argv[]){
 
   //-- NORRIS ALGORITHM ---
   Lattice lNorris;
-  
+  double ramnorris=0;
+  double cpunorris=0;
   vector<int> added ={};
   auto startnorris = chrono::steady_clock::now();
   for(int g : c.getObjectsVector()){
@@ -181,25 +200,27 @@ int main(int argc, char *argv[]){
   } 
   lNorris.add(make_pair(attributesPrime, attributes));
   auto endnorris = chrono::steady_clock::now();
+  cpunorris=getCurrentValue();
+  ramnorris=getValue();
   cout << "->Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
   cout << "Time Norris " 
     << chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()
 		<< " ms" << endl;
-  //cout << "CONCEPTOS DE NORRIS:";
-  //lNorris.printTerminal();
-  //cout << endl <<endl<<"SALIDA CORRECTA(PUEDE VARIAR EL ORDEN):";
-  //lberry.printTerminal();
   //--- ---
   
 
   //---GODIN'S ALGORITHM---
   formalConcept inf(make_pair(empty,empty));
   Lattice lGodin;
+  double ramgodin=0;
+  double cpugodin=0;
   auto startgodin = chrono::steady_clock::now();
   for(int g : objects){
     AddGodin({g},inf,c,lGodin);
   } 
   auto endgodin = chrono::steady_clock::now();
+  cpugodin=getCurrentValue();
+  ramgodin=getValue();
   cout << "->Godin has mined: " << lGodin.getSize()<<" concepts ."<<endl;
   cout << "Time Godin " 
     << chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()
@@ -212,8 +233,10 @@ int main(int argc, char *argv[]){
   //---ADDINTENT ALGORITHM---
   formalConcept bottomconcept(make_pair(attributesPrime,attributes));
   Lattice lAddIntent;
+  double ramaddintent=0;
+  double cpuaddintent=0;
   auto startintent = chrono::steady_clock::now();
-  lAddIntent.add(bottomconcept);
+  /*lAddIntent.add(bottomconcept);
   for(int g : objects){
     vector<int> gaux={g};
     vector<int> gPrime;
@@ -225,8 +248,10 @@ int main(int argc, char *argv[]){
       lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
-  }
+  }*/
   auto endintent = chrono::steady_clock::now();
+  cpuaddintent=getCurrentValue();
+  ramaddintent=getValue();
   cout << "->AddIntent has mined: " << lAddIntent.getSize()<<" concepts ."<<endl;
   cout << "Time Addintent " 
     << chrono::duration_cast<chrono::milliseconds>(endintent - startintent).count()
@@ -234,43 +259,33 @@ int main(int argc, char *argv[]){
   //lAddIntent.printTerminalNodes();
   //lAddIntent.printTerminalConcepts(c.getObjects(),c.getAttributes());
   //--- ---
-  */
-  /*
-  cout<< "SALIDA GODIN";
-  lGodin.printTerminal();
   
-  */
 
-
-
-  //-- INCLOSE ALGORITHM ---
-  vector<vector<int>> A2 ;
-  vector<vector<int>> B2 ;
-  A2.push_back(objects);
-  B2.push_back({});
-  Lattice linclose;
-  int r=0;
-  int y =0;
-
-  auto startclose = chrono::steady_clock::now();
-  linclose.add(make_pair(attributesPrime,attributes));
-  InClose(r,y,A2,B2,c,linclose);
-  auto endclose = chrono::steady_clock::now();
-  //linclose.printTerminalConcepts(c.getObjects(),c.getAttributes())
-
-  cout << "->In close has mined: "<<linclose.getSize()<<" concepts ."<< endl;
-  cout<< "CPU USAGE:"<< getCurrentValue()<<"%" <<endl;
-  cout<< "RAM USED: "<< getValue()<<" Kb"<<endl;
-  cout << "Time InClose " 
+  if(infile){
+  results << "NextClosure " 
+    << chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()
+		<< " ms / "<<ramganter<<" kb / "<<cpuganter<< " %" << endl;
+  results << "Lindig " 
+    << chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()
+		<< " ms / "<<ramlindig<<" kb / "<<cpulindig<< " %" << endl;
+  results << "Inherit-Concepts " 
+    << chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()
+		<< " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
+  results << "InClose " 
     << chrono::duration_cast<chrono::milliseconds>(endclose - startclose).count()
-		<< " ms" << endl;
-  //--- ---
-
-
-  ofstream results;
-  results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/"+to_string(c.getNAttributes())+"/"+to_string(gprime) +"results"+to_string(c.getNObjects())+".txt");
+		<< " ms / "<<raminclose<<" kb / "<<cpuinclose<< " %" << endl;
+  results << "Bordat " 
+    << chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()
+		<< " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
+  results << "Godin " 
+    << chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()
+		<< " ms / "<<ramgodin<<" kb / "<<cpugodin<< " %" << endl;
+  results << "Norris " 
+    << chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()
+		<< " ms / "<<ramnorris<<" kb / "<<cpunorris<< " %" << endl;
   linclose.printIntoFile(results);
   results.close();
+  }
 
   return 0;
 }

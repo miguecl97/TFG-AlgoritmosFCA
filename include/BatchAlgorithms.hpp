@@ -22,7 +22,7 @@ using namespace std;
  // <extension, intension>
 
 void NextConcept(vector<vector<int>> A,vector<vector<int>> B,vector<int> inum,int r,Context &c, Lattice &l);
-void NextGanter(vector<int> A,int g, Context &c, Lattice &l);
+void NextGanter(vector<int> &A,int &g, Context &c, Lattice &l);
 
 list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c);
 void LatticeLindig(Context &c, Lattice &l);

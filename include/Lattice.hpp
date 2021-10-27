@@ -21,7 +21,7 @@ struct Node{
 
         int index;
         formalConcept c;
-        //vector<int> ch;
+        vector<int> ch;
         pair<vector<int>,vector<int>> lowerUpperNeighbors;
 
         Node(){};

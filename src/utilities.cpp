@@ -156,7 +156,7 @@ Context generate(int nObj, int nProp, int d){
     }
 
     ofstream dataset;
-    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/"+to_string(nProp)+"/"+to_string(d)+"/datasetG"+to_string(nObj)+".csv");
+    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/"+to_string(nProp)+"/"+to_string(d)+"/G"+to_string(nObj)+"dataset.csv");
     
     dataset<< " ,";
     for(int i=1;i<=nProp;i++){

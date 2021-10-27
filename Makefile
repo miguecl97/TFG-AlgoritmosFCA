@@ -2,7 +2,7 @@ SRC = src
 INC = include
 OBJ = obj
 BIN = bin
-CPPFLAGS = -Wall  -g -c -std=c++17 -I$(INC) 
+CPPFLAGS = -Wall -O2 -g -c -std=c++17 -I$(INC) 
 
 all: $(BIN)/main 
 
