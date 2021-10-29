@@ -182,7 +182,7 @@ void Lattice::printGraphplaceInput(ofstream& out, int flag){
 
 void Lattice::printTerminalNodes(){
         cout << endl;
-        cout << "List of concepts: "<< endl;
+        cout << "List of concepts ("<< getSize()<<"): "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 cout << "Concept: "<< i->index+1 << ": " << endl;
                 cout << "( ";
@@ -198,7 +198,7 @@ void Lattice::printTerminalNodes(){
 
 void Lattice::printIntoFile(ofstream& out){
         out << endl;
-        out << "List of concepts: "<< endl;
+        out << "List of concepts: ("<< getSize()<<"): "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 out << "Concept: "<< i->index+1 << ": " << endl;
                 out << "( ";
@@ -214,7 +214,7 @@ void Lattice::printIntoFile(ofstream& out){
 
 void Lattice::printTerminalConcepts(vector<string> obj, vector<string> attr){
         cout << endl;
-        cout << "List of concepts: "<< endl;
+        cout << "List of concepts: ("<< getSize()<<"): "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 cout << "Concept: "<< i->index+1 << ": " << endl;
                 cout << "( ";

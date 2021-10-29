@@ -136,7 +136,7 @@ vector< vector<int> > getAllSubsets(vector<int> set){
 
 Context generate(int nObj, int nProp, int d){
     vector<vector<bool>> mat(nObj, vector<bool>(nProp, false));
-    const int range_from  = 0;
+    const int range_from  = 1;
     const int range_to    = nProp;
     std::random_device                  rand_dev;
     std::mt19937                        generator(rand_dev());
@@ -149,14 +149,18 @@ Context generate(int nObj, int nProp, int d){
         random_shuffle(row.begin(), row.end());
     }*/
     for(auto &row : mat){
-        fill(row.begin(), row.begin() + d, false);
+        //fill(row.begin(), row.begin(), false);
         for(int i=0; i<d;i++){
-            row[distr(generator)]=1;
+            int random =distr(generator);
+            while(row[random]==1){
+                random =distr(generator);
+            }
+            row[random]=1;
         }
     }
 
     ofstream dataset;
-    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/"+to_string(nProp)+"/"+to_string(d)+"/G"+to_string(nObj)+"dataset.csv");
+    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(d)+"/G"+to_string(nObj)+"dataset.csv");
     
     dataset<< " ,";
     for(int i=1;i<=nProp;i++){

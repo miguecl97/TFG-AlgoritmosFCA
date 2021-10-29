@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
     gprime= atoi(argv[3]);
     infile=true;
     c=generate(nG,nA,gprime);
-    results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/"+to_string(c.getNAttributes())+"/"+to_string(gprime) +"/G"+to_string(c.getNObjects())+"-results.txt");
+    results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/M"+to_string(c.getNAttributes())+"/g'"+to_string(gprime) +"/G"+to_string(c.getNObjects())+"-results.txt");
   }else if(argc==2){
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
@@ -75,6 +75,7 @@ int main(int argc, char *argv[]){
   Lattice lganter;
   double ramganter=0;
   double cpuganter=0;
+  int sizeganter=0;
   vector<int> Aganter={};
   int gganter =c.getNObjects()-1;
   auto startganter = chrono::steady_clock::now();
@@ -83,7 +84,8 @@ int main(int argc, char *argv[]){
   auto endganter = chrono::steady_clock::now();
   cpuganter=getCurrentValue();
   ramganter=getValue();
-  cout << "->NextClosure(Ganter) has mined: "<< lganter.getSize()<<" concepts ."<<endl;
+  sizeganter=lganter.getSize();
+  cout << "->NextClosure(Ganter) has mined: "<< sizeganter<<" concepts ."<<endl;
   cout << "Time NextClosure " 
     << chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()
 		<< " ms" << endl;
@@ -98,17 +100,20 @@ int main(int argc, char *argv[]){
   Lattice llindig;
   double ramlindig=0;
   double cpulindig=0;
+  int sizelindig=0;
   auto startlindig = chrono::steady_clock::now();
   LatticeLindig(c,llindig);
   auto endlindig = chrono::steady_clock::now();
   cpulindig=getCurrentValue();
   ramlindig=getValue();
+  sizelindig=llindig.getSize();
 
-  cout << "->Lindig has mined: "<<llindig.getSize()<<" concepts ."<< endl;
+  cout << "->Lindig has mined: "<<sizelindig<<" concepts ."<< endl;
   cout << "Time Lindig " 
     << chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()
 		<< " ms" << endl;l=llindig;
   //llindig.printTerminal();
+ //llindig.printTerminalConcepts(c.getObjects(),c.getAttributes());
   //--- ---
   
 
@@ -118,12 +123,14 @@ int main(int argc, char *argv[]){
   Lattice lberry;
   double ramberry=0;
   double cpuberry=0;
+  int sizeberry = 0;
   auto startberry = chrono::steady_clock::now();
   InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
   auto endberry = chrono::steady_clock::now();
   cpuberry=getCurrentValue();
   ramberry=getValue();
-  cout << "->Berry has mined:" << l.getSize()<<" concepts ."<<endl;
+  sizeberry=l.getSize();
+  cout << "->Berry has mined:" << sizeberry<<" concepts ."<<endl;
   cout << "Time Berry " 
     << chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()
 		<< " ms" << endl;
@@ -142,26 +149,27 @@ int main(int argc, char *argv[]){
   int y =0;
   double raminclose=0;
   double cpuinclose=0;
-
+  int sizeinclose=0;
   auto startclose = chrono::steady_clock::now();
   linclose.add(make_pair(attributesPrime,attributes));
   InClose(r,y,A2,B2,c,linclose);
   auto endclose = chrono::steady_clock::now();
   cpuinclose=getCurrentValue();
   raminclose=getValue();
-
+  sizeinclose=linclose.getSize();
 
   //linclose.printTerminalConcepts(c.getObjects(),c.getAttributes());
-  cout << "->In close has mined: "<<linclose.getSize()<<" concepts ."<< endl;
+  cout << "->In close has mined: "<<sizeinclose<<" concepts ."<< endl;
   cout << "Time InClose " 
     << chrono::duration_cast<chrono::milliseconds>(endclose - startclose).count()
 		<< " ms" << endl;
   //--- ---
-
+  
   //---BORDAT'S ALGORITHM---
   Lattice lBordat;
   double rambordat=0;
   double cpubordat=0;
+  int sizebordat=0;
   vector<int> objPrime;
   c.objectPrime(objects,objPrime);
   auto startbordat = chrono::steady_clock::now();
@@ -170,7 +178,8 @@ int main(int argc, char *argv[]){
   auto endbordat = chrono::steady_clock::now();
   cpubordat=getCurrentValue();
   rambordat=getValue();
-  cout << "->Bordat has mined:" << lBordat.getSize()<<" concepts ."<<endl;
+  sizebordat= lBordat.getSize();
+  cout << "->Bordat has mined:" << sizebordat<<" concepts ."<<endl;
   cout << "Time Bordat " 
     << chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()
 		<< " ms" << endl;
@@ -192,6 +201,7 @@ int main(int argc, char *argv[]){
   Lattice lNorris;
   double ramnorris=0;
   double cpunorris=0;
+  int sizenorris=0;
   vector<int> added ={};
   auto startnorris = chrono::steady_clock::now();
   for(int g : c.getObjectsVector()){
@@ -202,7 +212,8 @@ int main(int argc, char *argv[]){
   auto endnorris = chrono::steady_clock::now();
   cpunorris=getCurrentValue();
   ramnorris=getValue();
-  cout << "->Norris has mined: "<< lNorris.getSize()<< " concepts ."<< endl;
+  sizenorris=lNorris.getSize();
+  cout << "->Norris has mined: "<< sizenorris<< " concepts ."<< endl;
   cout << "Time Norris " 
     << chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()
 		<< " ms" << endl;
@@ -214,6 +225,7 @@ int main(int argc, char *argv[]){
   Lattice lGodin;
   double ramgodin=0;
   double cpugodin=0;
+  int sizegodin=0;
   auto startgodin = chrono::steady_clock::now();
   for(int g : objects){
     AddGodin({g},inf,c,lGodin);
@@ -221,7 +233,8 @@ int main(int argc, char *argv[]){
   auto endgodin = chrono::steady_clock::now();
   cpugodin=getCurrentValue();
   ramgodin=getValue();
-  cout << "->Godin has mined: " << lGodin.getSize()<<" concepts ."<<endl;
+  sizegodin=lGodin.getSize();
+  cout << "->Godin has mined: " << sizegodin <<" concepts ."<<endl;
   cout << "Time Godin " 
     << chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()
 		<< " ms" << endl;
@@ -235,8 +248,9 @@ int main(int argc, char *argv[]){
   Lattice lAddIntent;
   double ramaddintent=0;
   double cpuaddintent=0;
+  int sizeintent=0;
   auto startintent = chrono::steady_clock::now();
-  /*lAddIntent.add(bottomconcept);
+  lAddIntent.add(bottomconcept);
   for(int g : objects){
     vector<int> gaux={g};
     vector<int> gPrime;
@@ -248,11 +262,12 @@ int main(int argc, char *argv[]){
       lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
-  }*/
+  }
   auto endintent = chrono::steady_clock::now();
   cpuaddintent=getCurrentValue();
   ramaddintent=getValue();
-  cout << "->AddIntent has mined: " << lAddIntent.getSize()<<" concepts ."<<endl;
+  sizeintent =lAddIntent.getSize();
+  cout << "->AddIntent has mined: " << sizeintent<<" concepts ."<<endl;
   cout << "Time Addintent " 
     << chrono::duration_cast<chrono::milliseconds>(endintent - startintent).count()
 		<< " ms" << endl;
@@ -262,28 +277,31 @@ int main(int argc, char *argv[]){
   
 
   if(infile){
-  results << "NextClosure " 
+  results << "NextClosure ("<<sizeganter<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()
-		<< " ms / "<<ramganter<<" kb / "<<cpuganter<< " %" << endl;
-  results << "Lindig " 
+	  << " ms / "<<ramganter<<" kb / "<<cpuganter<< " %" << endl;
+  results << "Lindig ("<<sizelindig<<") "  
     << chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()
-		<< " ms / "<<ramlindig<<" kb / "<<cpulindig<< " %" << endl;
-  results << "Inherit-Concepts " 
+	  << " ms / "<<ramlindig<<" kb / "<<cpulindig<< " %" << endl;
+  results << "Inherit-Concepts ("<<sizeberry<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()
-		<< " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
-  results << "InClose " 
+	  << " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
+  results << "InClose ("<<sizeinclose<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endclose - startclose).count()
-		<< " ms / "<<raminclose<<" kb / "<<cpuinclose<< " %" << endl;
-  results << "Bordat " 
+	  << " ms / "<<raminclose<<" kb / "<<cpuinclose<< " %" << endl;
+  results << "Bordat ("<<sizebordat<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()
-		<< " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
-  results << "Godin " 
+	 	<< " ms / "<<rambordat<<" kb / "<<cpubordat<< " %" << endl;
+  results << "Godin ("<<sizegodin<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()
 		<< " ms / "<<ramgodin<<" kb / "<<cpugodin<< " %" << endl;
-  results << "Norris " 
+  results << "Norris ("<<sizenorris<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()
 		<< " ms / "<<ramnorris<<" kb / "<<cpunorris<< " %" << endl;
-  linclose.printIntoFile(results);
+  results << "AddIntent ("<<sizeintent<<") " 
+    << chrono::duration_cast<chrono::milliseconds>(endintent - startintent).count()
+		<< " ms / "<<ramnorris<<" kb / "<<cpunorris<< " %" << endl;
+  l.printIntoFile(results);
   results.close();
   }
 
