@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<svg 
+ width="800" height="600"
+ viewBox="0 0 800 600"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+
+<title>Gnuplot</title>
+<desc>Produced by GNUPLOT 5.4 patchlevel 2 </desc>
+
+<g id="gnuplot_canvas">
+
+<rect x="0" y="0" width="800" height="600" fill="#ffffff"/>
+<defs>
+
+	<circle id='gpDot' r='0.5' stroke-width='0.5' stroke='currentColor'/>
+	<path id='gpPt0' stroke-width='0.267' stroke='currentColor' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' stroke-width='0.267' stroke='currentColor' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' stroke-width='0.267' stroke='currentColor' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' stroke-width='0.267' stroke='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<rect id='gpPt4' stroke-width='0.267' stroke='currentColor' fill='currentColor' x='-1' y='-1' width='2' height='2'/>
+	<circle id='gpPt5' stroke-width='0.267' stroke='currentColor' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' fill='currentColor' stroke='none'/>
+	<path id='gpPt7' stroke-width='0.267' stroke='currentColor' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' stroke='currentColor' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' fill='currentColor' stroke='none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' stroke='currentColor' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' fill='currentColor' stroke='none'/>
+	<path id='gpPt13' stroke-width='0.267' stroke='currentColor' d='M0,1.330 L1.265,0.411 L0.782,-1.067 L-0.782,-1.076 L-1.265,0.411 z'/>
+	<use xlink:href='#gpPt13' id='gpPt14' fill='currentColor' stroke='none'/>
+	<filter id='textbox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='#FFFFFF' flood-opacity='1' result='bgnd'/>
+	  <feComposite in='SourceGraphic' in2='bgnd' operator='atop'/>
+	</filter>
+	<filter id='greybox' filterUnits='objectBoundingBox' x='0' y='0' height='1' width='1'>
+	  <feFlood flood-color='lightgrey' flood-opacity='1' result='grey'/>
+	  <feComposite in='SourceGraphic' in2='grey' operator='atop'/>
+	</filter>
+</defs>
+<g fill="none" color="#FFFFFF" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,552.00 L778.99,552.00  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,552.00 L89.00,552.00 M778.99,552.00 L771.49,552.00  '/>	<g transform="translate(74.50,555.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 0</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,450.60 L778.99,450.60  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,450.60 L89.00,450.60 M778.99,450.60 L771.49,450.60  '/>	<g transform="translate(74.50,453.85)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 50000</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,349.20 L778.99,349.20  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,349.20 L89.00,349.20 M778.99,349.20 L771.49,349.20  '/>	<g transform="translate(74.50,352.45)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 100000</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,247.81 L778.99,247.81  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,247.81 L89.00,247.81 M778.99,247.81 L771.49,247.81  '/>	<g transform="translate(74.50,251.06)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 150000</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,146.41 L88.50,146.41 M250.00,146.41 L778.99,146.41  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,146.41 L89.00,146.41 M778.99,146.41 L771.49,146.41  '/>	<g transform="translate(74.50,149.66)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 200000</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,45.01 L778.99,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,45.01 L89.00,45.01 M778.99,45.01 L771.49,45.01  '/>	<g transform="translate(74.50,48.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" > 250000</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M81.50,552.00 L81.50,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,552.00 L81.50,544.50 M81.50,45.01 L81.50,52.51  '/>	<g transform="translate(81.50,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 0</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M221.00,552.00 L221.00,157.51 M221.00,52.51 L221.00,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M221.00,552.00 L221.00,544.50 M221.00,45.01 L221.00,52.51  '/>	<g transform="translate(221.00,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 20</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M360.50,552.00 L360.50,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M360.50,552.00 L360.50,544.50 M360.50,45.01 L360.50,52.51  '/>	<g transform="translate(360.50,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 40</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M499.99,552.00 L499.99,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M499.99,552.00 L499.99,544.50 M499.99,45.01 L499.99,52.51  '/>	<g transform="translate(499.99,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 60</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M639.49,552.00 L639.49,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M639.49,552.00 L639.49,544.50 M639.49,45.01 L639.49,52.51  '/>	<g transform="translate(639.49,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 80</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="0.50" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(192, 192, 192)' class="gridline"  d='M778.99,552.00 L778.99,45.01  '/></g>
+<g fill="none" color="black" stroke="rgb(192, 192, 192)" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M778.99,552.00 L778.99,544.50 M778.99,45.01 L778.99,52.51  '/>	<g transform="translate(778.99,570.25)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" > 100</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,45.01 L81.50,552.00 L778.99,552.00 L778.99,45.01 L81.50,45.01 Z  '/></g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(16.00,298.51) rotate(270)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" >Tiempo(ms)</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(430.24,592.75)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" >|G|</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+	<g id="gnuplot_plot_1" ><title>NextClosure</title>
+<g fill="none" color="#FFFFFF" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,63.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >NextClosure</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(255,   0,   0)'  d='M207.50,60.01 L243.00,60.01 M81.50,552.00 L221.00,551.96 L360.50,551.59 L499.99,550.30 L639.49,546.94 L778.99,539.38
+		 '/>	<use xlink:href='#gpPt10' transform='translate(81.50,552.00) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(221.00,551.96) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(360.50,551.59) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(499.99,550.30) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(639.49,546.94) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(778.99,539.38) scale(3.75)' color='rgb(255,   0,   0)'/>
+	<use xlink:href='#gpPt10' transform='translate(225.25,60.01) scale(3.75)' color='rgb(255,   0,   0)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_2" ><title>Lindig</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,78.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >Lindig</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(102,   0, 255)'  d='M207.50,75.01 L243.00,75.01 M81.50,552.00 L221.00,551.92 L360.50,550.33 L499.99,539.16 L639.49,473.44 L778.99,131.69
+		 '/>	<use xlink:href='#gpPt11' transform='translate(81.50,552.00) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(221.00,551.92) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(360.50,550.33) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(499.99,539.16) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(639.49,473.44) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(778.99,131.69) scale(3.75)' color='rgb(102,   0, 255)'/>
+	<use xlink:href='#gpPt11' transform='translate(225.25,75.01) scale(3.75)' color='rgb(102,   0, 255)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_3" ><title>Inherit-Concepts</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,93.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >Inherit-Concepts</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(102, 153, 153)'  d='M207.50,90.01 L243.00,90.01 M81.50,552.00 L221.00,551.65 L360.50,549.00 L499.99,537.83 L639.49,487.37 L778.99,352.01
+		 '/>	<use xlink:href='#gpPt13' transform='translate(81.50,552.00) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(221.00,551.65) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(360.50,549.00) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(499.99,537.83) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(639.49,487.37) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(778.99,352.01) scale(3.75)' color='rgb(102, 153, 153)'/>
+	<use xlink:href='#gpPt13' transform='translate(225.25,90.01) scale(3.75)' color='rgb(102, 153, 153)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_4" ><title>InClose</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,108.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >InClose</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(255, 204,   0)'  d='M207.50,105.01 L243.00,105.01 M81.50,552.00 L221.00,551.97 L360.50,551.61 L499.99,549.25 L639.49,536.63 L778.99,483.68
+		 '/>	<use xlink:href='#gpPt14' transform='translate(81.50,552.00) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(221.00,551.97) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(360.50,551.61) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(499.99,549.25) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(639.49,536.63) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(778.99,483.68) scale(3.75)' color='rgb(255, 204,   0)'/>
+	<use xlink:href='#gpPt14' transform='translate(225.25,105.01) scale(3.75)' color='rgb(255, 204,   0)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_5" ><title>Bordat</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,123.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >Bordat</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(  0,   0,   0)'  d='M207.50,120.01 L243.00,120.01 M81.50,552.00 L221.00,551.81 L360.50,550.28 L499.99,544.13 L639.49,520.84 L778.99,422.60
+		 '/>	<use xlink:href='#gpPt0' transform='translate(81.50,552.00) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(221.00,551.81) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(360.50,550.28) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(499.99,544.13) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(639.49,520.84) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(778.99,422.60) scale(3.75)' color='rgb(  0,   0,   0)'/>
+	<use xlink:href='#gpPt0' transform='translate(225.25,120.01) scale(3.75)' color='rgb(  0,   0,   0)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_6" ><title>Godin</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,138.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >Godin</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb(102,   0,  51)'  d='M207.50,135.01 L243.00,135.01 M81.50,552.00 L221.00,551.82 L360.50,549.71 L499.99,540.65 L639.49,514.43 L778.99,444.09
+		 '/>	<use xlink:href='#gpPt1' transform='translate(81.50,552.00) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(221.00,551.82) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(360.50,549.71) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(499.99,540.65) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(639.49,514.43) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(778.99,444.09) scale(3.75)' color='rgb(102,   0,  51)'/>
+	<use xlink:href='#gpPt1' transform='translate(225.25,135.01) scale(3.75)' color='rgb(102,   0,  51)'/>
+</g>
+	</g>
+	<g id="gnuplot_plot_7" ><title>Norris</title>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(200.50,153.26)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="end">
+		<text><tspan font-family="Segoe UI" >Norris</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='rgb( 51, 204,  51)'  d='M207.50,150.01 L243.00,150.01 M81.50,552.00 L221.00,551.95 L360.50,551.03 L499.99,546.22 L639.49,532.02 L778.99,494.64
+		 '/>	<use xlink:href='#gpPt12' transform='translate(81.50,552.00) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(221.00,551.95) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(360.50,551.03) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(499.99,546.22) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(639.49,532.02) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(778.99,494.64) scale(3.75)' color='rgb( 51, 204,  51)'/>
+	<use xlink:href='#gpPt12' transform='translate(225.25,150.01) scale(3.75)' color='rgb( 51, 204,  51)'/>
+</g>
+	</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="2.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="black" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<path stroke='black'  d='M81.50,45.01 L81.50,552.00 L778.99,552.00 L778.99,45.01 L81.50,45.01 Z  '/></g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+	<g transform="translate(430.24,25.76)" stroke="none" fill="black" font-family="Segoe UI" font-size="10.00"  text-anchor="middle">
+		<text><tspan font-family="Segoe UI" >|M|=100 , |g'|=30</tspan></text>
+	</g>
+</g>
+<g fill="none" color="black" stroke="currentColor" stroke-width="1.00" stroke-linecap="butt" stroke-linejoin="miter">
+</g>
+</g>
+</svg>
+

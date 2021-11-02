@@ -250,7 +250,7 @@ int main(int argc, char *argv[]){
   double cpuaddintent=0;
   int sizeintent=0;
   auto startintent = chrono::steady_clock::now();
-  lAddIntent.add(bottomconcept);
+  /*lAddIntent.add(bottomconcept);
   for(int g : objects){
     vector<int> gaux={g};
     vector<int> gPrime;
@@ -262,7 +262,7 @@ int main(int argc, char *argv[]){
       lAddIntent.replace(f,make_pair(f.first+gaux,f.second));
     }
 
-  }
+  }*/
   auto endintent = chrono::steady_clock::now();
   cpuaddintent=getCurrentValue();
   ramaddintent=getValue();
