@@ -29,7 +29,7 @@ typedef pair<vector<int>, vector<int>> formalConcept;
  */
 Context readCSV(ifstream &f);
 
-Context generate(int nObj, int nProp, int d);
+Context generate(int nObj, int nProp, int d,int filenumber);
 
 ostream& operator<< (ostream& os,const vector<int>& v);
 

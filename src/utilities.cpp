@@ -134,7 +134,7 @@ vector< vector<int> > getAllSubsets(vector<int> set){
     return subset;
 }
 
-Context generate(int nObj, int nProp, int d){
+Context generate(int nObj, int nProp, int d, int filenumber){
     vector<vector<bool>> mat(nObj, vector<bool>(nProp, false));
     const int range_from  = 1;
     const int range_to    = nProp;
@@ -160,7 +160,7 @@ Context generate(int nObj, int nProp, int d){
     }
 
     ofstream dataset;
-    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(d)+"/G"+to_string(nObj)+"dataset.csv");
+    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(d)+"/G"+to_string(nObj)+"dataset"+to_string(filenumber)+".csv");
     
     dataset<< " ,";
     for(int i=1;i<=nProp;i++){

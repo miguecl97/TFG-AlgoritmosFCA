@@ -26,16 +26,21 @@ int main(int argc, char *argv[]){
   Context c;
   Lattice l;
   bool infile =false;
-  int nG,nA,gprime=0;
+  int nG,nA,gprime,filenumber=0;
   ofstream results;
+  ofstream csvfile;
 
-  if(argc==4){
+  if(argc==5){
     nG=atoi(argv[1]);
     nA= atoi(argv[2]);
     gprime= atoi(argv[3]);
+    filenumber = atoi(argv[4]);
     infile=true;
-    c=generate(nG,nA,gprime);
-    results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/M"+to_string(c.getNAttributes())+"/g'"+to_string(gprime) +"/G"+to_string(c.getNObjects())+"-results.txt");
+    c=generate(nG,nA,gprime,filenumber);
+    csvfile.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/M"+to_string(c.getNAttributes())+"/g'"+to_string(gprime) +"/tables/table"+to_string(c.getNObjects())+".csv",fstream::app);
+    csvfile<<endl;
+    csvfile<<gprime<<","<<nG<<",";
+    results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/M"+to_string(c.getNAttributes())+"/g'"+to_string(gprime) +"/results/G"+to_string(c.getNObjects())+"-results"+to_string(filenumber)+".txt");
   }else if(argc==2){
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
@@ -44,7 +49,7 @@ int main(int argc, char *argv[]){
       return 0;
     }
   }else{
-    cout<< "There are 2 ways of execute the algorithms program: \n";
+    cout<< "ERROR: There are 2 ways of execute the algorithms program: \n";
     cout<< "-> Generating a artificial dataset by introducing number of objects, attributes and number of atributes per object in the command line:\n";
     cout<<"    ./bin/main 50 100 4 (will generate a context with |G|=50,|M|=100 and |g'|=4)"<<endl;
     cout<< "-> Using a existing dataset in a csv file: "<<endl;
@@ -280,29 +285,38 @@ int main(int argc, char *argv[]){
   results << "NextClosure ("<<sizeganter<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()
 	  << " ms / "<<ramganter<<" kb / "<<cpuganter<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endganter - startganter).count()<< ",";
   results << "Lindig ("<<sizelindig<<") "  
     << chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()
 	  << " ms / "<<ramlindig<<" kb / "<<cpulindig<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endlindig - startlindig).count()<< ",";
   results << "Inherit-Concepts ("<<sizeberry<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()
 	  << " ms / "<<ramberry<<" kb / "<<cpuberry<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endberry - startberry).count()<< ",";
   results << "InClose ("<<sizeinclose<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endclose - startclose).count()
 	  << " ms / "<<raminclose<<" kb / "<<cpuinclose<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endclose - startclose).count()<< ",";
   results << "Bordat ("<<sizebordat<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()
 	 	<< " ms / "<<rambordat<<" kb / "<<cpubordat<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endbordat - startbordat).count()<< ",";
   results << "Godin ("<<sizegodin<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()
 		<< " ms / "<<ramgodin<<" kb / "<<cpugodin<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endgodin - startgodin).count()<< ",";
   results << "Norris ("<<sizenorris<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()
 		<< " ms / "<<ramnorris<<" kb / "<<cpunorris<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endnorris - startnorris).count()<< ",";
   results << "AddIntent ("<<sizeintent<<") " 
     << chrono::duration_cast<chrono::milliseconds>(endintent - startintent).count()
 		<< " ms / "<<ramnorris<<" kb / "<<cpunorris<< " %" << endl;
+  csvfile<<chrono::duration_cast<chrono::milliseconds>(endintent - startintent).count()<< ",";
   l.printIntoFile(results);
   results.close();
+  csvfile.close();
   }
 
   return 0;
