@@ -32,9 +32,9 @@ done
 done
 elif [ $n -eq 40 ];
 then
-cp tablesheet.csv "results/M100/g'${n}/tables/table80.csv";
+cp tablesheet.csv "results/M100/g'${n}/tables/table100.csv";
 for run in {1..10}; do
-  ./bin/main 80 100 40 $run
+  ./bin/main 100 100 40 $run
 	echo $run
 done
 else

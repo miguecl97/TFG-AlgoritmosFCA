@@ -1,6 +1,7 @@
 set datafile separator ','
 set style line 100 lt 1 lc rgb "grey" lw 0.5 
 set key left
+set yrange [0:255000]
 set terminal svg size 800,600 enhanced font 'Segoe UI,10' background rgb 'white'
 set output 'M100g40G20100.svg'
 set style line 101 lw 2 lt rgb "#ff0000" # style for targetValue (1) (pink)

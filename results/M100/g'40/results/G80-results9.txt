@@ -1,0 +1,10 @@
+NextClosure (369894) 18077 ms / 74764 kb / 12.5398 %
+Lindig (0) 0 ms / 74764 kb / -nan %
+Inherit-Concepts (0) 0 ms / 74764 kb / -nan %
+InClose (369894) 820082 ms / 153956 kb / 12.6632 %
+Bordat (0) 0 ms / 153956 kb / -nan %
+Godin (369894) 530676 ms / 402812 kb / 12.5634 %
+Norris (369894) 318397 ms / 278180 kb / 12.5596 %
+AddIntent (0) 0 ms / 278180 kb / 12.5596 %
+
+List of concepts: (0): 

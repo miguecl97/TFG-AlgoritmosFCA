@@ -107,7 +107,7 @@ int main(int argc, char *argv[]){
   double cpulindig=0;
   int sizelindig=0;
   auto startlindig = chrono::steady_clock::now();
-  /*LatticeLindig(c,llindig);*/
+  LatticeLindig(c,llindig);
   auto endlindig = chrono::steady_clock::now();
   cpulindig=getCurrentValue();
   ramlindig=getValue();
@@ -130,7 +130,7 @@ int main(int argc, char *argv[]){
   double cpuberry=0;
   int sizeberry = 0;
   auto startberry = chrono::steady_clock::now();
-  /*InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);*/
+  InheritConcepts({{}}, {}, atBerry, objects, {}, c,lberry);
   auto endberry = chrono::steady_clock::now();
   cpuberry=getCurrentValue();
   ramberry=getValue();
@@ -156,8 +156,8 @@ int main(int argc, char *argv[]){
   double cpuinclose=0;
   int sizeinclose=0;
   auto startclose = chrono::steady_clock::now();
-  /*linclose.add(make_pair(attributesPrime,attributes));
-  InClose(r,y,A2,B2,c,linclose);*/
+  linclose.add(make_pair(attributesPrime,attributes));
+  InClose(r,y,A2,B2,c,linclose);
   auto endclose = chrono::steady_clock::now();
   cpuinclose=getCurrentValue();
   raminclose=getValue();
@@ -178,8 +178,8 @@ int main(int argc, char *argv[]){
   vector<int> objPrime;
   c.objectPrime(objects,objPrime);
   auto startbordat = chrono::steady_clock::now();
-  /*LatticeBordat(objects,objPrime,objPrime,c,lBordat);
-  lBordat.add(make_pair(empty,attributes));*/
+  LatticeBordat(objects,objPrime,objPrime,c,lBordat);
+  lBordat.add(make_pair(empty,attributes));
   auto endbordat = chrono::steady_clock::now();
   cpubordat=getCurrentValue();
   rambordat=getValue();
