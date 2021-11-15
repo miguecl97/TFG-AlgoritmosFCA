@@ -192,9 +192,11 @@ int main(int argc, char *argv[]){
   //--- ---
   
 
-  //ofstream myfile; 
-  //myfile.open("lattice.g");
-  //l.printGraphplaceInput(myfile,0);
+  ofstream myfile; 
+  myfile.open("lattice.g");
+
+  l.printGraphplaceInput(myfile,0);
+  myfile.close();
   //l.printTerminal();
 
   //--------------------------------------------------------------- . ------------------------------------------------------------------//
@@ -317,8 +319,10 @@ int main(int argc, char *argv[]){
   l.printIntoFile(results);
   results.close();
   csvfile.close();
+  }else{
+    l.printTerminalConcepts(c.getObjects(),c.getAttributes());
   }
-
+  
   return 0;
 }
 

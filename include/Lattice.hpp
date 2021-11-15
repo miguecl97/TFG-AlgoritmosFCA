@@ -19,10 +19,10 @@ using namespace std;
 
 struct Node{
 
-        int index;
-        formalConcept c;
-        vector<int> ch;
-        pair<vector<int>,vector<int>> lowerUpperNeighbors;
+        int index; /** index of the node in the lattice */
+        formalConcept c; /** formalConcept of the node */
+        vector<int> ch; /**childs of the concept */
+        pair<vector<int>,vector<int>> lowerUpperNeighbors;/** upper and lower negihtbors of the concept */ 
 
         Node(){};
 

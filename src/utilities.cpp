@@ -134,7 +134,7 @@ vector< vector<int> > getAllSubsets(vector<int> set){
     return subset;
 }
 
-Context generate(int nObj, int nProp, int d, int filenumber){
+Context generate(int nObj, int nProp, int nGPrime, int filenumber){
     vector<vector<bool>> mat(nObj, vector<bool>(nProp, false));
     const int range_from  = 1;
     const int range_to    = nProp;
@@ -142,25 +142,18 @@ Context generate(int nObj, int nProp, int d, int filenumber){
     std::mt19937                        generator(rand_dev());
     std::uniform_int_distribution<int>  distr(range_from, range_to);
 
-
-
-    /*for (auto& row : mat){
-        fill(row.begin(), row.begin() + d, true);
-        random_shuffle(row.begin(), row.end());
-    }*/
     for(auto &row : mat){
-        //fill(row.begin(), row.begin(), false);
-        for(int i=0; i<d;i++){
+        for(int i=0; i<nGPrime;i++){
             int random =distr(generator);
             while(row[random]==1){
-                random =distr(generator);
+                random = distr(generator);
             }
             row[random]=1;
         }
     }
 
     ofstream dataset;
-    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(d)+"/G"+to_string(nObj)+"dataset"+to_string(filenumber)+".csv");
+    dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(nGPrime)+"/G"+to_string(nObj)+"dataset"+to_string(filenumber)+".csv");
     
     dataset<< " ,";
     for(int i=1;i<=nProp;i++){
@@ -273,9 +266,3 @@ int getValue(){ //Note: this value is in KB!
     fclose(file);
     return result;
 }
-
-
-
-
-
-
