@@ -12,12 +12,11 @@
 #include <cmath>
 
 
-
+//NORRIS
 void AddNorris(vector<int> g,vector<int> &added, Context &c, Lattice &l){
     vector<int> gPrime;
     c.objectPrime(g,gPrime); // compute {g}'
 
-    
     for(formalConcept f : l.getformalConcepts()){ // for each (A,B) in L
         if(IsSubset(gPrime,f.second)){
             l.replace(f,make_pair(f.first+g,f.second)); //hacemos efecto de los cambios en el retículo
@@ -59,39 +58,32 @@ void AddNorris(vector<int> g,vector<int> &added, Context &c, Lattice &l){
     if(empty2){
         l.add(make_pair(g,gPrime));// add ({g},{g}')
     }
-
      // g has been added
 }
 
 
 
-
+//GODIN
 void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
 
     vector<int> gPrime;
     vector<int> emptyset={};
     c.objectPrime(g,gPrime);
 
-    //cout<< "adding: "<< g<<endl;
-    //cout<< "inf= "<< inf<<endl;
     if(inf.first.empty() && inf.second.empty()){
         inf.first=g;
         inf.second=gPrime;
-        //cout<< "dentro del inf.empty"<< inf<<endl;
         l.add(inf);
     }else{
         if(!IsSubset(inf.second,gPrime)){
             if(inf.first.empty()){
                 l.replace(inf,make_pair(inf.first,inf.second+gPrime));
                 inf.second = inf.second+gPrime;
-                //cout<< "dentro del inf.first.empty"<< inf<<endl;
             }else{
-                
                 l.add(make_pair(emptyset,inf.second+gPrime));
                 //(empty,inf U{g'}) es un vecino superior de inf
                 inf.first =emptyset;
                 inf.second=inf.second + gPrime;
-                //cout<< "dentro del else inf.first.empty"<<inf<<endl;
             }
         }
 
@@ -102,6 +94,7 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                 j=f.second.size();
             }
         }
+
         vector<vector<formalConcept>> C(j+1);
         vector<vector<formalConcept>> CPrime(j+1);
         
@@ -109,32 +102,26 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
 
             for(formalConcept f : l.getformalConcepts()){
                 if((int)f.second.size()==i){
-                   // cout<< "ci"<<f<<endl;
                     C[i].push_back(f);// stova a dar core mirarlo bien
                 }
                 CPrime[i].clear();
-            }
-           
+            } 
         }
         
         for(int i =0; i<= j; i++){
 
             for(formalConcept f : C[i]){
                 if(IsSubset(gPrime,f.second)){
-                    l.replace(f,make_pair(f.first+g,f.second)); //NOTE: por si falla
+                    l.replace(f,make_pair(f.first+g,f.second)); //NOTE: tested
                     //f.first = f.first +g;
-                    CPrime[i].push_back(make_pair(f.first + g,f.second)); //REVISAR
-                    //cout<< "dentro del issubset"<< f.first+g <<endl;
+                    CPrime[i].push_back(make_pair(f.first + g,f.second)); 
                     if(f.second==gPrime){
-                        //cout<< "haciendo return"<<endl;
                         return;
                     }
                 }else{
                     vector<int> intent;
                     std::set_intersection(f.second.begin(),f.second.end(),gPrime.begin(),gPrime.end(),inserter(intent,intent.begin())); // int = B \cap {g}'
-                    //cout<< "intent = "<<intent<<endl;
                     bool exists = false;
-                    //cout<< "dentro del else issubset"<< endl;
                     for(formalConcept fCPrime : CPrime[intent.size()]){
                         if(fCPrime.second==intent){
                             exists=true;
@@ -144,28 +131,19 @@ void AddGodin(vector<int> g,formalConcept &inf, Context &c, Lattice &l){
                     if(!exists){
                         l.add(make_pair(f.first+g,intent));
                         CPrime[intent.size()].push_back(make_pair(f.first+g,intent));
-                        //cout<< "!exist"<<f.first+g<<endl;
                         if(intent == gPrime){
-                            //cout<< "retrurning"<<endl;
                             return;
                         }
-                    
                     }
-
                 }
-            }
-           
-        }
-
-        
+            } 
+        }        
     }
-
-
 }
 
 
 
-
+//ADDINTENT
 formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConcept, Lattice &l){
     bool parentIsMaximal=true;
     while (parentIsMaximal){
@@ -178,24 +156,19 @@ formalConcept GetMaximalConcept(vector<int> intent, formalConcept generatorConce
                 parentIsMaximal=true;
                 break;
             }
-        }
-        
+        }   
     }
     return generatorConcept;
 }
 
 
-
+//ADDINTENT
 formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Context &c, Lattice&l){
-    //cout<< "intent " << intent<<endl;
-    //cout<< "generator"<< generatorConcept<<endl;
     generatorConcept = GetMaximalConcept(intent,generatorConcept,l);
 
     if(generatorConcept.second==intent){
         return generatorConcept;
     }
-
-    //cout<< "generator2"<< generatorConcept<<endl;
    
     vector<formalConcept> generatorParents = l.getParents(generatorConcept);
     vector<formalConcept> newParents;
@@ -203,14 +176,11 @@ formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Cont
     newParents.push_back(make_pair(empty,empty));
 
     for(formalConcept f : generatorParents){
-        //cout<< "generatorparents       " << f<<endl;
         if(!IsSubset(intent,f.second)){
             vector<int> intersection;
-
             std::set_intersection(f.second.begin(),f.second.end(),intent.begin(),intent.end(),inserter(intersection,intersection.begin()));
             f=AddIntent(intersection,f,c,l);
         }
-
         bool addParent=true;
 
         for(unsigned i=0; i<newParents.size();i++){
@@ -231,6 +201,5 @@ formalConcept AddIntent(vector<int> intent, formalConcept generatorConcept, Cont
     if(!l.find(newConcept)){
         l.add(newConcept);
     }
-
     return newConcept;
 }

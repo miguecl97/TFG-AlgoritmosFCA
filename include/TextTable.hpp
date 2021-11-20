@@ -1,5 +1,7 @@
 #pragma once
-
+/*Auxiliar file for print in the terminal a table with good format, more info avaible at:
+https://github.com/haarcuba/cpp-text-table
+*/
 #include <iostream>
 #include <map>
 #include <iomanip>

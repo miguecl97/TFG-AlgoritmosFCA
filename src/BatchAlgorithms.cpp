@@ -4,15 +4,12 @@
 */
 
 #include "BatchAlgorithms.hpp"
-//#include "Lattice.cpp"
-
 #include <iostream>
 #include <vector>
 #include <numeric> // std::iota
-#include <cmath>
+#include <cmath> // max min 
 
-
-
+//NEXTCLOSURE
 void NextGanter(vector<int> &A,int &g, Context &c, Lattice &l){
 
     while(A!=c.getObjectsVector()){
@@ -25,7 +22,6 @@ void NextGanter(vector<int> &A,int &g, Context &c, Lattice &l){
             }
         }
         A = aux-minus;
-
         vector<int> AdoublePrime;
         vector<int> Aprime;
         c.objectPrime(A,Aprime);
@@ -52,17 +48,16 @@ void NextGanter(vector<int> &A,int &g, Context &c, Lattice &l){
             }
             if(!aux2.empty()){
                 g = *max_element(aux2.begin(), aux2.end());
-            }    
-
+            }   
         }
     }
 }
 
 
+//LINDIG
 list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
     vector<int> A = c.getObjectsVector();
     list<formalConcept> neigh;
-
     vector<int> min = A-obj;
     vector <int> minus(min);
     
@@ -70,18 +65,14 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
         vector <int> m1;
         vector <int> aux = {x};
         vector <int> both;
-
         //O U {x}
         std::set_union(obj.begin(), obj.end(), aux.begin(), aux.end() ,back_inserter(both) );
-
         c.objectPrime(both, m1); 
         vector <int> g1;
         c.attributePrime(m1,g1);
-
         vector<int> intersection;
         vector<int> difference =  g1 - obj;
         vector<int> difference2= difference - aux;
-
         std::set_intersection(min.begin(),min.end(),difference2.begin(),difference2.end(),inserter(intersection,intersection.begin()));
 
        if(intersection.empty()){
@@ -95,7 +86,7 @@ list<formalConcept> Neighbors(vector<int> obj, vector<int> attr, Context &c){
     return neigh;
 }
 
-
+//LINDIG
 void LatticeLindig(Context &c, Lattice &l){
     formalConcept f;
     vector <int> emptyobj;
@@ -104,7 +95,6 @@ void LatticeLindig(Context &c, Lattice &l){
     c.objectDoublePrime(emptyobj,f.first);
     //{ }'
     c.objectPrime(emptyattr,f.second);
-
     l.add(f);
     list <formalConcept> neigh;
 
@@ -114,9 +104,10 @@ void LatticeLindig(Context &c, Lattice &l){
             l.insertLookUp(x,f);
         }
     }while(l.next(f,f));
-
 }
 
+
+//INCLOSE
 void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Context &c, Lattice &l){
     int rnew = r+1;
 
@@ -125,7 +116,6 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
     }
 
     for(int j = y; j<(int)c.getNAttributes();j++){
-        //int k = j+1;
         A[rnew]={};
         
         for(int i : A[r]){
@@ -135,7 +125,6 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
         }
 
         if(A[rnew].size()>0){
-
             if(A[rnew].size()==A[r].size()){
                 insert_sorted(B[r],j);
             }else{
@@ -148,19 +137,18 @@ void InClose(int &r, int y, vector<vector<int>> &A ,vector<vector<int>> &B, Cont
 
                     InClose(rnew,j+1,A,B,c,l);
                 }
-            }
-            
+            }        
         }
-
     }
 
     formalConcept f = make_pair(A[r],B[r]);
     if(!l.find(f)){
         l.add(f);
     }
-
 }
 
+
+//INCLOSE
 bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Context &c){
     int h=0;
     int rnew=r+1;
@@ -190,7 +178,7 @@ bool isCannonical(int r, int y, vector<vector<int>> A, vector<vector<int>> B,Con
 }
     
 
-
+//BERRY
 void initializeTD(vector<vector<int>> &S, vector <int> &F, Context &c){
     std::vector<std::vector<int> > T(c.getNAttributes(), std::vector<int>(c.getNAttributes()));
     vector<int> D(c.getNAttributes());
@@ -217,6 +205,7 @@ void initializeTD(vector<vector<int>> &S, vector <int> &F, Context &c){
 }
 
 
+//BERRY
 void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c){
     int x = X[0];
     vector<int> P(T.size());
@@ -264,6 +253,8 @@ void preUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<in
     }
 }
 
+
+//BERRY
 void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<int> &B, vector<int> &X, Context &c){
     int x = X[0];
     vector<int> P(T.size());
@@ -306,12 +297,13 @@ void postUpdate(vector<vector<int>> &T, vector <int> &D, vector<int> &A,vector<i
          for(int j = 0; j < (int)T.size(); j++){     
             T[j][X[i]] = -1;
             T[X[i]][j] = -1;
-
          }
          D[X[i]]= -1;
     }
 }
 
+
+//BERRY
 vector<vector<int>> maxmodPartition(Context &c,vector<int> &A,vector<int> &B){
     vector<int> P(c.getNAttributes());
     std::iota(P.begin(), P.end(), 0);
@@ -342,23 +334,20 @@ vector<vector<int>> maxmodPartition(Context &c,vector<int> &A,vector<int> &B){
             }
         }
     }
-
     return part;
 }
 
 
-
+//BERRY
 void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vector<int> &B, vector<int> marked, Context &c, Lattice &l){
     bool emptyrelation=false;
 
     if(A.empty()){
         initializeTD(T,D,c);
     }
-
     if(B.empty()){
         emptyrelation=true;
     }
-    
 
     if(!emptyrelation){
         vector<vector<int>> part = maxmodPartition(c,A,B);
@@ -388,15 +377,14 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
             vector<int> bprime;
             vector<int> intersection;
             vector<int> rx;
+
             c.attributePrime(X,rx);
-
             std::set_intersection(B.begin(),B.end(),rx.begin(),rx.end(),inserter(intersection,intersection.begin()));
-
             c.objectPrime(intersection, bprime);
 
-            preUpdate(T,D,A,B,X,c);
-            InheritConcepts(T,D,sum,intersection,marked,c,l);
-            postUpdate(T,D,A,B,X,c);
+            preUpdate(T,D,A,B,X,c); //preupdate T and D
+            InheritConcepts(T,D,sum,intersection,marked,c,l); //call again inherit-concepts
+            postUpdate(T,D,A,B,X,c); //postupdate T and D
 
             vector<int> Y;
             vector<vector<int>> relations;
@@ -417,13 +405,9 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
                 }
             }
             marked = (marked + X +Y);
-
         }
-
     }
-
-    
-    
+ 
     if(!l.find(make_pair(B,A)) && (!B.empty() && !A.empty())){
         l.add(make_pair(B,A));
     }else{
@@ -443,20 +427,16 @@ void InheritConcepts(vector<vector<int>> T, vector<int> D, vector<int> &A, vecto
             } 
         }
     }
-
-
-    
-
-
 }
 
 
+//BORDAT
 vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context &c){
     
     vector<formalConcept> ln;
     vector<int> C = B;
-
     int indexg=A.size();
+
     for(int i=0; i<(int)A.size();i++){
         vector<int> gPrime;
         vector<int> gaux = {A[i]};
@@ -468,20 +448,15 @@ vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context
         }
     }
 
-    //cout<<" LLamada a VECINOS:    con A="<<A<<", B="<<B<<endl;
-
     while(indexg<=(int)A.size()-1){
-       // cout <<"(vecinos) index{g}="<<indexg<<endl;
         vector<int> E = {A[indexg]};
         vector<int> gPrime;
         c.objectPrime(E,gPrime);
         vector<int> F = gPrime;
         int h=A[indexg];
-        //cout<< "(vecinos) procesando :(E= "<< A[indexg]<<",F= "<< F <<")"<<endl;
-
         int i=1;
+
         while(h!=A.back()){
-    
             h=A[indexg+i];
             vector<int> intersection;
             vector<int> haux= {h};
@@ -493,19 +468,17 @@ vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context
                 insert_sorted(E,h);
                 F=intersection;
             }
-
             i++;
         }
 
-
         vector<int> intersection2;
         std::set_intersection(F.begin(),F.end(),C.begin(),C.end(),inserter(intersection2,intersection2.begin()));
-        //cout << "F="<< F<<"CAP C="<<C<<",B="<<B<<endl;
+
         if(intersection2==B){
             ln.push_back(make_pair(E,F));
         }
-        C=C+F;
 
+        C=C+F;
         indexg=A.size();
 
         for(int i=0; i<(int)A.size();i++){
@@ -517,23 +490,19 @@ vector<formalConcept> LowerNeighboursBordat(vector<int> A, vector<int> B,Context
                 indexg=i;
                 break;            
             }
-
         }
-
-        //cout<<"(vecinos) indexg (final)="<<indexg<<endl;
-
     }
-
     return ln;
-
-
 }
 
+
+//BORDAT
 void FindBordat(formalConcept AB, formalConcept &CD, Lattice &l){
 
     int i = l.getIndex(AB);
     vector<int> chAB = l.getConcepts()[i].ch;
     formalConcept first;
+    
     for(int e : chAB){
         Node nodo = l.getConcept(e);
         if(IsSubset(CD.second,nodo.c.second)){
@@ -547,21 +516,18 @@ void FindBordat(formalConcept AB, formalConcept &CD, Lattice &l){
     }else{
         CD=first;
         return;
-    }
-        
-    
-    
+    }   
 }
 
-void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Lattice &l){
 
+//BORDAT
+void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Lattice &l){
     
     l.add(make_pair(A,B));
     vector<formalConcept> ln = LowerNeighboursBordat(A,B,c);    
     formalConcept f2 =make_pair(A,B);
 
     for(formalConcept f : ln){
-
         vector<int> intersection;
         std::set_intersection(C.begin(),C.end(),f.second.begin(),f.second.end(),inserter(intersection,intersection.begin()));
         if(intersection==B){
@@ -570,8 +536,6 @@ void LatticeBordat(vector<int> A, vector<int> B, vector<int> C, Context &c, Latt
             l.getConcept(l.getIndex(make_pair(A,B))).ch.push_back(l.getIndex(f));
         }
     }
-
-
 }
 
 

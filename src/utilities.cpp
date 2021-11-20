@@ -14,33 +14,27 @@ Context readCSV(ifstream &f){
     vector<string> objects;
     vector<string> attributes;
     vector<vector<bool>> table;
-
-
     getline(f,line);
     boost::split(values, line, boost::is_any_of(DELIMITER));
     values.erase(values.begin());
+
     for (string value : values){
         attributes.push_back(value);
-        
     }
 
     while(getline(f,line)){
         boost::split(values, line, boost::is_any_of(DELIMITER));
         objects.push_back(values.at(0));
         values.erase(values.begin());
-
         vector<bool> row;
+
         for (string value : values)
             row.push_back(value == CSVYES);
 
         table.push_back(row);
-
     }
-
     return Context(table,objects,attributes);
-
 }
-
 
 
 ostream& operator<< (ostream& os, const std::vector<int>& v) 
@@ -56,14 +50,12 @@ ostream& operator<< (ostream& os, const std::vector<int>& v)
 
 
 std::ostream& operator<<(ostream& out, const formalConcept& f){
-
         out<< "{";
         if(f.first.size()!=0){
                 for(vector<int>::const_iterator j = f.first.begin(); j<f.first.end() -1 ;j++){
                         out<< *j << ", ";
                         
                 }
-        
                 out << *(f.first.end() -1);
         }
         out<< "}, {";
@@ -75,7 +67,6 @@ std::ostream& operator<<(ostream& out, const formalConcept& f){
                 out << *(f.second.end() -1);
         }
         out << "}";
-
         return out;
 }
 
@@ -95,22 +86,18 @@ void insert_sorted( std::vector<int> & vec, int const& item ){
 
 
 vector<int> operator-(const vector<int>& vector1, const vector<int>& vector2){
-
     vector<int> aux;
     //std::sort(vector1.begin(), vector1.end());
     //std::sort(vector2.begin(), vector2.end());
     std::set_difference( vector1.begin(), vector1.end(), vector2.begin(), vector2.end(), std::back_inserter( aux )  );
-
     return aux;
 }
 
 vector<int> operator+(const vector<int>& vector1, const vector<int>& vector2){
-
     vector<int> aux;
     std::set_union(vector1.begin(), vector1.end(), vector2.begin(), vector2.end() ,back_inserter(aux) );
     sort(aux.begin(), aux.end() );
     aux.erase( unique( aux.begin(), aux.end() ), aux.end() );
-
     return aux;
 }
 
@@ -123,10 +110,8 @@ vector< vector<int> > getAllSubsets(vector<int> set){
     for (int i = 0; i <(int) set.size(); i++)
     {
         vector< vector<int> > subsetTemp = subset;  //making a copy of given 2-d vector.
-
         for (int j = 0; j < (int)subsetTemp.size(); j++)
             subsetTemp[j].push_back( set[i] );   // adding set[i] element to each subset of subsetTemp. like adding {2}(in 2nd iteration  to {{},{1}} which gives {{2},{1,2}}.
-
         for (int j = 0; j < (int)subsetTemp.size(); j++)
             subset.push_back( subsetTemp[j] );  //now adding modified subsetTemp to original subset (before{{},{1}} , after{{},{1},{2},{1,2}}) 
     }
@@ -154,12 +139,13 @@ Context generate(int nObj, int nProp, int nGPrime, int filenumber){
 
     ofstream dataset;
     dataset.open ("/home/miguelcant/Documentos/FCA_mcantarero/datasets/M"+to_string(nProp)+"/g'"+to_string(nGPrime)+"/G"+to_string(nObj)+"dataset"+to_string(filenumber)+".csv");
-    
     dataset<< " ,";
+
     for(int i=1;i<=nProp;i++){
         dataset<<i<<",";
     }
     dataset<<"\n";
+
     for(int i=1; i<= nObj;i++){
         dataset<<i<<",";
         for(int j=1;j<=nProp;j++){
@@ -200,9 +186,8 @@ void transformNodes(formalConcept f, vector<string> objects, vector<string> attr
 }
 
 
-
+//AUXILIAR FUNCITONS 
 static unsigned long long lastTotalUser, lastTotalUserLow, lastTotalSys, lastTotalIdle;
-
 void init(){
     FILE* file = fopen("/proc/stat", "r");
     fscanf(file, "cpu %llu %llu %llu %llu", &lastTotalUser, &lastTotalUserLow,

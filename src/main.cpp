@@ -19,9 +19,7 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 
-
   /*** prepare data according to the context for algorithms ***/
-
   init();
   Context c;
   Lattice l;
@@ -31,6 +29,7 @@ int main(int argc, char *argv[]){
   ofstream csvfile;
 
   if(argc==5){
+
     nG=atoi(argv[1]);
     nA= atoi(argv[2]);
     gprime= atoi(argv[3]);
@@ -41,32 +40,37 @@ int main(int argc, char *argv[]){
     csvfile<<endl;
     csvfile<<gprime<<","<<nG<<",";
     results.open ("/home/miguelcant/Documentos/FCA_mcantarero/results/M"+to_string(c.getNAttributes())+"/g'"+to_string(gprime) +"/results/G"+to_string(c.getNObjects())+"-results"+to_string(filenumber)+".txt");
+
   }else if(argc==2){
+
     ifstream CSVfile(argv[1]);
     c = readCSV(CSVfile);
-    if(c.getNObjects()==0){
-      cout<< "Error reading the csv file";
-      return 0;
-    }
+
   }else{
+
     cout<< "ERROR: There are 2 ways of execute the algorithms program: \n";
     cout<< "-> Generating a artificial dataset by introducing number of objects, attributes and number of atributes per object in the command line:\n";
     cout<<"    ./bin/main 50 100 4 (will generate a context with |G|=50,|M|=100 and |g'|=4)"<<endl;
     cout<< "-> Using a existing dataset in a csv file: "<<endl;
     cout<< "   ./bin/main /datasets/test.csv"<<endl;
     return 0;
+
   }
 
+  if(c.getNObjects()==0 ||c.getNAttributes()==0){
+    cout<< "Error reading the csv file";
+    return 0;
+  }
+
+  //auxiliar structures
   vector<int> objects (c.getNObjects());
   std::iota(objects.begin(), objects.end(), 0);
   vector<int> objectsPrime;
   c.objectPrime(objects,objectsPrime);
-
   vector<int> attributes (c.getNAttributes());
   std::iota(attributes.begin(), attributes.end(), 0);
   vector<int> attributesPrime;
   c.attributePrime(attributes,attributesPrime);
-
   vector<int> empty={};
 
 
@@ -162,7 +166,6 @@ int main(int argc, char *argv[]){
   cpuinclose=getCurrentValue();
   raminclose=getValue();
   sizeinclose=linclose.getSize();
-
   //linclose.printTerminalConcepts(c.getObjects(),c.getAttributes());
   cout << "->In close has mined: "<<sizeinclose<<" concepts ."<< endl;
   cout << "Time InClose " 
@@ -170,6 +173,7 @@ int main(int argc, char *argv[]){
 		<< " ms" << endl;
   //--- ---
   
+
   //---BORDAT'S ALGORITHM---
   Lattice lBordat;
   double rambordat=0;
@@ -192,11 +196,10 @@ int main(int argc, char *argv[]){
   //--- ---
   
 
-  ofstream myfile; 
+  /*ofstream myfile; 
   myfile.open("lattice.g");
-
   l.printGraphplaceInput(myfile,0);
-  myfile.close();
+  myfile.close();*/
   //l.printTerminal();
 
   //--------------------------------------------------------------- . ------------------------------------------------------------------//

@@ -13,15 +13,16 @@ int Lattice::getSize(){
     return concepts.size();
 }
 
+
 vector<formalConcept> Lattice::getformalConcepts(){
     vector<formalConcept> ret;
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
         ret.push_back(it->c);
     }
-
     return ret;
 }
+
 
 Node Lattice::getConcept(int i){
     for(auto i =0; i<(int)concepts.size();i++){
@@ -29,7 +30,6 @@ Node Lattice::getConcept(int i){
             return concepts[i];
         }
     }
-
     return concepts[0];
 }
 
@@ -38,14 +38,11 @@ void Lattice::replace(formalConcept f,formalConcept newf){
     typename std::vector<Node>::iterator it;
     for(it= concepts.end(); it!=concepts.begin(); it--){
         if(it->c.first == f.first && it->c.second == f.second){
-            //cout << "reemplazando"<< f.first << ", "<<f.second<<endl<<"por "<< newf.first<< ", "<<newf.second<<endl;
             it->c.first=newf.first;
             it->c.second=newf.second;
-            //cout << "nuevo concepto:"<< it->c.first << ", "<<it->c.second<<endl;
             return;
         }
     }
-
 }
 
 
@@ -62,7 +59,6 @@ int Lattice::getIndex(formalConcept concp){
         if(it->c.first == concp.first && it->c.second == concp.second)
             return it->index;
     }
-
     return -1;
 }
 
@@ -73,26 +69,23 @@ bool Lattice::find(formalConcept concp){
         if(it->c.first == concp.first && it->c.second == concp.second)
             return true;
     }
-
     return false;
 }
 
 
 vector<formalConcept> Lattice::getConceptsAbove(formalConcept c){
     vector<formalConcept> above;
-    
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
         if(IsSubset(c.second,it->c.second))// && it->c.first!=c.first && it->c.second!=c.second)
             above.push_back(it->c);
     }
-
     return above;
 }
 
+
 vector<formalConcept> Lattice::getParents(formalConcept c){
     vector<formalConcept> above;
-    
     typename std::vector<Node>::iterator it;
     for(it= concepts.begin(); it!=concepts.end(); it++){
         if(IsSubset(c.second,it->c.second) && it->c.first!=c.first && it->c.second!=c.second)
@@ -113,24 +106,18 @@ vector<formalConcept> Lattice::getParents(formalConcept c){
         if (include)
             parents.push_back(*it1);
     }
-
     return parents;
 }
 
 
-
-
 bool Lattice::next(formalConcept& c, formalConcept& output){
-
     typename vector<Node>::iterator it = std::find(concepts.begin(), concepts.end(), Node(c,0));
-
     if(it == concepts.end() || ++it == concepts.end())
         return false;
     
     output = it->c;
     last_position_index = it - concepts.begin();
     return true;
-
 }
 
 bool Lattice::insertLookUp(formalConcept& x, formalConcept& c){
@@ -150,13 +137,12 @@ bool Lattice::insertLookUp(formalConcept& x, formalConcept& c){
     }
 
     c_pos = concepts.begin() + last_position_index;
-
     x_pos->lowerUpperNeighbors.first.push_back(c_pos->index);
     c_pos->lowerUpperNeighbors.second.push_back(x_pos->index);
-
     return true;
-
 }
+
+
 
 void Lattice::printGraphplaceInput(ofstream& out, int flag){
         ofstream tempout("explain.graph");
@@ -164,15 +150,12 @@ void Lattice::printGraphplaceInput(ofstream& out, int flag){
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 tempout << "Node "<< i->index << ": " << i->c << endl;
                 out << "( ";
-
                 if(flag ==0){
                         out << i->c;
                 }else if(flag ==1){
                         out<< i->index;
                 }
-
                 out << ") "<< i->index<< " node "<<endl;
-
                 for(typename vector<int>::iterator j = i->lowerUpperNeighbors.second.begin();
                     j< i->lowerUpperNeighbors.second.end();j++){
                             out<< *j << " "<< i->index << " edge" << endl;
@@ -180,21 +163,20 @@ void Lattice::printGraphplaceInput(ofstream& out, int flag){
         }
 }
 
+
+
 void Lattice::printTerminalNodes(){
         cout << endl;
         cout << "List of concepts ("<< getSize()<<"): "<< endl;
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 cout << "Concept: "<< i->index+1 << ": " << endl;
                 cout << "( ";
-
-                
                 cout << i->c;
-
-
                 cout << ") "<<endl;
         }
 
 }    
+
 
 void Lattice::printIntoFile(ofstream& out){
         out << endl;
@@ -202,15 +184,11 @@ void Lattice::printIntoFile(ofstream& out){
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 out << "Concept: "<< i->index+1 << ": " << endl;
                 out << "( ";
-
-                
                 out << i->c;
-
-
                 out << ") "<<endl;
         }
-
 }    
+
 
 void Lattice::printTerminalConcepts(vector<string> obj, vector<string> attr){
         cout << endl;
@@ -218,12 +196,7 @@ void Lattice::printTerminalConcepts(vector<string> obj, vector<string> attr){
         for(typename vector<Node>::iterator i = concepts.begin(); i!= concepts.end(); i++){
                 cout << "Concept: "<< i->index+1 << ": " << endl;
                 cout << "( ";
-
-                
                 transformNodes(i->c,obj,attr);
-
-
                 cout << ") "<<endl;
         }
-
 }    

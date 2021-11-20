@@ -16,7 +16,6 @@ Context::Context(){
 Context::Context(vector<vector<bool>> data, vector<string> obj, vector<string> attr){
     nObj = obj.size();
     nProp = attr.size();
-
     objects = obj;
     attributes= attr;
     table = data;     
@@ -36,18 +35,14 @@ Context::Context(vector<vector<bool>> data){
  }
 
 vector<int> Context::getObjectsVector(){
-
     vector<int> aux (getNObjects());
     std::iota(aux.begin(), aux.end(), 0);
-
     return aux;
 }
 
 vector<int> Context::getAttributesVector(){
-
     vector<int> aux (getNAttributes());
     std::iota(aux.begin(), aux.end(), 0);
-
     return aux;
 }
 
@@ -57,11 +52,10 @@ bool Context::getIncidence(int i, int j){
 }
 
 void Context::objectPrime(vector<int> &objset, vector<int> &objPrime){
-    
     if(objset.empty()){
         objPrime.resize(attributes.size());
         for(size_t k=0 ;k < nProp ; k++){
-            objPrime[k]=k;    //care         
+            objPrime[k]=k;    //if empty fullfill the vector         
         }
     }else{
         objPrime.clear();
@@ -73,7 +67,6 @@ void Context::objectPrime(vector<int> &objset, vector<int> &objPrime){
             }    
                 if(temp)
                     objPrime.push_back(k);
-
         }
     }
 }
@@ -94,36 +87,28 @@ void Context::attributePrime(vector<int> &attrset, vector<int> &attributePrime){
                 temp = table[k][*j] && temp;
             }
             if(temp)
-                attributePrime.push_back(k);
-            
+                attributePrime.push_back(k);  
         }
     }
-
-
 }
 
 void Context::objectDoublePrime(vector<int> &objset, vector<int> &objDPrime){
-
     vector <int> aux;
     objectPrime(objset,aux);
     attributePrime(aux, objDPrime);
-
 }
 
-void Context::attributeDoublePrime(vector<int> &attrset, vector<int> &attributeDPrime){
 
+void Context::attributeDoublePrime(vector<int> &attrset, vector<int> &attributeDPrime){
     vector <int> aux;
     attributePrime(attrset,aux);
     objectPrime(aux, attributeDPrime);
-
 }
 
 
 ostream& operator<<(ostream& os, Context& c){
 
     TextTable t( '-', '|', '+' );
-
-
     t.add( "Objects / Attributes");
     for (size_t attrID = 0; attrID < c.getNAttributes(); attrID++){
         t.add(c.getAttributes().at(attrID));
@@ -143,18 +128,5 @@ ostream& operator<<(ostream& os, Context& c){
     t.setAlignment( 2, TextTable::Alignment::RIGHT );
     cout << t;
     
-    return os; 
-    /*cout << "          Atributos " ;
-    for (size_t attrID = 0; attrID < c.getNAttributes(); attrID++){
-        cout << c.getAttributes().at(attrID) << " |  ";
-    }
-    cout << endl ;
-    cout << "Objeto  | "<< endl;
-    for (size_t objID = 0; objID < c.getNObjects(); objID++){
-        cout << c.getObjects().at(objID) << " |  ";
-        for(unsigned i=0; i < c.getNAttributes(); i++){
-            cout  << c.getTable()[objID][i] << " ";
-        } 
-        cout << endl;
-    }*/   
+    return os;   
 }
