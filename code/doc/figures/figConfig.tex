@@ -1,0 +1,14 @@
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{calculator}
+
+% palette
+\COPY{206}{\H}
+\foreach \i in {0,...,359}{
+  \ADD{\H}{\i}{\hue}
+  \MODULO{\hue}{360}{\normhue}
+  \xglobal\definecolor{c\i}{Hsb}{\normhue,1,1}
+  \xglobal\definecolor{l\i}{Hsb}{\normhue,0.46,0.15}
+  \xglobal\definecolor{d\i}{Hsb}{\normhue,0.44,0.73}
+  \xglobal\definecolor{t\i}{Hsb}{\normhue,0.45,0.44}
+}

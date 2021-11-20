@@ -1,0 +1,7 @@
+\babel@toc {spanish}{}
+\contentsline {section}{Bitácora}{1}{section*.2}% 
+\contentsline {section}{\numberline {A}Objetivos y Análisis de Requisitos}{3}{appendix.Alph1}% 
+\contentsline {subsection}{\numberline {A.1}Objetivos}{3}{subsection.Alph1.1}% 
+\contentsline {subsection}{\numberline {A.2}Análisis de Requisitos}{3}{subsection.Alph1.2}% 
+\contentsline {subsection}{\numberline {A.3}Diagramas de Casos de Uso}{3}{subsection.Alph1.3}% 
+\contentsline {section}{\numberline {B}Diagrama de Clases}{3}{appendix.Alph2}% 

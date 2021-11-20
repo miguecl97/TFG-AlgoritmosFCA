@@ -1,0 +1,26 @@
+\documentclass[rgb]{standalone}
+
+\input{figConfig}
+
+\tikzstyle{vertex}=[circle,fill=d0]
+
+\begin{document}
+\begin{tikzpicture}[fill = d0]
+  \node[vertex, fill = d120] (root) {};
+  \node[vertex, below of = root] (s1) {};
+  \node[vertex, below right of = root] (s2) {};
+  \node[vertex, below left of = root] (s3) {};
+  \node[vertex, below of = s1, fill = d240] (bot) {};
+
+  \draw (root) -- (s1);
+  \draw (root) -- (s2);
+  \draw (root) -- (s3);
+
+  \foreach \name in {s1, s2, s3}
+  \draw (\name) -- (bot);
+\end{tikzpicture}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

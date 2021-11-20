@@ -1,0 +1,42 @@
+\documentclass[rgb]{standalone}
+
+\input{figConfig}
+\usepackage{tikz-uml}
+
+\renewcommand*\familydefault{\ttdefault}
+
+\tikzumlset{fill class = none}
+
+\begin{document}
+\begin{tikzpicture}[
+  declare function={
+    dx = 2cm;
+    dy = 2cm;
+  }
+  ]
+
+  \umlclass{Node}
+  {
+    + concept : pair<bitset, bitset> \\
+    + parents : list<Node*> \\
+    + children : list<Node*>
+  }
+  {
+    + toString() : string
+  }
+
+  \umlclass[right = dx of Node]{Lattice}
+  {
+    - top : Node* \\
+    - bottom : Node* \\
+    - concepts : hash<string, Node>
+  }
+  {
+    + getTop() : Node \\
+    + getBottom() : Node
+  }
+
+  \umlunicompo[mult1 = 1, mult2 = *]{Lattice}{Node}
+
+\end{tikzpicture}
+\end{document}
