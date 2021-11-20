@@ -146,7 +146,8 @@ Once all the requirements for experimentation have been explained, Chapter \ref{
 
 Finally, chapter \ref{chap:8} reviews the objectives set at the beginning of the work, explaining to what extent these objectives have been achieved and drawing the conclusions that have been obtained in the course of the work. To conclude the paper, possible future avenues for follow-up of this study are indicated.
 
-The entire work is available for consultation and use by any researcher interested in the subject at: \href{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code}{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code}.
+The entire work is available for consultation and use by any researcher interested in the subject at:
+\href{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code}{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code}.
 
 \include{preliminares/declaracion-originalidad}
 
@@ -161,7 +162,7 @@ The entire work is available for consultation and use by any researcher interest
 \chapter{Introducción, motivación y objetivos}
 \label{chap:1}
 \section{Marco histórico}
-El Análisis Formal de Conceptos (FCA)\footnote{En inglés Formal Concept Analysis, cuyas siglas utilizaremos para referirnos al Análisis Formal de Conceptos en adelante.} es un campo de la matemática aplicada que se basa en la matematización de los conceptos y la jerarquía conceptual. De este modo, tal y como explicó Bernhard Ganter \cite{ganter_formal_1999} en uno de los primeros artículos que se publicaron sobre la materia, el FCA activa y utiliza el pensamiento matemático para el análisis de datos conceptuales y el procesamiento del conocimiento dando lugar a un análisis desde un punto de vista más realista y cercano para el usuario.
+El Análisis Formal de Conceptos (FCA)\footnote{En inglés Formal Concept Analysis, cuyas siglas utilizaremos para referirnos al Análisis Formal de Conceptos en adelante.} es un campo de la matemática aplicada que se basa en la matematización de la palabra concepto y la jerarquía conceptual. De este modo, tal y como explicó Bernhard Ganter \cite{ganter_formal_1999} en uno de los primeros artículos que se publicaron sobre la materia, el FCA activa y utiliza el pensamiento matemático para el análisis de datos conceptuales y el procesamiento del conocimiento dando lugar a un análisis desde un punto de vista más realista y cercano para el usuario.
 
 En matemáticas, desempeñó un papel especial durante la aparición de la lógica matemática en el siglo XIX. Sin embargo, posteriormente no tuvo prácticamente ninguna repercusión en el pensamiento matemático \cite{comparingperformance}. No fue hasta $1977$ cuando se retomó el tema y se profundizó en estudiar las propiedades de los retículos desde un punto de vista computacional \cite{distributive} o las relaciones que se podían extraer a partir de su estructura \cite{tolerance}. Ya en $1981$, Rudolf Wille \cite{willeconcept} formalizó por primera vez toda esta rama de la Teoría del Orden conocida como el Análisis Formal de Conceptos. Desde entonces, a través de un gran número de contribuciones, el Análisis Formal de Conceptos ha obtenido tal amplitud que se utiliza en una gran variedad de campos y a día de hoy se siguen buscando mejoras para su rendimiento. Prueba de ello son las Conferencias Internacionales sobre el Análisis Formal de Conceptos (ICFCA), en las que desde el $2004$ los principales investigadores sobre el tema se reúnen anualmente para compartir los mejores avances en la materia. Una lista con enlaces a las publicaciones de estas conferencias se puede encontrar en el siguiente \href{https://link.springer.com/conference/icfca}{enlace} \footnote{https://link.springer.com/conference/icfca}.
 
@@ -303,7 +304,7 @@ A continuación presentaremos las nociones de supremo e ínfimo que juegan un pa
 \end{definition}
  
 
-En el caso concreto de $ A=\{x,y\}$, tambien escribimos $x \wedge y$ para el $\inf(A)$ y $x \vee y $ para el $\sup(A)$. A partir de estas nociones podemos presentar el concepto de retículo.
+En el caso concreto de $ A=\{x,y\}$, también escribimos $x \wedge y$ para el $\inf(A)$ y $x \vee y $ para el $\sup(A)$. A partir de estas nociones podemos presentar el concepto de retículo.
 
 \begin{definition}[Retículo \cite{ganter_formal_1999}] Un conjunto ordenado $\mathbb{L} = (L,\leq)$  diremos que es un retículo si para todo par de elementos de $L$ existen el supremo y el ínfimo. Esto es, existen $x \wedge y$ e $x \vee y$ para todo $x,y \in L$.
 
@@ -901,7 +902,7 @@ Sea $\M$ un conjunto de atributos de un contexto formal $(\G,\M,\I)$, y sean $C,
 Una implicación $C \to D$ se cumple en $(\G,\M,\I) \Longleftrightarrow D \subseteq C''$.
 \end{proposition}
 
- Para leer implicaciones a partir de un diagrama, se elige un conjunto de atributos y se toman los conceptos correspondientes a ellos, a partir de los cuales se construye el ínfimo de dichos conceptos. Los  atributos  que  están  por encima  del  concepto  identificado  por  el  infimo  están implicados por los atributos previamente elegidos. 
+ Para leer implicaciones a partir de un diagrama, se elige un conjunto de atributos y se toman los conceptos correspondientes a ellos, a partir de los cuales se construye el ínfimo de dichos conceptos. Los  atributos  que  están  por encima  del  concepto  identificado por el ínfimo están implicados por los atributos previamente elegidos. 
 
 Así en nuestro ejemplo tendríamos implicaciones como \{Visitas Guiadas, Descuento Estudiantes\} $\to$ \{Interés Cultural \}. En efecto, \{Interés Cultural\} $\subseteq $ \{Visitas Guiadas, Descuento Estudiantes\}=\{Catedral\}$'$ =\{Interés Cultural, Visitas Guiadas, Descuento Estudiantes\}.
 
@@ -989,7 +990,7 @@ Por otro lado, durante la revisión bibliográfica también se recopilaron diver
 \section{Algoritmos por lotes}
 
 
-Los algoritmos por lotes para el Análisis Formal de Conceptos son aquellos que contruyen el retículo de conceptos partiendo desde el inicio de manera secuencial, y que ante algún cambio en el conjunto de datos deben volver a constriuir el retículo por completo. En esta sección veremos los más populares y sobre qué principios se basa su funcionamiento.
+Los algoritmos por lotes para el Análisis Formal de Conceptos son aquellos que construyen el retículo de conceptos partiendo desde el inicio de manera secuencial, y que ante algún cambio en el conjunto de datos deben volver a construir el retículo por completo. En esta sección veremos los más populares y sobre qué principios se basa su funcionamiento.
 
 Para obtener una idea más clara del funcionamiento de los algoritmos, en algunas ocasiones haremos referencia al ejemplo sencillo de los centros comerciales de Granada, cuyo contexto recordemos que era:
 
@@ -1810,7 +1811,7 @@ Por otro lado, los conjuntos de datos reales se han obtenido realizando una bina
 
 \begin{itemize}
     \item $"\textbf{Breast Cancer}".$ Contiene información recopilada por el doctor Wolberg \cite{breast} durante sus casos clínicos en relación con el cáncer de mama. Inicialmente este conjunto tiene $699$ objetos y $10$ atributos. Tras preprocesarlo y binarizar los atributos se obtienen finalmente $99$ atributos. Posteriormente para nuestro estudio recogimos una muestra de $500$ objetos. El número medio de atributos por objeto es $10$. El dataset original se encuentra disponible en \href{https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/}{https://archive.ics.uci.edu/\linebreak ml/machine-learning-databases/breast-cancer-wisconsin/} y el fichero csv que queda tras preprocesarlo se encuentra disponible en la carpeta \href{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code/datasets/real-datasets/breastcancer.csv}{datasets/real-datasets/breastcancer.csv}\footnote{https://github.com/miguecl97/TFG-AlgoritmosFCA/tree/master/code/datasets/real\-datasets/breastcancer.csv} del repositorio de GitHub del trabajo.
-    \item $"\textbf{Sponges}".$ Contiene información relativa a un estudio realizado sobre esponjas marinas que se encuentran en la costa del mediterránero, con atributos como el color, el tipo de espora, el número de papilas, su forma, etc. Originalmente este conjunto de datos posee $76$ objetos y $45$ atributos. Para adaptarlo a nuestro experimento se ha realizado una binarización y eliminación de algunos atributos para obtener finalmente un fichero con $76$ objetos y $100$ atributos. El número medio de atributos por objeto es $29$. El dataset original se encuentra disponible en \href{https://archive.ics.uci.edu/ml/datasets/sponge}{https://archive.ics.uci.edu/ml/datasets/sponge} y el fichero csv tras haberlo preprocesado está en \href{https://github.com/miguecl97/TFG-AlgoritmosFCA/blob/master/code/datasets/real-datasets/sponge.csv}{datasets/real-datasets/breastcancer.csv}\footnote{https://github.com/miguecl97/TFG-AlgoritmosFCA/blob/master/code/datasets/real-datasets/sponge.csv} del repositorio de GitHub del trabajo.
+    \item $"\textbf{Sponges}".$ Contiene información relativa a un estudio realizado sobre esponjas marinas que se encuentran en la costa del mediterráneo, con atributos como el color, el tipo de espora, el número de papilas, su forma, etc. Originalmente este conjunto de datos posee $76$ objetos y $45$ atributos. Para adaptarlo a nuestro experimento se ha realizado una binarización y eliminación de algunos atributos para obtener finalmente un fichero con $76$ objetos y $100$ atributos. El número medio de atributos por objeto es $29$. El dataset original se encuentra disponible en \href{https://archive.ics.uci.edu/ml/datasets/sponge}{https://archive.ics.uci.edu/ml/datasets/sponge} y el fichero csv tras haberlo preprocesado está en \href{https://github.com/miguecl97/TFG-AlgoritmosFCA/blob/master/code/datasets/real-datasets/sponge.csv}{datasets/real-datasets/breastcancer.csv}\footnote{https://github.com/miguecl97/TFG-AlgoritmosFCA/blob/master/code/datasets/real-datasets/sponge.csv} del repositorio de GitHub del trabajo.
 \end{itemize}
 
 En resumen, para los conjuntos de datos reales:
@@ -2117,7 +2118,7 @@ En la figura \ref{fig:compbreast} podemos observar que el comportamiento es bast
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.4]{images/distribution-breast.png}
+  \includegraphics[scale=0.5]{images/distribution-breast.png}
  
 \caption{Histograma con el número de objetos con los que cada atributo está relacionado para el conjunto de datos breastcancer.csv .}
  \label{fig:disbreast}
@@ -2125,7 +2126,7 @@ En la figura \ref{fig:compbreast} podemos observar que el comportamiento es bast
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.4]{images/distribution-artificialg10G500.png}
+  \includegraphics[scale=0.5]{images/distribution-artificialg10G500.png}
  
 \caption{Histograma con el número de objetos con los que cada atributo está relacionado para el conjunto de datos artificial con $|\M|=100$, $|g'|=10$ y $|\G|=500$.}
  \label{fig:distrartg10G500}
@@ -2185,7 +2186,7 @@ De nuevo estos cambios probablemente se deban a la diferencia en las distribucio
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.4]{images/distribution-sponges.png}
+  \includegraphics[scale=0.5]{images/distribution-sponges.png}
 \caption{Histograma con el número de objetos con los que cada atributo está relacionado para el conjunto de datos sponges.csv. }
   \label{fig:dissponges}
 
@@ -2193,7 +2194,7 @@ De nuevo estos cambios probablemente se deban a la diferencia en las distribucio
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.4]{images/distribution-artificialg30G80.png}
+  \includegraphics[scale=0.5]{images/distribution-artificialg30G80.png}
 \caption{Histograma con el número de objetos con los que cada atributo está relacionado para el conjunto de datos artificial con $|\M|=100$, $|g'|=30$ y $|\G|=80$.}
  \label{fig:distrartg30G80}
 \end{figure}
@@ -2283,7 +2284,7 @@ En resumen, las grandes conclusiones que podemos sacar de nuestra experimentaci�
     \item En las condiciones anteriores, ante conjuntos de datos con densidad baja el algoritmo más rápido es el InClose, mientras que para conjuntos de densidad alta el más rápido con diferencia es el NextClosure.
     \item Si el conjunto de datos no sigue dicha distribución no podemos predecir qué algoritmo será más rápido para utilizarlo. Pero los algoritmos InClose o NextClosure son los principales candidatos a serlo.
     \item Los algoritmos incrementales no aportan la ventaja significativa que deberían dar a la hora de añadir conceptos al retículo, sobre todo cuando la densidad es alta, por lo que sería necesario replantearse su funcionamiento.
-    \item Además de todo lo anterior, una de las grandes conclusiones que permanece de este trabajo es el estudio experimental en si mismo. Cualquier persona puede replicar el estudio con el mismo código y los mismos conjuntos de datos descargando el repositorio en su másquina. Esto parece algo poco relevante, pero ninguno de los estudios realizados hasta la fecha ha hecho público el código fuente de su experimentación, y tampoco es popular encontrar estos algoritmos programados en C++.
+    \item Además de todo lo anterior, una de las grandes conclusiones que permanece de este trabajo es el estudio experimental en si mismo. Cualquier persona puede replicar el estudio con el mismo código y los mismos conjuntos de datos descargando el repositorio en su máquina. Esto parece algo poco relevante, pero ninguno de los estudios realizados hasta la fecha ha hecho público el código fuente de su experimentación, y tampoco es popular encontrar estos algoritmos programados en C++.
 \end{itemize}
 
 \chapter{Conclusiones y trabajo futuro}
