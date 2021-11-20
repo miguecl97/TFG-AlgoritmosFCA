@@ -1,0 +1,57 @@
+%------------------------
+% Bibliotecas para matemáticas de latex
+%------------------------
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[ruled, spanish, onelanguage, linesnumbered]{algorithm2e}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{shapes,fit}
+\usepackage{bussproofs}
+\EnableBpAbbreviations{}
+\usepackage{mathtools}
+\usepackage{scalerel}
+\usepackage{stmaryrd}
+
+%------------------------
+% Estilos para los teoremas
+%------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorema}
+\newtheorem{proposition}{Proposición}
+\newtheorem{lemma}{Lema}
+\newtheorem{corollary}{Corolario}
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}
+\newtheorem{proofs}{Demostración}
+\theoremstyle{remark}
+\newtheorem{remark}{Comentario}
+\newtheorem{exampleth}{Ejemplo}
+
+\begingroup\makeatletter\@for\theoremstyle:=definition,remark,plain\do{\expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{\addtolength\thm@preskip\parskip}}\endgroup
+
+%------------------------
+% Macros
+% ------------------------
+
+% Aquí pueden añadirse abreviaturas para comandos de latex
+% frequentemente usados.
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+% Fracción grande: \ddfrac{}{}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+% Valor absoluto: \abs{}
+\providecommand{\abs}[1]{\lvert#1\rvert}   
+% Licencia
+\usepackage[
+    type={CC},
+    modifier={by-sa},
+    version={4.0},
+]{doclicense}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\I}{\mathcal{I}}
+
+\renewcommand\L{\mathcal{L}}
+\newcommand{\G}{\mathcal{G}}
+\newcommand\m[1]{\mathcal{#1}}
