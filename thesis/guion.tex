@@ -1,0 +1,196 @@
+
+
+\documentclass{article}
+\input{macros}
+\begin{document}
+
+\section{Portada}
+
+Buenos días, mi nombre es Miguel Ángel Cantarero López, alumno del DGGIM y en esta exposición vamos a explicar el Trabajo de Fin de Grado que hemos realizado que se titula: ``Estudio experimental de algoritmos de cálculo de retículos en Análisis Formal de Conceptos'', en el que vamos a brindar una imagen comparativa del funcionamiento de los principales algoritmos que existen para el Análisis Formal de Conceptos.
+
+
+\section{Contenidos}
+
+\section{Introducción - Motivación}
+
+El FCA es una teoría de la matemática (que surgió en XXXX) aplicada que se basa en la representación matemática de la palabra concepto. 
+
+Ese significado que tenemos de la palabra concepto, vamos a intentar darle rigor matemático. Ilustremos su funcionamiento.
+
+ Partimos de un conjunto de datos que forman un contexto formal que es lo que en la práctica se conoce como esta tabla cruzada de objetos y de atributos, con las x en las casillas que indican que cierto objeto tiene cierto atributo. En este caso se trata de un conjunto de datos sobre centros comerciales de granada donde podemos ver....
+
+A partir de este contexto formal con el FCA se calculan o se extraen (o se minan) lo que se conocen como conceptos formales. Los conceptos formales son parejas de subconjuntos de objetos y subconjuntos de atributos. Las cuales indican que los únicos objetos que poseen los atributos de la derecha son esos y los únicos atributos que poseen esos objetos son los de la derecha.
+Por ejemplo en este contexto obtenemos el concepto Nevada, Ropa Alimentacion electrónica el cual nos idce que el centro comercial envada tiene tienda de ropa,... y viceversa.
+
+Por último, esta teoría se encarga de dotar de orden al conjunto de conceptos dando lugar a lo que se conoce como un retíucl de conceptos. Nos aporta una visualización y una estructura para trabajar con ellos. 
+
+\section{Objetivos}
+
+
+\section{Aplicaciones}
+
+Una de las más intuitivas en en los sistemas de recuperación de información, por ejemplo un sistema que almacena documentos indexados según los temas que se tratan en ellos. 
+
+Supongamos que el usuario introduce en el buscador la palabra Grupos. Pues teniendo el retículo construido el sistema se iria al concepto marcado en rojo que es este de aquí abajo.  
+
+A partir de aquí recuperamos los DOcumentos 3, 5 y 4. Pero también es importante recuperar otros que estén en cierta meidida relacionados con esos, y para ello subiríamos al concepto superior y recomendaríamos el documento2 que también habla de álgebra como los otros.
+
+
+También en biología se utiliza pra encontrar grupos de organismos que comparten grupos de genes,...
+
+\section{TEORÍA DEL FCA - Operadores de derivación}
+
+El operador A' se define como el conjunto de atributos que están relacionados con todos los objetos de A. 
+
+Ejemplo....
+
+Ahora resulta interesante preguntarse qué ocurre si aplicamos de nuevo el operador ' , vemos que obtenemos un nuevo conjunto de objetos. Definimos así los operadores dobles de derivación, que nos llevan subconjuntos de objetos en subconjuntos de objetos y subconjuntos de atributos en subconjuntos de atributos.
+
+Estos operadores de derivación forman una Conexión de Galois (monotona, embebimiento de orde, isomorfismo de orden) (','), g $\leq$ m' $\Longleftrightarrow$ m $\leq$ g'
+
+\section{Concepto formal} 
+
+A=EXTENSION, objetos que pertenecen a este concepto
+B=INTENSION, atributos relacionados con todos estos objetos
+
+\section{Relación de orden}
+
+por tratarse de conceptos formales se tiene que:
+$$B_1=A_1'=\{m\in \M | \forall g \in A_1 : g\I m\}$$
+$$B_2=A_2'=\{m\in \M | \forall g \in A_2 : g\I m\}$$
+de donde deducimos que $B_2 \subseteq B_1$.
+
+\begin{enumerate}
+    \item Reflexividad:  $(A,B) \leq (A,B)$
+    
+    \item Antisimetría: $(A_1,B_1) \leq (A_2,B_2) \wedge (A_2,B_2) \leq (A_1,B_2) \Longrightarrow (A_1,B_1) =(A_2,B_2)$
+    
+    \item Transitividad: $(A_1,B_1)\leq(A_2,B_2)\leq(A_3,B_3) \Longrightarrow (A_1,B_1) \leq (A_3,B_3)$
+\end{enumerate}
+
+\section{Retículo de conceptos}
+
+Estamos ya en condiciones de definir el retículo de conceptos.  El de nuestro ejemplo sería el siguiente:
+
+y su diagrama de hasse era el que veíamos al principio de la presentación,
+
+como vemos, las extensiones se leen bajando hacia abajo y las intensiones subiendo  hacia arriba.
+
+
+\section{Teorema}
+
+La primera parte nos aporta unas fórmulas determinadas para el cálculo del supremo y del ínfimo de un conjunto de conceptos.
+
+La segunda parte concluye con que cada retículo completo es isomorfo a un retículo de
+conceptos. Esto significa que para cada retículo completo debemos de ser capaces de encontrar un conjunto $G$ de objetos, un conjunto $M$ de atributos, y una relación de orden $I$, tal que el retículo que tomemos $(L,\subseteq)$ sea isomorfo a $\underline{{B}}(G,M,I)$. El teorema no solo dice que esto sea posible sino que da la forma para construirlo . 
+
+Para ver esto, en primer lugar expliquemos el papel que juegan las funciones $\gamma$ y $\mu$:
+
+Sea $(G,M,I)$
+\begin{itemize} 
+    \item para cada objeto $g \in G$ el correspondiente $"$\textit{objeto concepto}$"$ es: $\gamma (g) := (\{g\}'',\{g\}')$,
+    \item y para cada atributo $m \in M$ el $"$\textit{atributo concepto}$"$ viene dado por $\mu(m) :=(\{m\}',\{m\}'').$
+\end{itemize}
+
+\section{Tipos de algoritmos}
+
+El principal objetivo del FCA es el de construir el retículo de conceptos. A lo largo de la historia múltiples algoritmos han sido propuestos por diversos autores. Distinguiremos entre algoritmos por lotes, incrementales y paralelos.
+
+Los por lotes son aquellos que reciben el contexto como entrada y crean el retículo de algoritmos desde cero. Si la aplicación requiere insertar un nuevo objeto en el contexto, estos algoritmos deben de volver a crear el retículo completo. Los enfoques más destacados son los de ganter,....
+
+En segundo lugar tenemos los algoritmos incrementales, estos cuando se añade un nuevo objeto al contexto sólo tienen que añadir ese objeto al retículo. Es decir, trabajan con el retículo como entrada y van añadiendo los objetos. De esta manera, añadiendo todos los objetos del contexto uno a uno podemos ejecutarlos como si fuesen algoritmos por lotes.
+
+En tercer lugar se han publicado algunos algoritmos paralelos, los más importantes han sido...... en este estudio no se van a incluir ya que no es justo comparar paralelos con no paralelos, pero es interesante saber que están ahi sobre todo de cara a un trabajo futuro. 
+
+
+\section{Ganter}
+
+Ganter se dió cuenta de que los operadores de derivación formaban un sistema de clausura
+$$ \overline{*} : \mathcal{P}(M) \to \mathcal{P}(M) $$ 
+
+que es extensiva, monótona e idempotente, esto es, para todo $A,B \subseteq M$:
+
+\begin{enumerate}
+    \item $A \subseteq \overline{A}$
+    \item $A \subseteq B \Longrightarrow \overline{A} \subseteq \overline{B}$
+    \item $\overline{\overline{A}} = \overline{A}$
+\end{enumerate}
+
+Aplicando el doble operador Ganter construye todos los conceptos, además añade un test para elegir de manera adecuada el siguiente A a calcular el cierre.
+
+\section{Lindig}
+
+Sigue una estategia de abajo hacia arriba y Lindig utilizó que el conjunto S incluye todos los vecinos superiores de un concpepto, entonces a partir de ahi construye el retículo.
+
+\section{Bordat}
+
+En cambio Bordat plateó un algoritmo de arriba hacia abajo. Diseñó una función que calculaba los vecinos inferiores de un concepto y a partir de ahí construye todo el retículo.
+
+\section{InheritConcepts}
+
+El punto más destacable de este algoritmo es que emplea dos tablas que mantienen información sobre las relaciones de los atributos, estas tablas se van actualizando cada vez que se calcula un concepto para evitar realizar cálculos innecesarios.
+
+\section{InClose}
+Itera sobre los atributos y calcula las extensiones de la siguiente manera:
+
+El primer caso no produce inguna extension nueva, el segundo sigue y en el tercero corta la rama de la extensión.
+
+\section{Norris}
+
+Busca los conceptos con los atributos que contengan los atributos del concepto a añadir y cuando lo encuentra actualiza la rama entera.
+
+\section{Godin}
+Calcula longitudes de extensiones para ahorrar más pasos y luego actualiza la rama.
+
+\section{AddIntent}
+
+Busca el concepto generador del que se quiere añadir y a partir de ahí añade el objeto a las extensiones de los de arriba y los atributos a los conceptos de abajo.
+
+\section{Propiedades}
+
+A modo de resumen aquí tenemos una tabla comparativa de propiedades.
+
+Vemos los incrementales y los por lotes. Los incrementales vemos que solo difieren en la p7. 
+Mientras que los por lotes tienen características importantes como la p3. Y la p8.
+
+\section{Experimentación}
+
+Hemos hecho una implementación y vamos a probarlos sobre diferentes conjuntos de datos para ver su rendimiento.
+
+
+\section{Software}
+
+La implementacion es en c++
+
+....
+\section{Conjuntos de datos}
+
+\section{g'=10 20}
+HEMOS QUITADO EL ADDINTENT
+En primer lugar vemos que el algoritmo InClose es el que menor tiempo de ejecución requiere para estos conjuntos de datos, esto se debe a que hay muy pocos atributos que tengan cada objeto y puede podar la generacion de extensiones mucho antes. El algoritmo de BOrdat lo sigue muy de cerca. Por otro lado observamos que el de Godin es el que peor funciona. COmo el conjunto de datos tiene poca densidad y tardan muy poco tiempo 700 ms , vamos a llegar a G500, veamos un factor curioso, el algoritmo INheritConcepts. Y como mejora su tiempo de ejecucion.
+\section{g'10 500}
+El inherit concepts es el que mejor lleva esta subida en el número de objetos, quizás gracias a la tabla de las relaciones le permite ahorrarse muchos calculos.
+
+\section{g'20 20}
+De nuevo el inclose va bastante bien pero cabe a destacar el algoritmo nextclosure que se coloca en segundo lugar, veamos si aumentamos la densidad si este comportamiento se mantiene y el nextclosure sigue mejorando.
+
+\section{g'30 20}
+En efecto cuando aumenta la densidad del conjunto de datos, el algoritmo enxtclosure pasa a ser el mejor. EL de godin que antes era bastante peor, mejora mucho su rendimiento, calcular la longitud de las extensiones parece que ahora resulta mas eficiente (ya que al haber mas atirbutos estas son más grandes y trabajar con su longitud nos ahorra mas tiempo).
+
+\section{g'40 20}
+
+Este valor para el parámetro $|g'|$ provoca que se generen un gran número de conceptos para cada contexto, lo que se traduce en un aumento considerable en los tiempos de ejecución y en los recursos del sistema. Este es el motivo por el que algunos algoritmos no se siguen ejecutando para valores grandes de $|\G|$.  El resultado de este experimento es que al llegar a la cifra de $|G|=60$ varios algoritmos comienzan a empeorar su desempeño de manera notable. El algoritmo de Lindig que anteriormente vimos que perdía bastante eficiencia, confirma este suceso, uniéndose a él los algoritmos de Inherit-Concepts y Bordat. No nos sorprende que el algoritmo Inherit-Concepts sea el segundo que peor rendimiento ofrece ya que las tablas $T$ y $D$ que utiliza para mantener información alcanzan un tamaño considerable, y esto provoca que su actualización sea costosa. Por otro lado el algoritmo NextClosure se confirma como el mejor candidato a la hora de ejecutar contextos con una densidad elevada. Cuando pasamos a $|\G|=80$, los algoritmos de Norris, InClose y Godin se disparan en el tiempo de ejecución, y el único que se mantiene estable es el de NextClosure. Este hecho es muy similar al que ocurrió en la experimentación realizada por Obiedkov.
+
+\section{breastcancer}
+Se mantiene el orden en los tiempos de ejecución pero hay algunos que difieren bastante. El único que mejora es el de bordat.
+\section{sponges}
+Hay muchas fdiferencias en los peores casos, el orden es bastante diferente y el algoritmo inclose resulta mejor que el nextclosure cuando para el artificial no era así. DIferencia de lindig.
+
+Esto se debe a las diferencias en las distribuciones de los atributos.
+
+\section{Conclusiones}
+
+
+\section{Trabajo futuro}
+
+\end{document}

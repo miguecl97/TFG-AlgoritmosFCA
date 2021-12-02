@@ -1,0 +1,28 @@
+// <Lattice object of 2 atoms 7 concepts 2 coatoms at 0x7fb84073fb10>
+digraph Lattice {
+	node [label="" shape=circle style=filled width=.25]
+	edge [dir=none labeldistance=1.5 minlen=2]
+	c0
+	c1
+	c1 -> c1 [color=transparent headlabel=Documento2 labelangle=270]
+	c1 -> c0
+	c2
+	c2 -> c2 [color=transparent headlabel=Documento4 labelangle=270]
+	c2 -> c2 [color=transparent labelangle=90 taillabel=Ecuaciones]
+	c2 -> c0
+	c3
+	c3 -> c3 [color=transparent headlabel=Documento1 labelangle=270]
+	c3 -> c3 [color=transparent labelangle=90 taillabel="Análisis"]
+	c3 -> c1
+	c4
+	c4 -> c4 [color=transparent headlabel="Documento3 Documento5" labelangle=270]
+	c4 -> c4 [color=transparent labelangle=90 taillabel=Grupos]
+	c4 -> c2
+	c5
+	c5 -> c5 [color=transparent labelangle=90 taillabel="Álgebra"]
+	c5 -> c1
+	c5 -> c4
+	c6
+	c6 -> c3
+	c6 -> c5
+}
